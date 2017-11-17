@@ -3,7 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JDevl32", "JDevl32\JDevl32.csproj", "{D9A34CD3-5163-46CB-BCC2-DEC4B7F2F66D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JDevl32.Web", "JDevl32.Web\JDevl32.Web.csproj", "{2C950636-D29F-48EA-B013-9A4710E92BD2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{C7DA7286-7BE5-4BB8-B18F-68213787770D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "init", "init", "{3B1DAA99-B6F0-4EB1-A490-9521471B0CDF}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\init\run.bat = .nuget\init\run.bat
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,13 +18,16 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D9A34CD3-5163-46CB-BCC2-DEC4B7F2F66D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D9A34CD3-5163-46CB-BCC2-DEC4B7F2F66D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D9A34CD3-5163-46CB-BCC2-DEC4B7F2F66D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D9A34CD3-5163-46CB-BCC2-DEC4B7F2F66D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C950636-D29F-48EA-B013-9A4710E92BD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C950636-D29F-48EA-B013-9A4710E92BD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C950636-D29F-48EA-B013-9A4710E92BD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C950636-D29F-48EA-B013-9A4710E92BD2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3B1DAA99-B6F0-4EB1-A490-9521471B0CDF} = {C7DA7286-7BE5-4BB8-B18F-68213787770D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {41C3EA69-9CBB-4202-8F14-D90EEADF27D2}

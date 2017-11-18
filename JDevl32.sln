@@ -3,14 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JDevl32.Web", "JDevl32.Web\JDevl32.Web.csproj", "{2C950636-D29F-48EA-B013-9A4710E92BD2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JDevl32.Web", "JDevl32.Web\JDevl32.Web.csproj", "{2C950636-D29F-48EA-B013-9A4710E92BD2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{C7DA7286-7BE5-4BB8-B18F-68213787770D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "init", "init", "{3B1DAA99-B6F0-4EB1-A490-9521471B0CDF}"
 	ProjectSection(SolutionItems) = preProject
+		.nuget\init\globcopy.py = .nuget\init\globcopy.py
 		.nuget\init\run.bat = .nuget\init\run.bat
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JDevl32.Entity", "JDevl32.Entity\JDevl32.Entity.csproj", "{8D23D014-C579-461A-8CB5-C523EFD9B267}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,6 +25,10 @@ Global
 		{2C950636-D29F-48EA-B013-9A4710E92BD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C950636-D29F-48EA-B013-9A4710E92BD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C950636-D29F-48EA-B013-9A4710E92BD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D23D014-C579-461A-8CB5-C523EFD9B267}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D23D014-C579-461A-8CB5-C523EFD9B267}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D23D014-C579-461A-8CB5-C523EFD9B267}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D23D014-C579-461A-8CB5-C523EFD9B267}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

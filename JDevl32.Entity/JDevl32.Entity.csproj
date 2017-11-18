@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Jeremy Paiz</Authors>
+    <Company />
+    <Copyright>Copyright © 2017 Jeremy Paiz</Copyright>
+    <RepositoryUrl>https://github.com/jdevl32/JDevl32/JDevl32.Entity</RepositoryUrl>
+    <RepositoryType>GitHub</RepositoryType>
+    <PackageReleaseNotes>Initial release.</PackageReleaseNotes>
+  </PropertyGroup>
+
+</Project>

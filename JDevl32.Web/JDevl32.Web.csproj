@@ -17,4 +17,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.1" />
   </ItemGroup>
 
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="copy &quot;$(ProjectDir)bin\$(ConfigurationName)\*.nupkg&quot; &quot;C:\Offline\[D Drive]\[Storage]\Development\Package\NuGet\$(ConfigurationName)&quot;" />
+  </Target>
+
 </Project>

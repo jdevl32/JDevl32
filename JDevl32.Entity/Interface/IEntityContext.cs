@@ -24,6 +24,14 @@ namespace JDevl32.Entity.Interface
 		IConfigurationRoot ConfigurationRoot { get; }
 
 		/// <summary>
+		/// The database connection string key.
+		/// </summary>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		string ConnectionStringKey { get; }
+
+		/// <summary>
 		/// The hosting environment of the application.
 		/// </summary>
 		/// <remarks>

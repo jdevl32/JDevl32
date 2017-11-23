@@ -25,6 +25,9 @@ namespace JDevl32.Entity.Model
 		public IConfigurationRoot ConfigurationRoot { get; }
 
 		/// <inheritdoc />
+		public virtual string ConnectionStringKey { get; }
+
+		/// <inheritdoc />
 		public IHostingEnvironment HostingEnvironment { get; }
 
 #endregion
@@ -35,6 +38,9 @@ namespace JDevl32.Entity.Model
 		/// <summary>
 		/// Create an entity context base.
 		/// </summary>
+		/// <param name="dbContextOptions">
+		/// The context options.
+		/// </param>
 		/// <param name="configurationRoot">
 		/// The configuration root of the application.
 		/// </param>
@@ -44,11 +50,39 @@ namespace JDevl32.Entity.Model
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
-		protected EntityContextBase(IConfigurationRoot configurationRoot, IHostingEnvironment hostingEnvironment)
+		protected EntityContextBase(DbContextOptions dbContextOptions, IConfigurationRoot configurationRoot, IHostingEnvironment hostingEnvironment)
+			:
+			base(dbContextOptions)
 		{
 			ConfigurationRoot = configurationRoot;
 			HostingEnvironment = hostingEnvironment;
 		}
+
+#endregion
+
+#region DbContext
+
+		/// <inheritdoc />
+		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+		{
+			base.OnConfiguring(optionsBuilder);
+
+			if (HostingEnvironment.IsDevelopment())
+			{
+				optionsBuilder.EnableSensitiveDataLogging();
+			} // if
+
+			if (!string.IsNullOrWhiteSpace(ConnectionStringKey))
+			{
+				optionsBuilder.UseSqlServer(ConfigurationRoot[ConnectionStringKey]);
+			} // if
+		}
+
+		///// <inheritdoc />
+		//protected override void OnModelCreating(ModelBuilder modelBuilder)
+		//{
+		//	base.OnModelCreating(modelBuilder);
+		//}
 
 #endregion
 

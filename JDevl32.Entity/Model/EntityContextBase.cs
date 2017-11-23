@@ -58,6 +58,32 @@ namespace JDevl32.Entity.Model
 			HostingEnvironment = hostingEnvironment;
 		}
 
+		/// <inheritdoc />
+		/// <summary>
+		/// Create an entity context base.
+		/// </summary>
+		/// <param name="dbContextOptions">
+		/// The context options.
+		/// </param>
+		/// <param name="configurationRoot">
+		/// The configuration root of the application.
+		/// </param>
+		/// <param name="hostingEnvironment">
+		/// The hosting envrionment of the application.
+		/// </param>
+		/// <param name="connectionStringKey">
+		/// The database connection string key.
+		/// </param>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		protected EntityContextBase(DbContextOptions dbContextOptions, IConfigurationRoot configurationRoot, IHostingEnvironment hostingEnvironment, string connectionStringKey)
+			:
+			this(dbContextOptions, configurationRoot, hostingEnvironment)
+		{
+			ConnectionStringKey = connectionStringKey;
+		}
+
 #endregion
 
 #region DbContext

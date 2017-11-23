@@ -8,8 +8,8 @@
     <Copyright>Copyright © 2017 Jeremy Paiz</Copyright>
     <RepositoryUrl>https://github.com/jdevl32/JDevl32/JDevl32.Entity</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Add entity context base.</PackageReleaseNotes>
-    <Version>1.0.0.3</Version>
+    <PackageReleaseNotes>Add overrides to entity context base.</PackageReleaseNotes>
+    <Version>1.0.0.5</Version>
   </PropertyGroup>
 
   <ItemGroup>

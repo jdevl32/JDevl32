@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace JDevl32.Entity.Model
 {
@@ -15,7 +16,7 @@ namespace JDevl32.Entity.Model
 		UniqueBase
 	{
 
-#region Overrides of UniqueBase
+#region UniqueBase
 
 		/// <summary>
 		/// The global unique identifier.
@@ -23,6 +24,7 @@ namespace JDevl32.Entity.Model
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
+		[Required]
 		public new Guid Id { get; }
 
 #endregion

@@ -1,4 +1,6 @@
-﻿namespace JDevl32.Entity.Interface
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace JDevl32.Entity.Interface
 {
 
 	/// <summary>
@@ -18,6 +20,7 @@
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
+		[Required]
 		int Id { get; }
 
 		/// <summary>

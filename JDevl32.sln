@@ -22,7 +22,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".git", ".git", "{E6749735-F
 		.git\config = .git\config
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JDevl32.DotNetCliEF.MigrateDatabase.Tool", "JDevl32.DotNetCliEF.MigrateDatabase.Tool\JDevl32.DotNetCliEF.MigrateDatabase.Tool.csproj", "{61AE855E-8CAE-4D22-B1CB-FA5C7F1BD993}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JDevl32.DotNetCliEF.MigrateDatabase.Tool", "JDevl32.DotNetCliEF.MigrateDatabase.Tool\JDevl32.DotNetCliEF.MigrateDatabase.Tool.csproj", "{61AE855E-8CAE-4D22-B1CB-FA5C7F1BD993}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JDevl32.Web.Host", "JDevl32.Web.Host\JDevl32.Web.Host.csproj", "{5E3B4CDD-CF69-410D-B4F0-36C06E012B92}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,6 +44,10 @@ Global
 		{61AE855E-8CAE-4D22-B1CB-FA5C7F1BD993}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61AE855E-8CAE-4D22-B1CB-FA5C7F1BD993}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61AE855E-8CAE-4D22-B1CB-FA5C7F1BD993}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E3B4CDD-CF69-410D-B4F0-36C06E012B92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E3B4CDD-CF69-410D-B4F0-36C06E012B92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E3B4CDD-CF69-410D-B4F0-36C06E012B92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E3B4CDD-CF69-410D-B4F0-36C06E012B92}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

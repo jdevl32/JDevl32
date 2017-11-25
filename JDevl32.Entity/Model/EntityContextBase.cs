@@ -79,10 +79,7 @@ namespace JDevl32.Entity.Model
 		/// </remarks>
 		protected EntityContextBase(DbContextOptions dbContextOptions, IConfigurationRoot configurationRoot, IHostingEnvironment hostingEnvironment, string connectionStringKey)
 			:
-			this(dbContextOptions, configurationRoot, hostingEnvironment)
-		{
-			ConnectionStringKey = connectionStringKey;
-		}
+			this(dbContextOptions, configurationRoot, hostingEnvironment) => ConnectionStringKey = connectionStringKey;
 
 #endregion
 

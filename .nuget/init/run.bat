@@ -12,4 +12,7 @@ nuget init "%src%" "%dst%"
 set "src=..\..\JDevl32.Web\bin\Release"
 nuget init "%src%" "%dst%"
 
+set "src=..\..\JDevl32.Web.Host\bin\Release"
+nuget init "%src%" "%dst%"
+
 ls -lA "%dstls%"

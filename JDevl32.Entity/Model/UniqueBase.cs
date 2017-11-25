@@ -94,5 +94,5 @@ namespace JDevl32.Entity.Model
 #endregion
 
 	}
-	
+
 }

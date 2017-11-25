@@ -2,19 +2,21 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace JDevl32.Web.Host.Interface
 {
 
 	/// <summary>
-	/// 
+	/// An application startup.
 	/// </summary>
 	/// <remarks>
 	/// Last modification:
+	/// Extend ASP.NET Core Hosting.
 	/// </remarks>
 	public interface IStartup
+		:
+		Microsoft.AspNetCore.Hosting.IStartup
 	{
 
 #region Property
@@ -69,19 +71,32 @@ namespace JDevl32.Web.Host.Interface
 
 #endregion
 
-		/// <summary>
-		/// Configure services for the application.
-		/// </summary>
-		/// <param name="services">
-		/// The services to configure.
-		/// </param>
-		/// <remarks>
-		/// This method gets called by the runtime. Use this method to add services to the container.
-		/// For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-		/// For more information on Core 1.x -> 2.x migration, visit https://docs.microsoft.com/en-us/aspnet/core/migration/1x-to-2x/identity-2x
-		/// Last modification:
-		/// </remarks>
-		void ConfigureServices(IServiceCollection services);
+		// todo|jdevl32: cleanup...
+		///// <summary>
+		///// Configure services for the application.
+		///// </summary>
+		///// <param name="services">
+		///// The services to configure.
+		///// </param>
+		///// <remarks>
+		///// This method gets called by the runtime. Use this method to add services to the container.
+		///// For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+		///// For more information on Core 1.x -> 2.x migration, visit https://docs.microsoft.com/en-us/aspnet/core/migration/1x-to-2x/identity-2x
+		///// Last modification:
+		///// </remarks>
+		//void ConfigureServices(IServiceCollection services);
+
+		///// <summary>
+		///// Configure the startup (using the application builder).
+		///// </summary>
+		///// <param name="applicationBuilder">
+		///// The application builder.
+		///// </param>
+		///// <remarks>
+		///// Last modification:
+		///// Pull up from base class implementation.
+		///// </remarks>
+		//void Configure(IApplicationBuilder applicationBuilder);
 
 		/// <summary>
 		/// Configure the application.

@@ -17,12 +17,17 @@ using IStartup = JDevl32.Web.Host.Interface.IStartup;
 namespace JDevl32.Web.Host
 {
 
-	/// <inheritdoc />
+	/// <summary>
+	/// An application startup base class.
+	/// </summary>
 	/// <remarks>
 	/// Last modification:
+	/// Extend ASP.NET Core Hosting.
 	/// </remarks>
 	public abstract class StartupBase
 		:
+		Microsoft.AspNetCore.Hosting.StartupBase
+		,
 		IStartup
 	{
 
@@ -99,6 +104,65 @@ namespace JDevl32.Web.Host
 
 #endregion
 
+#region Microsoft.AspNetCore.Hosting.StartupBase
+
+		/// <remarks>
+		/// Last modification:
+		/// Change from protected to public (pull up to interface).
+		/// </remarks>
+		public override void Configure(IApplicationBuilder applicationBuilder)
+		{
+			//
+			// Order is impoortant:
+			// 
+
+			// 1. Static files.
+			ConfigureStaticFiles(applicationBuilder);
+
+			// 2. Authentication
+			ConfigureAuthentication(applicationBuilder);
+
+			// 3. MVC -- typically last
+			ConfigureMVC(applicationBuilder);
+		}
+
+		/// <inheritdoc />
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		public override void ConfigureServices(IServiceCollection services)
+		{
+			// todo|jdevl32: pre...
+
+			ConfigureEntityContext(services);
+			ConfigureIdentity(services);
+
+			// Application cookie is no longer part of identity options (above).
+			services.ConfigureApplicationCookie(Configure);
+
+			services.AddLogging();
+			services.AddMvc(Configure).AddJsonOptions(Configure);
+			services.AddSingleton(ConfigurationRoot);
+
+			// todo|jdevl32: post...
+
+			//// todo|jdevl32: check other environment(s)
+			//if (HostingEnvironment.IsDevelopment())
+			//{
+			//	//services.AddScoped<IMailService, FakeMailService>();
+			//} // if
+			//else
+			//{
+			//	// todo|jdevl32: implement real mail service...
+			//} // else
+
+			//services.AddScoped<ITravelRepository, TravelRepository>();
+			//services.AddTransient<IGeoLocationService, GeoLocationService>();
+			//services.AddTransient<ITravelContextSeed, TravelContextSeed>();
+		}
+
+#endregion
+
 		protected IConfigurationRoot BuildConfiguration(IHostingEnvironment hostingEnvironment)
 		{
 			return BuildConfiguration(hostingEnvironment, ConfigPath);
@@ -136,22 +200,6 @@ namespace JDevl32.Web.Host
 				}
 			};
 			cookieAuthenticationOptions.LoginPath = "/Auth/Login";
-		}
-
-		protected virtual void Configure(IApplicationBuilder applicationBuilder)
-		{
-			//
-			// Order is impoortant:
-			// 
-
-			// 1. Static files.
-			ConfigureStaticFiles(applicationBuilder);
-
-			// 2. Authentication
-			ConfigureAuthentication(applicationBuilder);
-
-			// 3. MVC -- typically last
-			ConfigureMVC(applicationBuilder);
 		}
 
 		/// <inheritdoc />
@@ -271,41 +319,6 @@ namespace JDevl32.Web.Host
 			{
 				applicationBuilder.UseMvc(Configure);
 			} // if
-		}
-
-		/// <inheritdoc />
-		/// <remarks>
-		/// Last modification:
-		/// </remarks>
-		public virtual void ConfigureServices(IServiceCollection services)
-		{
-			// todo|jdevl32: pre...
-
-			ConfigureEntityContext(services);
-			ConfigureIdentity(services);
-
-			// Application cookie is no longer part of identity options (above).
-			services.ConfigureApplicationCookie(Configure);
-
-			services.AddLogging();
-			services.AddMvc(Configure).AddJsonOptions(Configure);
-			services.AddSingleton(ConfigurationRoot);
-
-			// todo|jdevl32: post...
-
-			//// todo|jdevl32: check other environment(s)
-			//if (HostingEnvironment.IsDevelopment())
-			//{
-			//	//services.AddScoped<IMailService, FakeMailService>();
-			//} // if
-			//else
-			//{
-			//	// todo|jdevl32: implement real mail service...
-			//} // else
-
-			//services.AddScoped<ITravelRepository, TravelRepository>();
-			//services.AddTransient<IGeoLocationService, GeoLocationService>();
-			//services.AddTransient<ITravelContextSeed, TravelContextSeed>();
 		}
 
 		protected virtual void ConfigureStaticFiles(IApplicationBuilder applicationBuilder)

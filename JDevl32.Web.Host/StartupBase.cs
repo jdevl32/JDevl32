@@ -37,7 +37,7 @@ namespace JDevl32.Web.Host
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
-		public string ConfigPath { get; }
+		public virtual string ConfigPath { get; }
 
 		/// <inheritdoc />
 		/// <remarks>
@@ -61,7 +61,7 @@ namespace JDevl32.Web.Host
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
-		public bool UseMvc { get; } = true;
+		public virtual bool UseMvc { get; } = true;
 
 		/// <inheritdoc />
 		/// <remarks>

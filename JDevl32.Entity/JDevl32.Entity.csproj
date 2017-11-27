@@ -8,8 +8,8 @@
     <Copyright>Copyright © 2017 Jeremy Paiz</Copyright>
     <RepositoryUrl>https://github.com/jdevl32/JDevl32/JDevl32.Entity</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Implement and use instance auto-mapper interface and base class.</PackageReleaseNotes>
-    <Version>1.0.0.9</Version>
+    <PackageReleaseNotes>Add database context options.</PackageReleaseNotes>
+    <Version>1.0.0.10</Version>
   </PropertyGroup>
 
   <ItemGroup>

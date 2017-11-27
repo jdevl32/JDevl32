@@ -11,6 +11,7 @@ namespace JDevl32.Entity.Model
 	/// </summary>
 	/// <remarks>
 	/// Last modification:
+	/// Add database context options.
 	/// </remarks>
 	public abstract class EntityContextBase
 		:
@@ -26,6 +27,9 @@ namespace JDevl32.Entity.Model
 
 		/// <inheritdoc />
 		public virtual string ConnectionStringKey { get; }
+
+		/// <inheritdoc />
+		public DbContextOptions DbContextOptions { get; }
 
 		/// <inheritdoc />
 		public IHostingEnvironment HostingEnvironment { get; }
@@ -55,6 +59,7 @@ namespace JDevl32.Entity.Model
 			base(dbContextOptions)
 		{
 			ConfigurationRoot = configurationRoot;
+			DbContextOptions = dbContextOptions;
 			HostingEnvironment = hostingEnvironment;
 		}
 
@@ -100,12 +105,6 @@ namespace JDevl32.Entity.Model
 				optionsBuilder.UseSqlServer(ConfigurationRoot[ConnectionStringKey]);
 			} // if
 		}
-
-		///// <inheritdoc />
-		//protected override void OnModelCreating(ModelBuilder modelBuilder)
-		//{
-		//	base.OnModelCreating(modelBuilder);
-		//}
 
 #endregion
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace JDevl32.Entity.Interface
@@ -9,6 +10,7 @@ namespace JDevl32.Entity.Interface
 	/// </summary>
 	/// <remarks>
 	/// Last modification:
+	/// Add database context options.
 	/// </remarks>
 	public interface IEntityContext
 	{
@@ -30,6 +32,14 @@ namespace JDevl32.Entity.Interface
 		/// Last modification:
 		/// </remarks>
 		string ConnectionStringKey { get; }
+
+		/// <summary>
+		/// The database context options.
+		/// </summary>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		DbContextOptions DbContextOptions { get; }
 
 		/// <summary>
 		/// The hosting environment of the application.

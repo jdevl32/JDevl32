@@ -8,8 +8,8 @@
     <Copyright>Copyright © 2017 Jeremy Paiz</Copyright>
     <RepositoryUrl>https://github.com/jdevl32/JDevl32/JDevl32.Entity</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Add database context options.</PackageReleaseNotes>
-    <Version>1.0.0.10</Version>
+    <PackageReleaseNotes>Add mapper null check.</PackageReleaseNotes>
+    <Version>1.0.0.11</Version>
   </PropertyGroup>
 
   <ItemGroup>

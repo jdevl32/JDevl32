@@ -3,6 +3,7 @@ using JDevl32.Mapper.Interface;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System;
 
 namespace JDevl32.Entity.Model
 {
@@ -36,12 +37,16 @@ namespace JDevl32.Entity.Model
 		/// <inheritdoc />
 		protected MapperEntityContextBase(DbContextOptions dbContextOptions, IConfigurationRoot configurationRoot, IHostingEnvironment hostingEnvironment, IMapper mapper)
 			:
-			base(dbContextOptions, configurationRoot, hostingEnvironment) => Mapper = mapper;
+			base(dbContextOptions, configurationRoot, hostingEnvironment)
+			=>
+			Mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
 
 		/// <inheritdoc />
 		protected MapperEntityContextBase(DbContextOptions dbContextOptions, IConfigurationRoot configurationRoot, IHostingEnvironment hostingEnvironment, IMapper mapper, string connectionStringKey)
 			:
-			base(dbContextOptions, configurationRoot, hostingEnvironment, connectionStringKey) => Mapper = mapper;
+			base(dbContextOptions, configurationRoot, hostingEnvironment, connectionStringKey)
+			=>
+			Mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
 
 #endregion
 

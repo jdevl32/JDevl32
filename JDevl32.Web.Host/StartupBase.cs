@@ -129,20 +129,25 @@ namespace JDevl32.Web.Host
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
+		/// Implement AutoMapper dependency injection extension.
 		/// </remarks>
 		public override void ConfigureServices(IServiceCollection services)
 		{
 			// todo|jdevl32: pre...
 
 			ConfigureEntityContext(services);
+			// todo|jdevl32: dependent on use-auth (or new add-auth) ???
 			ConfigureIdentity(services);
 
 			// Application cookie is no longer part of identity options (above).
 			services.ConfigureApplicationCookie(Configure);
 
 			services.AddLogging();
+			// todo|jdevl32: dependent on use-mvc (or new add-mvc) ???
 			services.AddMvc(Configure).AddJsonOptions(Configure);
 			services.AddSingleton(ConfigurationRoot);
+			// todo|jdevl32: dependent on mvc (would need to add if not use/add-mvc, or exception) ???
+			services.AddAutoMapper();
 
 			// todo|jdevl32: post...
 

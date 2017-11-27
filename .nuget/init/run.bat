@@ -9,6 +9,9 @@ set "dstls=//dd-wrt/nas-t-a1/[Storage]/Development/Package/NuGet"
 set "src=..\..\JDevl32.Entity\bin\Release"
 nuget init "%src%" "%dst%"
 
+set "src=..\..\JDevl32.Mapper\bin\Release"
+nuget init "%src%" "%dst%"
+
 set "src=..\..\JDevl32.Web\bin\Release"
 nuget init "%src%" "%dst%"
 

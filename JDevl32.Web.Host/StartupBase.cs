@@ -340,7 +340,7 @@ namespace JDevl32.Web.Host
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
-		protected virtual void InitializeMapper() => Mapper.Initialize(Configure);
+		protected virtual void InitializeMapper() => AutoMapper.Mapper.Initialize(Configure);
 
 	}
 

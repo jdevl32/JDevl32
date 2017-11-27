@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Copyright>Copyright © 2017 Jeremy Paiz</Copyright>
+    <Version>1.0.0.0</Version>
+    <Authors>Jeremy Paiz</Authors>
+    <Company>Jeremy Paiz</Company>
+    <RepositoryUrl>https://github.com/jdevl32/JDevl32/JDevl32.Mapper</RepositoryUrl>
+    <RepositoryType>GitHub</RepositoryType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="6.2.1" />
+  </ItemGroup>
+
+</Project>

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using JDevl32.Entity.Interface;
+using JDevl32.Mapper.Interface;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -17,12 +17,12 @@ namespace JDevl32.Entity.Model
 		:
 		EntityContextBase
 		,
-		IMapperEntityContext
+		IInstanceMapper
 	{
 
 #region Property
 
-#region IMapperEntityContext
+#region IInstanceMapper
 
 		/// <inheritdoc />
 		public IMapper Mapper { get; }

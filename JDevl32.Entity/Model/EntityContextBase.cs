@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace JDevl32.Entity.Model
 {
@@ -17,7 +18,7 @@ namespace JDevl32.Entity.Model
 		:
 		DbContext
 		,
-		IEntityContext
+		IEntityContext<EntityContextBase>
 	{
 
 #region IEntityContext
@@ -33,6 +34,9 @@ namespace JDevl32.Entity.Model
 
 		/// <inheritdoc />
 		public IHostingEnvironment HostingEnvironment { get; }
+
+		/// <inheritdoc />
+		public ILogger<EntityContextBase> Logger { get; }
 
 #endregion
 
@@ -51,16 +55,20 @@ namespace JDevl32.Entity.Model
 		/// <param name="hostingEnvironment">
 		/// The hosting envrionment of the application.
 		/// </param>
+		/// <param name="logger">
+		/// The logger.
+		/// </param>
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
-		protected EntityContextBase(DbContextOptions dbContextOptions, IConfigurationRoot configurationRoot, IHostingEnvironment hostingEnvironment)
+		protected EntityContextBase(DbContextOptions dbContextOptions, IConfigurationRoot configurationRoot, IHostingEnvironment hostingEnvironment, ILogger<EntityContextBase> logger)
 			:
 			base(dbContextOptions)
 		{
 			ConfigurationRoot = configurationRoot;
 			DbContextOptions = dbContextOptions;
 			HostingEnvironment = hostingEnvironment;
+			Logger = logger;
 		}
 
 		/// <inheritdoc />
@@ -76,15 +84,18 @@ namespace JDevl32.Entity.Model
 		/// <param name="hostingEnvironment">
 		/// The hosting envrionment of the application.
 		/// </param>
+		/// <param name="logger">
+		/// The logger.
+		/// </param>
 		/// <param name="connectionStringKey">
 		/// The database connection string key.
 		/// </param>
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
-		protected EntityContextBase(DbContextOptions dbContextOptions, IConfigurationRoot configurationRoot, IHostingEnvironment hostingEnvironment, string connectionStringKey)
+		protected EntityContextBase(DbContextOptions dbContextOptions, IConfigurationRoot configurationRoot, IHostingEnvironment hostingEnvironment, ILogger<EntityContextBase> logger, string connectionStringKey)
 			:
-			this(dbContextOptions, configurationRoot, hostingEnvironment) => ConnectionStringKey = connectionStringKey;
+			this(dbContextOptions, configurationRoot, hostingEnvironment, logger) => ConnectionStringKey = connectionStringKey;
 
 #endregion
 

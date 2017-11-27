@@ -8,8 +8,9 @@
     <Copyright>Copyright © 2017 Jeremy Paiz</Copyright>
     <RepositoryUrl>https://github.com/jdevl32/JDevl32/JDevl32.Entity</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Add mapper null check.</PackageReleaseNotes>
-    <Version>1.0.0.11</Version>
+    <PackageReleaseNotes>Re-implement entity context interface and base class as generics.
+Add additional logging.</PackageReleaseNotes>
+    <Version>1.0.0.12</Version>
   </PropertyGroup>
 
   <ItemGroup>

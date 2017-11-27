@@ -9,6 +9,7 @@ namespace JDevl32.Entity.Interface
 	/// </summary>
 	/// <remarks>
 	/// Last modification:
+	/// Re-implement
 	/// </remarks>
 	public interface IEntityContextSower
 	{
@@ -21,7 +22,7 @@ namespace JDevl32.Entity.Interface
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
-		IEntityContext EntityContext { get; }
+		IEntityContext<IEntityContextSower> EntityContext { get; }
 
 		/// <summary>
 		/// The logger.

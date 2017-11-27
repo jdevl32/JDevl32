@@ -3,6 +3,7 @@ using JDevl32.Mapper.Interface;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using System;
 
 namespace JDevl32.Entity.Model
@@ -25,6 +26,14 @@ namespace JDevl32.Entity.Model
 
 #region IInstanceMapper
 
+		/// <summary>
+		/// The logger.
+		/// </summary>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		public new ILogger<MapperEntityContextBase> Logger { get; }
+
 		/// <inheritdoc />
 		public IMapper Mapper { get; }
 
@@ -35,20 +44,24 @@ namespace JDevl32.Entity.Model
 #region Instance Initialization
 
 		/// <inheritdoc />
-		protected MapperEntityContextBase(DbContextOptions dbContextOptions, IConfigurationRoot configurationRoot, IHostingEnvironment hostingEnvironment, IMapper mapper)
+		protected MapperEntityContextBase(DbContextOptions dbContextOptions, IConfigurationRoot configurationRoot, IHostingEnvironment hostingEnvironment, ILogger<MapperEntityContextBase> logger, IMapper mapper)
 			:
-			base(dbContextOptions, configurationRoot, hostingEnvironment)
-			=>
+			base(dbContextOptions, configurationRoot, hostingEnvironment, logger)
+		{
+			logger.LogInformation($"[{nameof(mapper)}={(null == mapper ? "" : "not ")}null]");
 			Mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+		}
 
 		/// <inheritdoc />
-		protected MapperEntityContextBase(DbContextOptions dbContextOptions, IConfigurationRoot configurationRoot, IHostingEnvironment hostingEnvironment, IMapper mapper, string connectionStringKey)
+		protected MapperEntityContextBase(DbContextOptions dbContextOptions, IConfigurationRoot configurationRoot, IHostingEnvironment hostingEnvironment, ILogger<MapperEntityContextBase> logger, IMapper mapper, string connectionStringKey)
 			:
-			base(dbContextOptions, configurationRoot, hostingEnvironment, connectionStringKey)
-			=>
+			base(dbContextOptions, configurationRoot, hostingEnvironment, logger, connectionStringKey)
+		{
+			logger.LogInformation($"[{nameof(mapper)}={(null == mapper ? "" : "not ")}null]");
 			Mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+		}
 
-#endregion
+		#endregion
 
 	}
 

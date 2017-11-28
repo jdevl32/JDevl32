@@ -22,7 +22,7 @@ namespace JDevl32.Web.Host
 	/// </summary>
 	/// <remarks>
 	/// Last modification:
-	/// Extend ASP.NET Core Hosting.
+	/// Add override for configure entity context.
 	/// </remarks>
 	public abstract class StartupBase
 		:
@@ -290,6 +290,12 @@ namespace JDevl32.Web.Host
 
 		protected virtual void ConfigureEntityContext<TEntityContext>(IServiceCollection serviceCollection)
 			where TEntityContext : DbContext, IEntityContext
+			=>
+			serviceCollection.AddDbContext<TEntityContext>();
+
+		protected virtual void ConfigureEntityContext<TEntityContext, TDerivedClass>(IServiceCollection serviceCollection)
+			where TDerivedClass : class
+			where TEntityContext : DbContext, IEntityContext<TDerivedClass>
 			=>
 			serviceCollection.AddDbContext<TEntityContext>();
 

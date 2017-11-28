@@ -61,7 +61,7 @@ namespace JDevl32.Entity.Model
 			Mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
 		}
 
-		#endregion
+#endregion
 
 	}
 

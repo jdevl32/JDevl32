@@ -13,7 +13,7 @@ namespace JDevl32.Entity.Interface
 	/// Last modification:
 	/// Add database context options.
 	/// </remarks>
-	public interface IEntityContext<out TDerivedClass>
+	public interface IEntityContext<TDerivedClass>
 		where TDerivedClass : class
 	{
 

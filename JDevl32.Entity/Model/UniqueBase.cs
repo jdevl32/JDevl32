@@ -20,6 +20,7 @@ namespace JDevl32.Entity.Model
 
 		/// <inheritdoc />
 		[Key]
+		[Required]
 		public virtual int Id { get; }
 
 		/// <inheritdoc />

@@ -1,29 +1,34 @@
-﻿using System;
+﻿using JDevl32.Entity.Interface;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace JDevl32.Entity.Model
 {
 
-	/// <inheritdoc />
 	/// <summary>
 	/// Global unique (entity) item.
 	/// </summary>
 	/// <remarks>
 	/// Last modification:
+	/// Re-implement with (new) interface.
 	/// </remarks>
 	public abstract class GlobalUniqueBase
 		:
 		UniqueBase
+		,
+		IGlobalUnique
 	{
 
-#region UniqueBase
+#region IGlobalUnique
 
+		/// <inheritdoc />
 		/// <summary>
 		/// The global unique identifier.
 		/// </summary>
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
+		[Key]
 		[Required]
 		public new Guid Id { get; }
 

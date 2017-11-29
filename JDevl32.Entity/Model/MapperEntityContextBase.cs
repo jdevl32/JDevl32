@@ -31,11 +31,12 @@ namespace JDevl32.Entity.Model
 		/// </summary>
 		/// <remarks>
 		/// Last modification:
+		/// Implement set mapper.
 		/// </remarks>
 		public new ILogger<MapperEntityContextBase> Logger { get; }
 
 		/// <inheritdoc />
-		public IMapper Mapper { get; }
+		public IMapper Mapper { get; protected set; }
 
 #endregion
 
@@ -47,21 +48,33 @@ namespace JDevl32.Entity.Model
 		protected MapperEntityContextBase(DbContextOptions dbContextOptions, IConfigurationRoot configurationRoot, IHostingEnvironment hostingEnvironment, ILogger<MapperEntityContextBase> logger, IMapper mapper)
 			:
 			base(dbContextOptions, configurationRoot, hostingEnvironment, logger)
-		{
-			logger.LogInformation($"[{nameof(mapper)}={(null == mapper ? "" : "not ")}null]");
-			Mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-		}
+			=>
+			SetMapper(mapper);
 
 		/// <inheritdoc />
 		protected MapperEntityContextBase(DbContextOptions dbContextOptions, IConfigurationRoot configurationRoot, IHostingEnvironment hostingEnvironment, ILogger<MapperEntityContextBase> logger, IMapper mapper, string connectionStringKey)
 			:
 			base(dbContextOptions, configurationRoot, hostingEnvironment, logger, connectionStringKey)
-		{
-			logger.LogInformation($"[{nameof(mapper)}={(null == mapper ? "" : "not ")}null]");
-			Mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-		}
+			=>
+			SetMapper(mapper);
 
 #endregion
+
+		/// <summary>
+		/// Set the mapper.
+		/// </summary>
+		/// <param name="mapper">
+		/// The mapper.
+		/// </param>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		protected virtual void SetMapper(IMapper mapper)
+		{
+			Logger.LogDebug($"[{nameof(mapper)} is {(null == mapper ? string.Empty : "not ")}null]");
+
+			Mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+		}
 
 	}
 

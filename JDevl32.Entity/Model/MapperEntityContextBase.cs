@@ -72,7 +72,8 @@ namespace JDevl32.Entity.Model
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
-		protected virtual void Set(ILogger<MapperEntityContextBase> logger, IMapper mapper)
+		protected virtual void Set<TDerivedClass>(ILogger<TDerivedClass> logger, IMapper mapper)
+			where TDerivedClass : MapperEntityContextBase
 		{
 			SetLogger(logger);
 			SetMapper(mapper);
@@ -87,7 +88,8 @@ namespace JDevl32.Entity.Model
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
-		protected virtual void SetLogger(ILogger<MapperEntityContextBase> logger)
+		protected virtual void SetLogger<TDerivedClass>(ILogger<TDerivedClass> logger)
+			where TDerivedClass : MapperEntityContextBase
 		{
 			Logger = logger ?? throw new ArgumentNullException(nameof(logger));
 		}

@@ -33,7 +33,7 @@ namespace JDevl32.Entity.Model
 		/// Last modification:
 		/// Implement set mapper.
 		/// </remarks>
-		public new ILogger<MapperEntityContextBase> Logger { get; }
+		public new ILogger<MapperEntityContextBase> Logger { get; protected set; }
 
 		/// <inheritdoc />
 		public IMapper Mapper { get; protected set; }
@@ -49,16 +49,48 @@ namespace JDevl32.Entity.Model
 			:
 			base(dbContextOptions, configurationRoot, hostingEnvironment, logger)
 			=>
-			SetMapper(mapper);
+			Set(logger, mapper);
 
 		/// <inheritdoc />
 		protected MapperEntityContextBase(DbContextOptions dbContextOptions, IConfigurationRoot configurationRoot, IHostingEnvironment hostingEnvironment, ILogger<MapperEntityContextBase> logger, IMapper mapper, string connectionStringKey)
 			:
 			base(dbContextOptions, configurationRoot, hostingEnvironment, logger, connectionStringKey)
 			=>
-			SetMapper(mapper);
+			Set(logger, mapper);
 
 #endregion
+
+		/// <summary>
+		/// Set the logger and mapper.
+		/// </summary>
+		/// <param name="logger">
+		/// The logger.
+		/// </param>
+		/// <param name="mapper">
+		/// The mapper.
+		/// </param>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		protected virtual void Set(ILogger<MapperEntityContextBase> logger, IMapper mapper)
+		{
+			SetLogger(logger);
+			SetMapper(mapper);
+		}
+
+		/// <summary>
+		/// Set the logger.
+		/// </summary>
+		/// <param name="logger">
+		/// The logger.
+		/// </param>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		protected virtual void SetLogger(ILogger<MapperEntityContextBase> logger)
+		{
+			Logger = logger ?? throw new ArgumentNullException(nameof(logger));
+		}
 
 		/// <summary>
 		/// Set the mapper.

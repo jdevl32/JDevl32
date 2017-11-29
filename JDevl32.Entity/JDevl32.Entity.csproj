@@ -8,8 +8,8 @@
     <Copyright>Copyright © 2017 Jeremy Paiz</Copyright>
     <RepositoryUrl>https://github.com/jdevl32/JDevl32/JDevl32.Entity</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Make (set)logger generic.</PackageReleaseNotes>
-    <Version>1.0.0.16</Version>
+    <PackageReleaseNotes>Add identifier setters.</PackageReleaseNotes>
+    <Version>1.0.0.17</Version>
   </PropertyGroup>
 
   <ItemGroup>

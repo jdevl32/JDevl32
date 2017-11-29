@@ -21,7 +21,7 @@ namespace JDevl32.Entity.Model
 		/// <inheritdoc />
 		[Key]
 		[Required]
-		public virtual int Id { get; }
+		public virtual int Id { get; set; }
 
 		/// <inheritdoc />
 		public string ShortName { get; }

@@ -30,7 +30,7 @@ namespace JDevl32.Entity.Model
 		/// </remarks>
 		[Key]
 		[Required]
-		public new Guid Id { get; }
+		public new Guid Id { get; set; }
 
 #endregion
 

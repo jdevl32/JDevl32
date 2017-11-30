@@ -5,11 +5,9 @@ namespace JDevl32.Entity.Model
 {
 
 	/// <inheritdoc />
-	/// <summary>
-	/// Unique (entity) item.
-	/// </summary>
 	/// <remarks>
 	/// Last modification:
+	/// Add setters (required by Entity Framework).
 	/// </remarks>
 	public abstract class UniqueBase
 		:
@@ -24,13 +22,13 @@ namespace JDevl32.Entity.Model
 		public virtual int Id { get; set; }
 
 		/// <inheritdoc />
-		public string ShortName { get; }
+		public string ShortName { get; set; }
 
 		/// <inheritdoc />
-		public string FullName { get; }
+		public string FullName { get; set; }
 
 		/// <inheritdoc />
-		public string Description { get; }
+		public string Description { get; set; }
 
 #endregion
 

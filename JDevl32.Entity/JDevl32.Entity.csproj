@@ -8,8 +8,8 @@
     <Copyright>Copyright © 2017 Jeremy Paiz</Copyright>
     <RepositoryUrl>https://github.com/jdevl32/JDevl32/JDevl32.Entity</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Add identifier setters.</PackageReleaseNotes>
-    <Version>1.0.0.17</Version>
+    <PackageReleaseNotes>Add setters (required by Entity Framework).</PackageReleaseNotes>
+    <Version>1.0.0.18</Version>
   </PropertyGroup>
 
   <ItemGroup>

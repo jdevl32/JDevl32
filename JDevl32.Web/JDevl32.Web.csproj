@@ -9,10 +9,10 @@
     <PackageProjectUrl></PackageProjectUrl>
     <RepositoryUrl>https://github.com/jdevl32/JDevl32/JDevl32.Web</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Rename (base) interface controller.</PackageReleaseNotes>
-    <Version>1.0.0.1</Version>
-    <FileVersion>1.0.0.1</FileVersion>
-    <AssemblyVersion>1.0.0.1</AssemblyVersion>
+    <PackageReleaseNotes>Add context repository interface.</PackageReleaseNotes>
+    <Version>1.0.0.2</Version>
+    <FileVersion>1.0.0.2</FileVersion>
+    <AssemblyVersion>1.0.0.2</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

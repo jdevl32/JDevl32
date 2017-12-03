@@ -4,12 +4,12 @@ namespace JDevl32.Web.Controller.Interface
 {
 
 	/// <summary>
-	/// 
+	/// A (web) controller.
 	/// </summary>
 	/// <remarks>
 	/// Last modification:
 	/// </remarks>
-	public interface IBaseController
+	public interface IController
 	{
 
 #region Property

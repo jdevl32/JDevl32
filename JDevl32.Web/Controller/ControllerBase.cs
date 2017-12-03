@@ -6,7 +6,7 @@ namespace JDevl32.Web.Controller
 
 	/// <inheritdoc />
 	/// <summary>
-	/// 
+	/// A (non-generic, web) controller (base class).
 	/// </summary>
 	/// <remarks>
 	/// Last modification:

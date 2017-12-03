@@ -6,7 +6,7 @@ namespace JDevl32.Web.Controller
 {
 
 	/// <summary>
-	/// 
+	/// A generic (web) controller (base class).
 	/// </summary>
 	/// <typeparam name="TDerivedClass">
 	/// This should be the type of the derived class from this base class (for the logger).
@@ -18,7 +18,7 @@ namespace JDevl32.Web.Controller
 		:
 		Microsoft.AspNetCore.Mvc.Controller
 		,
-		IBaseController
+		IController
 		where TDerivedClass : class
 	{
 

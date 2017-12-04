@@ -14,12 +14,17 @@ namespace JDevl32.Entity.Model
 	/// </summary>
 	/// <remarks>
 	/// Last modification:
+	/// Re-implement as generic.
 	/// </remarks>
-	public abstract class MapperEntityContextBase
+	public abstract class MapperEntityContextBase<TDerivedClass>
 		:
-		EntityContextBase
+		EntityContextBase<TDerivedClass>
 		,
 		IInstanceMapper
+		where
+			TDerivedClass
+			:
+			class
 	{
 
 #region Property
@@ -31,9 +36,9 @@ namespace JDevl32.Entity.Model
 		/// </summary>
 		/// <remarks>
 		/// Last modification:
-		/// Implement set mapper.
+		/// Make virtual.
 		/// </remarks>
-		public new ILogger<MapperEntityContextBase> Logger { get; protected set; }
+		public new virtual ILogger<TDerivedClass> Logger { get; protected set; }
 
 		/// <inheritdoc />
 		public IMapper Mapper { get; protected set; }
@@ -45,14 +50,14 @@ namespace JDevl32.Entity.Model
 #region Instance Initialization
 
 		/// <inheritdoc />
-		protected MapperEntityContextBase(DbContextOptions dbContextOptions, IConfigurationRoot configurationRoot, IHostingEnvironment hostingEnvironment, ILogger<MapperEntityContextBase> logger, IMapper mapper)
+		protected MapperEntityContextBase(DbContextOptions dbContextOptions, IConfigurationRoot configurationRoot, IHostingEnvironment hostingEnvironment, ILogger<TDerivedClass> logger, IMapper mapper)
 			:
 			base(dbContextOptions, configurationRoot, hostingEnvironment, logger)
 			=>
 			Set(logger, mapper);
 
 		/// <inheritdoc />
-		protected MapperEntityContextBase(DbContextOptions dbContextOptions, IConfigurationRoot configurationRoot, IHostingEnvironment hostingEnvironment, ILogger<MapperEntityContextBase> logger, IMapper mapper, string connectionStringKey)
+		protected MapperEntityContextBase(DbContextOptions dbContextOptions, IConfigurationRoot configurationRoot, IHostingEnvironment hostingEnvironment, ILogger<TDerivedClass> logger, IMapper mapper, string connectionStringKey)
 			:
 			base(dbContextOptions, configurationRoot, hostingEnvironment, logger, connectionStringKey)
 			=>
@@ -72,8 +77,7 @@ namespace JDevl32.Entity.Model
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
-		protected virtual void Set<TDerivedClass>(ILogger<TDerivedClass> logger, IMapper mapper)
-			where TDerivedClass : MapperEntityContextBase
+		protected virtual void Set(ILogger<TDerivedClass> logger, IMapper mapper)
 		{
 			SetLogger(logger);
 			SetMapper(mapper);
@@ -88,8 +92,7 @@ namespace JDevl32.Entity.Model
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
-		protected virtual void SetLogger<TDerivedClass>(ILogger<TDerivedClass> logger)
-			where TDerivedClass : MapperEntityContextBase
+		protected virtual void SetLogger(ILogger<TDerivedClass> logger)
 		{
 			Logger = logger ?? throw new ArgumentNullException(nameof(logger));
 		}

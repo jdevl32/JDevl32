@@ -13,16 +13,19 @@ namespace JDevl32.Entity.Model
 	/// </summary>
 	/// <remarks>
 	/// Last modification:
-	/// Re-implement generic entity context interface as non-generic.
-	/// Implement as loggable interface.
+	/// Re-implement non-generic entity context interface as generic.
 	/// </remarks>
-	public abstract class EntityContextBase
+	public abstract class EntityContextBase<TDerivedClass>
 		:
 		DbContext
 		,
 		IEntityContext
 		,
-		ILoggable<EntityContextBase>
+		ILoggable<TDerivedClass>
+		where
+			TDerivedClass
+			:
+			class
 	{
 
 #region IEntityContext
@@ -44,7 +47,7 @@ namespace JDevl32.Entity.Model
 		/// Last modification:
 		/// Make virtual (due to re-implementation).
 		/// </remarks>
-		public virtual ILogger<EntityContextBase> Logger { get; }
+		public virtual ILogger<TDerivedClass> Logger { get; }
 
 #endregion
 
@@ -69,7 +72,7 @@ namespace JDevl32.Entity.Model
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
-		protected EntityContextBase(DbContextOptions dbContextOptions, IConfigurationRoot configurationRoot, IHostingEnvironment hostingEnvironment, ILogger<EntityContextBase> logger)
+		protected EntityContextBase(DbContextOptions dbContextOptions, IConfigurationRoot configurationRoot, IHostingEnvironment hostingEnvironment, ILogger<TDerivedClass> logger)
 			:
 			base(dbContextOptions)
 		{
@@ -101,7 +104,7 @@ namespace JDevl32.Entity.Model
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
-		protected EntityContextBase(DbContextOptions dbContextOptions, IConfigurationRoot configurationRoot, IHostingEnvironment hostingEnvironment, ILogger<EntityContextBase> logger, string connectionStringKey)
+		protected EntityContextBase(DbContextOptions dbContextOptions, IConfigurationRoot configurationRoot, IHostingEnvironment hostingEnvironment, ILogger<TDerivedClass> logger, string connectionStringKey)
 			:
 			this(dbContextOptions, configurationRoot, hostingEnvironment, logger) => ConnectionStringKey = connectionStringKey;
 

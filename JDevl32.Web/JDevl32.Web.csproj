@@ -9,12 +9,10 @@
     <PackageProjectUrl></PackageProjectUrl>
     <RepositoryUrl>https://github.com/jdevl32/JDevl32/JDevl32.Web</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Add reference to logging.
-Remove generic entity context interface -- obsolete due to (new) loggable interface.
-Re-implement logger downstream (due to loggable interface).</PackageReleaseNotes>
-    <Version>1.0.1.1</Version>
-    <FileVersion>1.0.1.1</FileVersion>
-    <AssemblyVersion>1.0.1.1</AssemblyVersion>
+    <PackageReleaseNotes>Re-implement interface and base classes as generic.</PackageReleaseNotes>
+    <Version>1.0.2.1</Version>
+    <FileVersion>1.0.2.1</FileVersion>
+    <AssemblyVersion>1.0.2.1</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,6 +21,7 @@ Re-implement logger downstream (due to loggable interface).</PackageReleaseNotes
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\JDevl32.Entity\JDevl32.Entity.csproj" />
     <ProjectReference Include="..\JDevl32.Logging\JDevl32.Logging.csproj" />
   </ItemGroup>
 

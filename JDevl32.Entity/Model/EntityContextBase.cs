@@ -1,4 +1,5 @@
 ﻿using JDevl32.Entity.Interface;
+using JDevl32.Logging.Interface;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -12,13 +13,16 @@ namespace JDevl32.Entity.Model
 	/// </summary>
 	/// <remarks>
 	/// Last modification:
-	/// Add database context options.
+	/// Re-implement generic entity context interface as non-generic.
+	/// Implement as loggable interface.
 	/// </remarks>
 	public abstract class EntityContextBase
 		:
 		DbContext
 		,
-		IEntityContext<EntityContextBase>
+		IEntityContext
+		,
+		ILoggable<EntityContextBase>
 	{
 
 #region IEntityContext
@@ -36,7 +40,11 @@ namespace JDevl32.Entity.Model
 		public IHostingEnvironment HostingEnvironment { get; }
 
 		/// <inheritdoc />
-		public ILogger<EntityContextBase> Logger { get; }
+		/// <remarks>
+		/// Last modification:
+		/// Make virtual (due to re-implementation).
+		/// </remarks>
+		public virtual ILogger<EntityContextBase> Logger { get; }
 
 #endregion
 

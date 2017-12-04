@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace JDevl32.Entity.Interface
 {
@@ -9,7 +8,7 @@ namespace JDevl32.Entity.Interface
 	/// </summary>
 	/// <remarks>
 	/// Last modification:
-	/// Re-implement
+	/// Re-implement logger downstream (due to loggable interface).
 	/// </remarks>
 	public interface IEntityContextSower
 	{
@@ -21,16 +20,9 @@ namespace JDevl32.Entity.Interface
 		/// </summary>
 		/// <remarks>
 		/// Last modification:
+		/// Remove generic entity context interface -- obsolete due to (new) loggable interface.
 		/// </remarks>
-		IEntityContext<IEntityContextSower> EntityContext { get; }
-
-		/// <summary>
-		/// The logger.
-		/// </summary>
-		/// <remarks>
-		/// Last modification:
-		/// </remarks>
-		ILogger<IEntityContextSower> Logger { get; }
+		IEntityContext EntityContext { get; }
 
 #endregion
 

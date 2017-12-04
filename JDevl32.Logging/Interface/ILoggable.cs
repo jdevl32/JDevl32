@@ -1,6 +1,7 @@
 ﻿namespace JDevl32.Logging.Interface
 {
 
+	/// <inheritdoc />
 	/// <summary>
 	/// A loggable object.
 	/// </summary>

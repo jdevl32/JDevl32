@@ -1,4 +1,5 @@
-﻿using JDevl32.Web.Controller.Interface;
+﻿using JDevl32.Logging.Interface;
+using JDevl32.Web.Controller.Interface;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -13,16 +14,21 @@ namespace JDevl32.Web.Controller
 	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
+	/// Implement loggable interface.
 	/// </remarks>
 	public abstract class ControllerBase<TDerivedClass>
 		:
 		Microsoft.AspNetCore.Mvc.Controller
+		,
+		ILoggable<TDerivedClass>
 		,
 		IController
 		where TDerivedClass : class
 	{
 
 #region Property
+
+#region IController
 
 		/// <inheritdoc />
 		/// <summary>
@@ -33,18 +39,25 @@ namespace JDevl32.Web.Controller
 		/// </remarks>
 		public IHostingEnvironment HostingEnvironment { get; }
 
-		/// <summary>
-		/// 
-		/// </summary>
+#endregion
+
+#region ILoggable<TDerivedClass>
+
+		/// <inheritdoc />
 		/// <remarks>
-		/// 
+		/// Last modification:
+		/// Make public (for loggable interface implementation) and virtual.
 		/// </remarks>
-		protected ILogger<TDerivedClass> Logger { get; }
+		public virtual ILogger<TDerivedClass> Logger { get; }
+
+#endregion
 
 #endregion
 
 #region Instance Initialization
 
+		// todo|jdevl32: not needed ???
+		/**
 		/// <summary>
 		/// Create a controller base.
 		/// </summary>
@@ -55,6 +68,7 @@ namespace JDevl32.Web.Controller
 		/// Last modification:
 		/// </remarks>
 		protected ControllerBase(ILogger<TDerivedClass> logger) => Logger = logger;
+		**/
 
 		/// <inheritdoc />
 		/// <summary>
@@ -70,8 +84,14 @@ namespace JDevl32.Web.Controller
 		/// Last modification:
 		/// </remarks>
 		protected ControllerBase(IHostingEnvironment hostingEnvironment, ILogger<TDerivedClass> logger)
-			:
-			this(logger) => HostingEnvironment = hostingEnvironment;
+			// todo|jdevl32: (see above) ???
+			//:
+			//this(logger) => HostingEnvironment = hostingEnvironment;
+
+		{
+			HostingEnvironment = hostingEnvironment;
+			Logger = logger;
+		}
 
 #endregion
 

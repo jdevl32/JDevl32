@@ -8,8 +8,8 @@
     <Copyright>Copyright © 2017 Jeremy Paiz</Copyright>
     <RepositoryUrl>https://github.com/jdevl32/JDevl32/JDevl32.Entity</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Add setters (required by Entity Framework).</PackageReleaseNotes>
-    <Version>1.0.0.18</Version>
+    <PackageReleaseNotes>Add reference to logging.</PackageReleaseNotes>
+    <Version>1.0.1.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\JDevl32.Logging\JDevl32.Logging.csproj" />
     <ProjectReference Include="..\JDevl32.Mapper\JDevl32.Mapper.csproj" />
   </ItemGroup>
 

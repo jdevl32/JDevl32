@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using JDevl32.Entity.Interface;
+using JDevl32.Logging.Interface;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -293,9 +294,33 @@ namespace JDevl32.Web.Host
 			=>
 			serviceCollection.AddDbContext<TEntityContext>();
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <typeparam name="TEntityContext">
+		/// The entity context type.
+		/// </typeparam>
+		/// <typeparam name="TDerivedClass">
+		/// The (loggable) derived class type.
+		/// </typeparam>
+		/// <param name="serviceCollection">
+		/// The service collection.
+		/// </param>
+		/// <remarks>
+		/// Last modification:
+		/// Remove generic entity context interface -- obsolete due to (new) loggable interface.
+		/// Re-implement logger downstream (due to loggable interface).
+		/// </remarks>
 		protected virtual void ConfigureEntityContext<TEntityContext, TDerivedClass>(IServiceCollection serviceCollection)
 			where TDerivedClass : class
-			where TEntityContext : DbContext, IEntityContext<TDerivedClass>
+			where
+				TEntityContext
+				:
+				DbContext
+				,
+				IEntityContext
+				,
+				ILoggable<TDerivedClass>
 			=>
 			serviceCollection.AddDbContext<TEntityContext>();
 

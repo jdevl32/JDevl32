@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using JDevl32.Entity.Interface;
-using JDevl32.Logging.Interface;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -289,8 +288,28 @@ namespace JDevl32.Web.Host
 		{
 		}
 
+		// todo|jdevl32: ???
+		/**
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <typeparam name="TEntityContext">
+		/// The entity context type.
+		/// </typeparam>
+		/// <param name="serviceCollection">
+		/// The service collection.
+		/// </param>
+		/// <remarks>
+		/// Last modification:
+		/// Remove some restrictions on type params.
+		/// </remarks>
 		protected virtual void ConfigureEntityContext<TEntityContext>(IServiceCollection serviceCollection)
-			where TEntityContext : DbContext, IEntityContext
+			where
+				TEntityContext
+				:
+				DbContext
+				//,
+				//IEntityContext
 			=>
 			serviceCollection.AddDbContext<TEntityContext>();
 
@@ -323,14 +342,39 @@ namespace JDevl32.Web.Host
 				ILoggable<TDerivedClass>
 			=>
 			serviceCollection.AddDbContext<TEntityContext>();
+		**/
 
 		protected virtual void ConfigureIdentity(IServiceCollection serviceCollection)
 		{
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <typeparam name="TIdentityUser">
+		/// 
+		/// </typeparam>
+		/// <typeparam name="TEntityContext">
+		/// 
+		/// </typeparam>
+		/// <param name="serviceCollection">
+		/// 
+		/// </param>
+		/// <remarks>
+		/// Last modification:
+		/// Remove some restrictions on type params.
+		/// </remarks>
 		protected virtual void ConfigureIdentity<TIdentityUser, TEntityContext>(IServiceCollection serviceCollection)
-			where TEntityContext : DbContext, IEntityContext
-			where TIdentityUser : IdentityUser
+			where
+				TEntityContext
+				:
+				DbContext
+				//,
+				//IEntityContext
+			where
+				TIdentityUser
+				:
+				IdentityUser
 			=>
 			serviceCollection
 				.AddIdentity<TIdentityUser, IdentityRole>(Configure)

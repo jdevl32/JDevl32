@@ -2,16 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <Version>1.0.1.1</Version>
+    <Version>1.0.2.1</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Jeremy Paiz</Authors>
     <Company />
     <Copyright>Copyright © 2017 Jeremy Paiz</Copyright>
     <RepositoryUrl>https://github.com/jdevl32/JDevl32/JDevl32.Web.Host</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Add reference to logging.
-Remove generic entity context interface -- obsolete due to (new) loggable interface.
-Re-implement logger downstream (due to loggable interface).</PackageReleaseNotes>
+    <PackageReleaseNotes>Remove unnecessary methods.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

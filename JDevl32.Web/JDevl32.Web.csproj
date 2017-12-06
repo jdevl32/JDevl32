@@ -9,10 +9,10 @@
     <PackageProjectUrl></PackageProjectUrl>
     <RepositoryUrl>https://github.com/jdevl32/JDevl32/JDevl32.Web</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Re-implement interface and base classes as generic.</PackageReleaseNotes>
-    <Version>1.0.2.1</Version>
-    <FileVersion>1.0.2.1</FileVersion>
-    <AssemblyVersion>1.0.2.1</AssemblyVersion>
+    <PackageReleaseNotes>Re-implement entity context respository as non-generic.</PackageReleaseNotes>
+    <Version>1.0.3.1</Version>
+    <FileVersion>1.0.3.1</FileVersion>
+    <AssemblyVersion>1.0.3.1</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

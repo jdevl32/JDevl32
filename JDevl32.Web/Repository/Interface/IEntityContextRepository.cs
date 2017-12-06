@@ -1,4 +1,4 @@
-﻿using JDevl32.Entity.Model;
+﻿using JDevl32.Entity.Interface;
 using System.Threading.Tasks;
 
 namespace JDevl32.Web.Repository.Interface
@@ -9,15 +9,8 @@ namespace JDevl32.Web.Repository.Interface
 	/// </summary>
 	/// <remarks>
 	/// Last modification:
-	/// Rename.
-	/// Re-implement as generic.
-	/// Add entity context.
 	/// </remarks>
-	public interface IEntityContextRepository<TDerivedClass>
-		where
-			TDerivedClass
-			:
-			class
+	public interface IEntityContextRepository
 	{
 
 #region Property
@@ -28,7 +21,7 @@ namespace JDevl32.Web.Repository.Interface
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
-		EntityContextBase<TDerivedClass> EntityContext { get; }
+		IEntityContext EntityContext { get; }
 
 #endregion
 

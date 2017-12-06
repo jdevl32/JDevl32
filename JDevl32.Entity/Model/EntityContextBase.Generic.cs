@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace JDevl32.Entity.Model
 {
@@ -13,7 +14,7 @@ namespace JDevl32.Entity.Model
 	/// </summary>
 	/// <remarks>
 	/// Last modification:
-	/// Re-implement non-generic entity context interface as generic.
+	/// Add save changes async.
 	/// </remarks>
 	public abstract class EntityContextBase<TDerivedClass>
 		:
@@ -27,6 +28,8 @@ namespace JDevl32.Entity.Model
 			:
 			class
 	{
+
+#region Property
 
 #region IEntityContext
 
@@ -48,6 +51,8 @@ namespace JDevl32.Entity.Model
 		/// Make virtual (due to re-implementation).
 		/// </remarks>
 		public virtual ILogger<TDerivedClass> Logger { get; }
+
+#endregion
 
 #endregion
 
@@ -113,6 +118,9 @@ namespace JDevl32.Entity.Model
 #region DbContext
 
 		/// <inheritdoc />
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
 			base.OnConfiguring(optionsBuilder);
@@ -127,6 +135,16 @@ namespace JDevl32.Entity.Model
 				optionsBuilder.UseSqlServer(ConfigurationRoot[ConnectionStringKey]);
 			} // if
 		}
+
+#endregion
+
+#region IEntityContext
+
+		/// <inheritdoc />
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		public virtual async Task<int> SaveChangesAsync() => await base.SaveChangesAsync();
 
 #endregion
 

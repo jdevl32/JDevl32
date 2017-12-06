@@ -1,4 +1,4 @@
-﻿using JDevl32.Entity.Model;
+﻿using JDevl32.Entity.Interface;
 using JDevl32.Logging.Interface;
 using JDevl32.Web.Repository.Interface;
 using Microsoft.Extensions.Logging;
@@ -12,10 +12,11 @@ namespace JDevl32.Web.Repository
 	/// </summary>
 	/// <remarks>
 	/// Last modification:
+	/// Re-implement entity context respository as non-generic.
 	/// </remarks>
 	public abstract class EntityContextRepositoryBase<TDerivedClass>
 		:
-		IEntityContextRepository<TDerivedClass>
+		IEntityContextRepository
 		,
 		ILoggable<TDerivedClass>
 		where
@@ -29,7 +30,7 @@ namespace JDevl32.Web.Repository
 #region IEntityContextRepository
 
 		/// <inheritdoc />
-		public abstract EntityContextBase<TDerivedClass> EntityContext { get; }
+		public abstract IEntityContext EntityContext { get; }
 
 #endregion
 

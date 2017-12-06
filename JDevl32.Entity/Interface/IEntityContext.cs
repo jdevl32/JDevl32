@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System.Threading.Tasks;
 
 namespace JDevl32.Entity.Interface
 {
@@ -10,8 +11,7 @@ namespace JDevl32.Entity.Interface
 	/// </summary>
 	/// <remarks>
 	/// Last modification:
-	/// Remove generic entity context interface -- obsolete due to (new) loggable interface.
-	/// Consequently, re-implement generic members (except logger) here.  Logger will be implemented downstream.
+	/// Add save changes async.
 	/// </remarks>
 	public interface IEntityContext
 	{
@@ -51,6 +51,17 @@ namespace JDevl32.Entity.Interface
 		IHostingEnvironment HostingEnvironment { get; }
 
 #endregion
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns>
+		/// 
+		/// </returns>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		Task<int> SaveChangesAsync();
 
 	}
 

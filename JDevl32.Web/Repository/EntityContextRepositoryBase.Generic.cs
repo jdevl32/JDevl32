@@ -3,6 +3,7 @@ using JDevl32.Entity.Interface;
 using JDevl32.Logging.Interface;
 using JDevl32.Mapper.Interface;
 using JDevl32.Web.Repository.Interface;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
@@ -14,9 +15,7 @@ namespace JDevl32.Web.Repository
 	/// </summary>
 	/// <remarks>
 	/// Last modification:
-	/// Add entity context type parameter.
-	/// Implement instance mapper.
-	/// Add constructor.
+	/// Restrict entity context type parameter to db-context type.
 	/// </remarks>
 	public abstract class EntityContextRepositoryBase<TDerivedClass, TEntityContext>
 		:
@@ -32,6 +31,8 @@ namespace JDevl32.Web.Repository
 		where
 			TEntityContext
 			:
+			DbContext
+			,
 			IEntityContext
 	{
 

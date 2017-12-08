@@ -8,8 +8,8 @@
     <Copyright>Copyright © 2017 Jeremy Paiz</Copyright>
     <RepositoryUrl>https://github.com/jdevl32/JDevl32/JDevl32.Entity</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Add save changes async.</PackageReleaseNotes>
-    <Version>1.0.2.2</Version>
+    <PackageReleaseNotes>Add default (parameterless) consctructor (required by Entity Framework).</PackageReleaseNotes>
+    <Version>1.0.3.2</Version>
   </PropertyGroup>
 
   <ItemGroup>

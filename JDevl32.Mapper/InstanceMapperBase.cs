@@ -26,6 +26,8 @@ namespace JDevl32.Mapper
 
 #region Instance Initialization
 
+		// todo|jdevl32: implement (ef-required) default ctor ???
+
 		/// <summary>
 		/// Create an instance-based auto-mapper.
 		/// </summary>

@@ -2,24 +2,22 @@
 using JDevl32.Entity.Interface;
 using JDevl32.Logging.Interface;
 using JDevl32.Mapper.Interface;
-using JDevl32.Web.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
-namespace JDevl32.Web.Repository
+namespace JDevl32.Entity
 {
 
 	/// <summary>
-	/// A (generic) entity context repository (base class).
+	/// A (generic) entity context sower (base class).
 	/// </summary>
 	/// <remarks>
 	/// Last modification:
-	/// Restrict entity context type parameter to db-context type.
 	/// </remarks>
-	public abstract class EntityContextRepositoryBase<TDerivedClass, TEntityContext>
+	public abstract class EntityContextSowerBase<TDerivedClass, TEntityContext>
 		:
-		IEntityContextRepository
+		IEntityContextSower
 		,
 		ILoggable<TDerivedClass>
 		,
@@ -38,14 +36,13 @@ namespace JDevl32.Web.Repository
 
 #region Property
 
-#region IEntityContextRepository
+#region IEntityContextSower
 
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Re-implement explicitly.
 		/// </remarks>
-		IEntityContext IEntityContextRepository.EntityContext
+		IEntityContext IEntityContextSower.EntityContext
 		{
 			get => Mapper.Map<IEntityContext>(EntityContext);
 			// todo|jdevl32: is the setter needed ???
@@ -100,7 +97,7 @@ namespace JDevl32.Web.Repository
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
-		protected EntityContextRepositoryBase(TEntityContext entityContext, ILogger<TDerivedClass> logger, IMapper mapper)
+		protected EntityContextSowerBase(TEntityContext entityContext, ILogger<TDerivedClass> logger, IMapper mapper)
 		{
 			EntityContext = entityContext;
 			Logger = logger;
@@ -109,13 +106,13 @@ namespace JDevl32.Web.Repository
 
 #endregion
 
-#region IEntityContextRepository
+#region IEntityContextSower
 
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
-		public virtual async Task<bool> SaveChangesAsync() => await EntityContext.SaveChangesAsync() > 0;
+		public abstract Task Seed();
 
 #endregion
 

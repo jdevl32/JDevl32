@@ -141,6 +141,7 @@ namespace JDevl32.Web.Host
 
 			// Application cookie is no longer part of identity options (above).
 			services.ConfigureApplicationCookie(Configure);
+			//services.ConfigureApplicationCookie(cookieAuthenticationOptions => Configure(cookieAuthenticationOptions));
 
 			services.AddLogging();
 			// todo|jdevl32: dependent on use-mvc (or new add-mvc) ???
@@ -247,6 +248,7 @@ namespace JDevl32.Web.Host
 
 		protected virtual void Configure(IRouteBuilder routeBuilder)
 		{
+			// todo|jdevl32: need to be virtual properties...
 			routeBuilder.MapRoute
 				(
 					"Default"
@@ -255,7 +257,8 @@ namespace JDevl32.Web.Host
 					,
 					new
 					{
-						controller = "App",
+						controller = "App"
+						,
 						action = "Index"
 					}
 				);

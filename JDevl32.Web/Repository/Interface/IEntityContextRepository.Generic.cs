@@ -1,11 +1,11 @@
-﻿using JDevl32.Entity.Model;
+﻿using JDevl32.Entity;
 using System.Threading.Tasks;
 
 namespace JDevl32.Web.Repository.Interface
 {
 
 	/// <summary>
-	/// 
+	/// A (generic) entity context repository.
 	/// </summary>
 	/// <remarks>
 	/// Last modification:

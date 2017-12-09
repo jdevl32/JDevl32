@@ -6,11 +6,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
-namespace JDevl32.Entity.Model
+namespace JDevl32.Entity
 {
 
 	/// <summary>
-	/// The entity context base class.
+	/// A (generic) entity context (base class).
 	/// </summary>
 	/// <remarks>
 	/// Last modification:

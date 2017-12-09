@@ -9,10 +9,11 @@
     <PackageProjectUrl></PackageProjectUrl>
     <RepositoryUrl>https://github.com/jdevl32/JDevl32/JDevl32.Web</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Restrict entity context type parameter to db-context type.</PackageReleaseNotes>
-    <Version>1.0.4.2</Version>
-    <FileVersion>1.0.4.2</FileVersion>
-    <AssemblyVersion>1.0.4.2</AssemblyVersion>
+    <PackageReleaseNotes>Refactor (move) source files.
+Create (generic) entity context sower (base class).</PackageReleaseNotes>
+    <Version>1.0.4.3</Version>
+    <FileVersion>1.0.4.3</FileVersion>
+    <AssemblyVersion>1.0.4.3</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

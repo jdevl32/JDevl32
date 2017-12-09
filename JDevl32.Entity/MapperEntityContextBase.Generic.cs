@@ -6,11 +6,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 
-namespace JDevl32.Entity.Model
+namespace JDevl32.Entity
 {
 
 	/// <summary>
-	/// An entity context base class with (an auto-mapper) mapper.
+	/// A (generic) entity context (base class) with (an auto-mapper) mapper.
 	/// </summary>
 	/// <remarks>
 	/// Last modification:

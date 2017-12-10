@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using JDevl32.Entity.Interface;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -23,7 +22,7 @@ namespace JDevl32.Web.Host
 	/// </summary>
 	/// <remarks>
 	/// Last modification:
-	/// Re-implement configure methods as virtual actions.
+	/// Rename (some) configure methods (to avoid collision).
 	/// </remarks>
 	public abstract class StartupBase
 		:
@@ -54,7 +53,7 @@ namespace JDevl32.Web.Host
 		/// </remarks>
 		protected virtual Action<IMapperConfigurationExpression> ConfigureAutoMapperAction
 			=>
-			mapperConfigurationExpression => Configure(mapperConfigurationExpression);
+			mapperConfigurationExpression => ConfigureAutoMapper(mapperConfigurationExpression);
 
 		/// <summary>
 		/// The action to configure the application cookie(s).
@@ -64,7 +63,7 @@ namespace JDevl32.Web.Host
 		/// </remarks>
 		protected virtual Action<CookieAuthenticationOptions> ConfigureCookieAuthenticationAction
 			=>
-			cookieAuthenticationOptions => Configure(cookieAuthenticationOptions);
+			cookieAuthenticationOptions => ConfigureCookieAuthentication(cookieAuthenticationOptions);
 
 		/// <summary>
 		/// The action to configure identity.
@@ -74,7 +73,7 @@ namespace JDevl32.Web.Host
 		/// </remarks>
 		protected virtual Action<IdentityOptions> ConfigureIdentityAction
 			=>
-			identityOptions => Configure(identityOptions);
+			identityOptions => ConfigureIdentity(identityOptions);
 
 		/// <summary>
 		/// The action to configure JSON.
@@ -84,7 +83,7 @@ namespace JDevl32.Web.Host
 		/// </remarks>
 		protected virtual Action<MvcJsonOptions> ConfigureJSONAction
 			=>
-			mvcJsonOptions => Configure(mvcJsonOptions);
+			mvcJsonOptions => ConfigureJSON(mvcJsonOptions);
 
 		/// <summary>
 		/// The action to configure MVC.
@@ -94,7 +93,7 @@ namespace JDevl32.Web.Host
 		/// </remarks>
 		protected virtual Action<MvcOptions> ConfigureMVCAction
 			=>
-			mvcOptions => Configure(mvcOptions);
+			mvcOptions => ConfigureMVC(mvcOptions);
 
 		/// <summary>
 		/// The action to configure routes.
@@ -104,7 +103,7 @@ namespace JDevl32.Web.Host
 		/// </remarks>
 		protected virtual Action<IRouteBuilder> ConfigureRoutesAction
 			=>
-			routeBuilder => Configure(routeBuilder);
+			routeBuilder => ConfigureRoutes(routeBuilder);
 
 		/// <inheritdoc />
 		/// <remarks>
@@ -242,7 +241,70 @@ namespace JDevl32.Web.Host
 				.AddEnvironmentVariables()
 				.Build();
 
-		protected virtual void Configure(CookieAuthenticationOptions cookieAuthenticationOptions)
+		/// <inheritdoc />
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		public void Configure(IApplicationBuilder applicationBuilder, IHostingEnvironment hostingEnvironment, ILoggerFactory loggerFactory)
+		{
+			InitializeMapper();
+			ConfigureLoggerFactory(applicationBuilder, hostingEnvironment, loggerFactory);
+			Configure(applicationBuilder);
+		}
+
+		// todo|jdevl32: ???
+		/**
+		/// <inheritdoc />
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		public void Configure(IApplicationBuilder applicationBuilder, IHostingEnvironment hostingEnvironment, ILoggerFactory loggerFactory, IEntityContextSower entityContextSower)
+		{
+			Configure(applicationBuilder, hostingEnvironment, loggerFactory);
+
+			// Enable/disable as needed (i.e., disable when rebuilding database).
+			entityContextSower.Seed().Wait();
+		}
+		**/
+
+		protected virtual void ConfigureAuthentication(IApplicationBuilder applicationBuilder)
+		{
+			if (UseAuthentication)
+			{
+				// Method "UseIdentity" is obsolete -- this is the replacement.
+				applicationBuilder.UseAuthentication();
+			} // if
+		}
+
+		/// <summary>
+		/// Configure auto-mapper.
+		/// </summary>
+		/// <param name="mapperConfigurationExpression">
+		/// The mapper configuration expression.
+		/// </param>
+		/// <remarks>
+		/// Last modification:
+		/// Rename.
+		/// </remarks>
+		protected virtual void ConfigureAutoMapper(IMapperConfigurationExpression mapperConfigurationExpression)
+		{
+			// todo|jdevl32: cleanup...
+			//mapperConfigurationExpression.CreateMap<Coordinate, ICoordinate>()
+			//	.ConstructUsing(coordinate => new Coordinate( /*coordinate.Latitude, coordinate.Longitude*/))
+			//	.ReverseMap();
+		}
+
+		/// <summary>
+		/// Configure cookie authentication.
+		/// </summary>
+		/// <param name="cookieAuthenticationOptions">
+		/// The cookie authentication options.
+		/// </param>
+		/// <remarks>
+		/// Last modification:
+		/// Rename.
+		/// </remarks>
+		protected virtual void ConfigureCookieAuthentication(CookieAuthenticationOptions cookieAuthenticationOptions)
 		{
 			// todo|jdevl32: "api" and login-path need to be virtual properties...
 			cookieAuthenticationOptions.Events = new CookieAuthenticationEvents
@@ -266,94 +328,6 @@ namespace JDevl32.Web.Host
 				}
 			};
 			cookieAuthenticationOptions.LoginPath = "/Auth/Login";
-		}
-
-		/// <inheritdoc />
-		/// <remarks>
-		/// Last modification:
-		/// </remarks>
-		public void Configure(IApplicationBuilder applicationBuilder, IHostingEnvironment hostingEnvironment, ILoggerFactory loggerFactory)
-		{
-			InitializeMapper();
-			ConfigureLoggerFactory(applicationBuilder, hostingEnvironment, loggerFactory);
-			Configure(applicationBuilder);
-		}
-
-		/// <inheritdoc />
-		/// <remarks>
-		/// Last modification:
-		/// </remarks>
-		public void Configure(IApplicationBuilder applicationBuilder, IHostingEnvironment hostingEnvironment, ILoggerFactory loggerFactory, IEntityContextSower entityContextSower)
-		{
-			Configure(applicationBuilder, hostingEnvironment, loggerFactory);
-
-			// Enable/disable as needed (i.e., disable when rebuilding database).
-			entityContextSower.Seed().Wait();
-		}
-
-		/// <summary>
-		/// Configure identity.
-		/// </summary>
-		/// <param name="identityOptions">
-		/// The identity options.
-		/// </param>
-		/// <remarks>
-		/// Last modification:
-		/// </remarks>
-		protected virtual void Configure(IdentityOptions identityOptions)
-		{
-			// todo|jdevl32: constant(s)...
-			identityOptions.Password.RequiredLength = 5;
-			identityOptions.User.RequireUniqueEmail = true;
-		}
-
-		protected virtual void Configure(IMapperConfigurationExpression mapperConfigurationExpression)
-		{
-			// todo|jdevl32: cleanup...
-			//mapperConfigurationExpression.CreateMap<Coordinate, ICoordinate>()
-			//	.ConstructUsing(coordinate => new Coordinate( /*coordinate.Latitude, coordinate.Longitude*/))
-			//	.ReverseMap();
-		}
-
-		protected virtual void Configure(IRouteBuilder routeBuilder)
-		{
-			// todo|jdevl32: need to be virtual properties...
-			routeBuilder.MapRoute
-				(
-					"Default"
-					,
-					"{controller}/{action}/{id?}"
-					,
-					new
-					{
-						controller = "App"
-						,
-						action = "Index"
-					}
-				);
-		}
-
-		protected virtual void Configure(MvcJsonOptions mvcJsonOptions)
-		{
-			mvcJsonOptions.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-		}
-
-		protected virtual void Configure(MvcOptions mvcOptions)
-		{
-			// todo|jdevl32: HTTPS only required in production ???
-			if (HostingEnvironment.IsProduction())
-			{
-				mvcOptions.Filters.Add(typeof(RequireHttpsAttribute));
-			} // if
-		}
-
-		protected virtual void ConfigureAuthentication(IApplicationBuilder applicationBuilder)
-		{
-			if (UseAuthentication)
-			{
-				// Method "UseIdentity" is obsolete -- this is the replacement.
-				applicationBuilder.UseAuthentication();
-			} // if
 		}
 
 		protected virtual void ConfigureEntityContext(IServiceCollection serviceCollection)
@@ -416,6 +390,23 @@ namespace JDevl32.Web.Host
 			serviceCollection.AddDbContext<TEntityContext>();
 		**/
 
+		/// <summary>
+		/// Configure identity.
+		/// </summary>
+		/// <param name="identityOptions">
+		/// The identity options.
+		/// </param>
+		/// <remarks>
+		/// Last modification:
+		/// Rename.
+		/// </remarks>
+		protected virtual void ConfigureIdentity(IdentityOptions identityOptions)
+		{
+			// todo|jdevl32: constant(s)...
+			identityOptions.Password.RequiredLength = 5;
+			identityOptions.User.RequireUniqueEmail = true;
+		}
+
 		protected virtual void ConfigureIdentity(IServiceCollection serviceCollection)
 		{
 		}
@@ -452,6 +443,21 @@ namespace JDevl32.Web.Host
 				.AddIdentity<TIdentityUser, IdentityRole>(ConfigureIdentityAction)
 				.AddEntityFrameworkStores<TEntityContext>();
 
+		/// <summary>
+		/// Configure JSON.
+		/// </summary>
+		/// <param name="mvcJsonOptions">
+		/// The JSON options.
+		/// </param>
+		/// <remarks>
+		/// Last modification:
+		/// Rename.
+		/// </remarks>
+		protected virtual void ConfigureJSON(MvcJsonOptions mvcJsonOptions)
+		{
+			mvcJsonOptions.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+		}
+
 		protected void ConfigureLoggerFactory(IApplicationBuilder applicationBuilder, IHostingEnvironment hostingEnvironment, ILoggerFactory loggerFactory) => ConfigureLoggerFactory(applicationBuilder, hostingEnvironment, loggerFactory, LogLevel.Error);
 
 		protected virtual void ConfigureLoggerFactory(IApplicationBuilder applicationBuilder, IHostingEnvironment hostingEnvironment, ILoggerFactory loggerFactory, LogLevel defaultLogLevel)
@@ -481,6 +487,53 @@ namespace JDevl32.Web.Host
 			{
 				applicationBuilder.UseMvc(ConfigureRoutesAction);
 			} // if
+		}
+
+		/// <summary>
+		/// Configure MVC.
+		/// </summary>
+		/// <param name="mvcOptions">
+		/// The MVC options.
+		/// </param>
+		/// <remarks>
+		/// Last modification:
+		/// Rename.
+		/// </remarks>
+		protected virtual void ConfigureMVC(MvcOptions mvcOptions)
+		{
+			// todo|jdevl32: HTTPS only required in production ???
+			if (HostingEnvironment.IsProduction())
+			{
+				mvcOptions.Filters.Add(typeof(RequireHttpsAttribute));
+			} // if
+		}
+
+		/// <summary>
+		/// Configure route(s).
+		/// </summary>
+		/// <param name="routeBuilder">
+		/// The route builder.
+		/// </param>
+		/// <remarks>
+		/// Last modification:
+		/// Rename.
+		/// </remarks>
+		protected virtual void ConfigureRoutes(IRouteBuilder routeBuilder)
+		{
+			// todo|jdevl32: need to be virtual properties...
+			routeBuilder.MapRoute
+				(
+					"Default"
+					,
+					"{controller}/{action}/{id?}"
+					,
+					new
+					{
+						controller = "App"
+						,
+						action = "Index"
+					}
+				);
 		}
 
 		protected virtual void ConfigureStaticFiles(IApplicationBuilder applicationBuilder)

@@ -1,5 +1,4 @@
-﻿using JDevl32.Entity.Interface;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -99,7 +98,7 @@ namespace JDevl32.Web.Host.Interface
 		//void Configure(IApplicationBuilder applicationBuilder);
 
 		/// <summary>
-		/// Configure the application.
+		/// Configure the startup.
 		/// </summary>
 		/// <param name="applicationBuilder">
 		/// The application builder.
@@ -117,6 +116,8 @@ namespace JDevl32.Web.Host.Interface
 		/// </remarks>
 		void Configure(IApplicationBuilder applicationBuilder, IHostingEnvironment hostingEnvironment, ILoggerFactory loggerFactory);
 
+		// todo|jdevl32: ???
+		/**
 		/// <summary>
 		/// Configure the application.
 		/// </summary>
@@ -138,6 +139,7 @@ namespace JDevl32.Web.Host.Interface
 		/// Configure authentication.
 		/// </remarks>
 		void Configure(IApplicationBuilder applicationBuilder, IHostingEnvironment hostingEnvironment, ILoggerFactory loggerFactory, IEntityContextSower entityContextSower);
+		**/
 
 	}
 

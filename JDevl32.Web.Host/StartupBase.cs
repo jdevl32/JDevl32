@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
+using System;
 using System.Threading.Tasks;
 using IStartup = JDevl32.Web.Host.Interface.IStartup;
 
@@ -22,7 +23,7 @@ namespace JDevl32.Web.Host
 	/// </summary>
 	/// <remarks>
 	/// Last modification:
-	/// Add override for configure entity context.
+	/// Re-implement configure methods as virtual actions.
 	/// </remarks>
 	public abstract class StartupBase
 		:
@@ -44,6 +45,66 @@ namespace JDevl32.Web.Host
 		/// Last modification:
 		/// </remarks>
 		public IConfigurationRoot ConfigurationRoot { get; }
+
+		/// <summary>
+		/// The action to configure auto-mapper.
+		/// </summary>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		protected virtual Action<IMapperConfigurationExpression> ConfigureAutoMapperAction
+			=>
+			mapperConfigurationExpression => Configure(mapperConfigurationExpression);
+
+		/// <summary>
+		/// The action to configure the application cookie(s).
+		/// </summary>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		protected virtual Action<CookieAuthenticationOptions> ConfigureCookieAuthenticationAction
+			=>
+			cookieAuthenticationOptions => Configure(cookieAuthenticationOptions);
+
+		/// <summary>
+		/// The action to configure identity.
+		/// </summary>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		protected virtual Action<IdentityOptions> ConfigureIdentityAction
+			=>
+			identityOptions => Configure(identityOptions);
+
+		/// <summary>
+		/// The action to configure JSON.
+		/// </summary>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		protected virtual Action<MvcJsonOptions> ConfigureJSONAction
+			=>
+			mvcJsonOptions => Configure(mvcJsonOptions);
+
+		/// <summary>
+		/// The action to configure MVC.
+		/// </summary>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		protected virtual Action<MvcOptions> ConfigureMVCAction
+			=>
+			mvcOptions => Configure(mvcOptions);
+
+		/// <summary>
+		/// The action to configure routes.
+		/// </summary>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		protected virtual Action<IRouteBuilder> ConfigureRoutesAction
+			=>
+			routeBuilder => Configure(routeBuilder);
 
 		/// <inheritdoc />
 		/// <remarks>
@@ -129,7 +190,7 @@ namespace JDevl32.Web.Host
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Implement AutoMapper dependency injection extension.
+		/// Re-implement configure methods as virtual actions.
 		/// </remarks>
 		public override void ConfigureServices(IServiceCollection services)
 		{
@@ -140,12 +201,11 @@ namespace JDevl32.Web.Host
 			ConfigureIdentity(services);
 
 			// Application cookie is no longer part of identity options (above).
-			services.ConfigureApplicationCookie(Configure);
-			//services.ConfigureApplicationCookie(cookieAuthenticationOptions => Configure(cookieAuthenticationOptions));
+			services.ConfigureApplicationCookie(ConfigureCookieAuthenticationAction);
 
 			services.AddLogging();
 			// todo|jdevl32: dependent on use-mvc (or new add-mvc) ???
-			services.AddMvc(Configure).AddJsonOptions(Configure);
+			services.AddMvc(ConfigureMVCAction).AddJsonOptions(ConfigureJSONAction);
 			services.AddSingleton(ConfigurationRoot);
 			// todo|jdevl32: dependent on mvc (would need to add if not use/add-mvc, or exception) ???
 			services.AddAutoMapper();
@@ -231,6 +291,15 @@ namespace JDevl32.Web.Host
 			entityContextSower.Seed().Wait();
 		}
 
+		/// <summary>
+		/// Configure identity.
+		/// </summary>
+		/// <param name="identityOptions">
+		/// The identity options.
+		/// </param>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
 		protected virtual void Configure(IdentityOptions identityOptions)
 		{
 			// todo|jdevl32: constant(s)...
@@ -365,7 +434,7 @@ namespace JDevl32.Web.Host
 		/// </param>
 		/// <remarks>
 		/// Last modification:
-		/// Remove some restrictions on type params.
+		/// Re-implement configure methods as virtual actions.
 		/// </remarks>
 		protected virtual void ConfigureIdentity<TIdentityUser, TEntityContext>(IServiceCollection serviceCollection)
 			where
@@ -380,7 +449,7 @@ namespace JDevl32.Web.Host
 				IdentityUser
 			=>
 			serviceCollection
-				.AddIdentity<TIdentityUser, IdentityRole>(Configure)
+				.AddIdentity<TIdentityUser, IdentityRole>(ConfigureIdentityAction)
 				.AddEntityFrameworkStores<TEntityContext>();
 
 		protected void ConfigureLoggerFactory(IApplicationBuilder applicationBuilder, IHostingEnvironment hostingEnvironment, ILoggerFactory loggerFactory) => ConfigureLoggerFactory(applicationBuilder, hostingEnvironment, loggerFactory, LogLevel.Error);
@@ -396,11 +465,21 @@ namespace JDevl32.Web.Host
 			loggerFactory.AddDebug(defaultLogLevel);
 		}
 
+		/// <summary>
+		/// Configure MVC.
+		/// </summary>
+		/// <param name="applicationBuilder">
+		/// An application builder.
+		/// </param>
+		/// <remarks>
+		/// Last modification:
+		/// Re-implement configure methods as virtual actions.
+		/// </remarks>
 		protected virtual void ConfigureMVC(IApplicationBuilder applicationBuilder)
 		{
 			if (UseMvc)
 			{
-				applicationBuilder.UseMvc(Configure);
+				applicationBuilder.UseMvc(ConfigureRoutesAction);
 			} // if
 		}
 
@@ -417,8 +496,9 @@ namespace JDevl32.Web.Host
 		/// </summary>
 		/// <remarks>
 		/// Last modification:
+		/// Re-implement configure methods as virtual actions.
 		/// </remarks>
-		protected virtual void InitializeMapper() => AutoMapper.Mapper.Initialize(Configure);
+		protected virtual void InitializeMapper() => AutoMapper.Mapper.Initialize(ConfigureAutoMapperAction);
 
 	}
 

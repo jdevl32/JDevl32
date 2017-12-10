@@ -23,7 +23,7 @@ namespace JDevl32.Web.Host
 	/// </summary>
 	/// <remarks>
 	/// Last modification:
-	/// Remove:  Extend ASP.NET Core Hosting.
+	/// Remove auto-mapper configuration (obsolete when using auto-mapper dependency injection extension.
 	/// </remarks>
 	public abstract class StartupBase
 		:
@@ -72,6 +72,8 @@ namespace JDevl32.Web.Host
 
 #endregion
 
+		// todo|jdevl32: ???
+		/**
 		/// <summary>
 		/// The action to configure auto-mapper.
 		/// </summary>
@@ -81,6 +83,7 @@ namespace JDevl32.Web.Host
 		protected virtual Action<IMapperConfigurationExpression> ConfigureAutoMapperAction
 			=>
 			mapperConfigurationExpression => ConfigureAutoMapper(mapperConfigurationExpression);
+		**/
 
 		/// <summary>
 		/// The action to configure the application cookie(s).
@@ -236,12 +239,12 @@ namespace JDevl32.Web.Host
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Rename (to avoid collisions).
-		/// Make virtual.
+		/// Remove auto-mapper configuration (obsolete when using auto-mapper dependency injection extension.
 		/// </remarks>
 		public virtual void ConfigureStartup(IApplicationBuilder applicationBuilder, IHostingEnvironment hostingEnvironment, ILoggerFactory loggerFactory)
 		{
-			InitializeMapper();
+			// todo|jdevl32: ???
+			//InitializeMapper();
 			ConfigureLoggerFactory(applicationBuilder, hostingEnvironment, loggerFactory);
 			ConfigureStartup(applicationBuilder);
 		}
@@ -285,6 +288,8 @@ namespace JDevl32.Web.Host
 			} // if
 		}
 
+		// todo|jdevl32: ???
+		/**
 		/// <summary>
 		/// Configure auto-mapper.
 		/// </summary>
@@ -297,11 +302,8 @@ namespace JDevl32.Web.Host
 		/// </remarks>
 		protected virtual void ConfigureAutoMapper(IMapperConfigurationExpression mapperConfigurationExpression)
 		{
-			// todo|jdevl32: cleanup...
-			//mapperConfigurationExpression.CreateMap<Coordinate, ICoordinate>()
-			//	.ConstructUsing(coordinate => new Coordinate( /*coordinate.Latitude, coordinate.Longitude*/))
-			//	.ReverseMap();
 		}
+		**/
 
 		/// <summary>
 		/// Configure cookie authentication.
@@ -553,6 +555,8 @@ namespace JDevl32.Web.Host
 			} // if
 		}
 
+		// todo|jdevl32: ???
+		/**
 		/// <summary>
 		/// Initialize and configure auto-mapper mappings.
 		/// </summary>
@@ -561,6 +565,7 @@ namespace JDevl32.Web.Host
 		/// Re-implement configure methods as virtual actions.
 		/// </remarks>
 		protected virtual void InitializeMapper() => AutoMapper.Mapper.Initialize(ConfigureAutoMapperAction);
+		**/
 
 	}
 

@@ -17,21 +17,22 @@ using IStartup = JDevl32.Web.Host.Interface.IStartup;
 namespace JDevl32.Web.Host
 {
 
+	/// <inheritdoc />
 	/// <summary>
 	/// An application startup base class.
 	/// </summary>
 	/// <remarks>
 	/// Last modification:
-	/// Rename (some) configure methods (to avoid collision).
+	/// Remove:  Extend ASP.NET Core Hosting.
 	/// </remarks>
 	public abstract class StartupBase
 		:
-		Microsoft.AspNetCore.Hosting.StartupBase
-		,
 		IStartup
 	{
 
 #region Property
+
+#region IStartup
 
 		/// <inheritdoc />
 		/// <remarks>
@@ -44,6 +45,32 @@ namespace JDevl32.Web.Host
 		/// Last modification:
 		/// </remarks>
 		public IConfigurationRoot ConfigurationRoot { get; }
+
+		/// <inheritdoc />
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		public IHostingEnvironment HostingEnvironment { get; }
+
+		/// <inheritdoc />
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		public virtual bool UseAuthentication { get; } = true;
+
+		/// <inheritdoc />
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		public virtual bool UseMvc { get; } = true;
+
+		/// <inheritdoc />
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		public virtual bool UseStaticFiles { get; } = true;
+
+#endregion
 
 		/// <summary>
 		/// The action to configure auto-mapper.
@@ -105,30 +132,6 @@ namespace JDevl32.Web.Host
 			=>
 			routeBuilder => ConfigureRoutes(routeBuilder);
 
-		/// <inheritdoc />
-		/// <remarks>
-		/// Last modification:
-		/// </remarks>
-		public IHostingEnvironment HostingEnvironment { get; }
-
-		/// <inheritdoc />
-		/// <remarks>
-		/// Last modification:
-		/// </remarks>
-		public virtual bool UseAuthentication { get; } = true;
-
-		/// <inheritdoc />
-		/// <remarks>
-		/// Last modification:
-		/// </remarks>
-		public virtual bool UseMvc { get; } = true;
-
-		/// <inheritdoc />
-		/// <remarks>
-		/// Last modification:
-		/// </remarks>
-		public virtual bool UseStaticFiles { get; } = true;
-
 #endregion
 
 #region Instance Initialization
@@ -164,34 +167,15 @@ namespace JDevl32.Web.Host
 
 #endregion
 
-#region Microsoft.AspNetCore.Hosting.StartupBase
-
-		/// <remarks>
-		/// Last modification:
-		/// Change from protected to public (pull up to interface).
-		/// </remarks>
-		public override void Configure(IApplicationBuilder applicationBuilder)
-		{
-			//
-			// Order is impoortant:
-			// 
-
-			// 1. Static files.
-			ConfigureStaticFiles(applicationBuilder);
-
-			// 2. Authentication
-			ConfigureAuthentication(applicationBuilder);
-
-			// 3. MVC -- typically last
-			ConfigureMVC(applicationBuilder);
-		}
+#region IStartup
 
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Re-implement configure methods as virtual actions.
+		/// Remove override (no longer applicable).
+		/// Make virtual.
 		/// </remarks>
-		public override void ConfigureServices(IServiceCollection services)
+		public virtual void ConfigureServices(IServiceCollection services)
 		{
 			// todo|jdevl32: pre...
 
@@ -226,6 +210,42 @@ namespace JDevl32.Web.Host
 			//services.AddTransient<ITravelContextSeed, TravelContextSeed>();
 		}
 
+		/// <inheritdoc />
+		/// <remarks>
+		/// Last modification:
+		/// Rename (to avoid possible collisions).
+		/// Remove override (no longer applicable).
+		/// Make virtual.
+		/// </remarks>
+		public virtual void ConfigureStartup(IApplicationBuilder applicationBuilder)
+		{
+			//
+			// Order is impoortant:
+			// 
+
+			// 1. Static files.
+			ConfigureStaticFiles(applicationBuilder);
+
+			// 2. Authentication
+			ConfigureAuthentication(applicationBuilder);
+
+			// 3. MVC -- typically last
+			ConfigureMVC(applicationBuilder);
+		}
+
+		/// <inheritdoc />
+		/// <remarks>
+		/// Last modification:
+		/// Rename (to avoid collisions).
+		/// Make virtual.
+		/// </remarks>
+		public virtual void ConfigureStartup(IApplicationBuilder applicationBuilder, IHostingEnvironment hostingEnvironment, ILoggerFactory loggerFactory)
+		{
+			InitializeMapper();
+			ConfigureLoggerFactory(applicationBuilder, hostingEnvironment, loggerFactory);
+			ConfigureStartup(applicationBuilder);
+		}
+
 #endregion
 
 		protected IConfigurationRoot BuildConfiguration(IHostingEnvironment hostingEnvironment)
@@ -240,17 +260,6 @@ namespace JDevl32.Web.Host
 				.AddJsonFile(path)
 				.AddEnvironmentVariables()
 				.Build();
-
-		/// <inheritdoc />
-		/// <remarks>
-		/// Last modification:
-		/// </remarks>
-		public void Configure(IApplicationBuilder applicationBuilder, IHostingEnvironment hostingEnvironment, ILoggerFactory loggerFactory)
-		{
-			InitializeMapper();
-			ConfigureLoggerFactory(applicationBuilder, hostingEnvironment, loggerFactory);
-			Configure(applicationBuilder);
-		}
 
 		// todo|jdevl32: ???
 		/**

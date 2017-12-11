@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JDevl32.Entity.Interface
 {
@@ -25,7 +26,9 @@ namespace JDevl32.Entity.Interface
 		/// </summary>
 		/// <remarks>
 		/// Last modification:
+		/// Add database generated identity annotation.
 		/// </remarks>
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Key]
 		[Required]
 		new Guid Id { get; }

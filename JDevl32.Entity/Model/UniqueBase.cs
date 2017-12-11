@@ -1,5 +1,6 @@
 ﻿using JDevl32.Entity.Interface;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JDevl32.Entity.Model
 {
@@ -19,7 +20,9 @@ namespace JDevl32.Entity.Model
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
+		/// Add database generated identity annotation.
 		/// </remarks>
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Key]
 		[Required]
 		public virtual int Id { get; set; }

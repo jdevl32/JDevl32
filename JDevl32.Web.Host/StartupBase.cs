@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +11,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
-using System;
 using System.Threading.Tasks;
 using IStartup = JDevl32.Web.Host.Interface.IStartup;
 
@@ -62,7 +62,14 @@ namespace JDevl32.Web.Host
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
-		public virtual bool UseMvc { get; } = true;
+		public virtual bool UseCORS { get; } = false;
+
+		/// <inheritdoc />
+		/// <remarks>
+		/// Last modification:
+		/// Rename.
+		/// </remarks>
+		public virtual bool UseMVC { get; } = true;
 
 		/// <inheritdoc />
 		/// <remarks>
@@ -72,18 +79,8 @@ namespace JDevl32.Web.Host
 
 #endregion
 
-		// todo|jdevl32: ???
+		// todo|jdevl32: cleanup...
 		/**
-		/// <summary>
-		/// The action to configure auto-mapper.
-		/// </summary>
-		/// <remarks>
-		/// Last modification:
-		/// </remarks>
-		protected virtual Action<IMapperConfigurationExpression> ConfigureAutoMapperAction
-			=>
-			mapperConfigurationExpression => ConfigureAutoMapper(mapperConfigurationExpression);
-		**/
 
 		/// <summary>
 		/// The action to configure the application cookie(s).
@@ -134,6 +131,7 @@ namespace JDevl32.Web.Host
 		protected virtual Action<IRouteBuilder> ConfigureRoutesAction
 			=>
 			routeBuilder => ConfigureRoutes(routeBuilder);
+		**/
 
 #endregion
 
@@ -175,8 +173,8 @@ namespace JDevl32.Web.Host
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Remove override (no longer applicable).
-		/// Make virtual.
+		/// Add CORS (and default configuration).
+		/// Use method group(s).
 		/// </remarks>
 		public virtual void ConfigureServices(IServiceCollection services)
 		{
@@ -187,11 +185,13 @@ namespace JDevl32.Web.Host
 			ConfigureIdentity(services);
 
 			// Application cookie is no longer part of identity options (above).
-			services.ConfigureApplicationCookie(ConfigureCookieAuthenticationAction);
+			services.ConfigureApplicationCookie(ConfigureCookieAuthentication);
 
 			services.AddLogging();
+			// todo|jdevl32: dependent on use-cors (or new add-cors) ???
+			services.AddCors(ConfigureCORS);
 			// todo|jdevl32: dependent on use-mvc (or new add-mvc) ???
-			services.AddMvc(ConfigureMVCAction).AddJsonOptions(ConfigureJSONAction);
+			services.AddMvc(ConfigureMVC).AddJsonOptions(ConfigureJSON);
 			services.AddSingleton(ConfigurationRoot);
 			// todo|jdevl32: dependent on mvc (would need to add if not use/add-mvc, or exception) ???
 			services.AddAutoMapper();
@@ -216,9 +216,7 @@ namespace JDevl32.Web.Host
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Rename (to avoid possible collisions).
-		/// Remove override (no longer applicable).
-		/// Make virtual.
+		/// Add CORS (and default configuration).
 		/// </remarks>
 		public virtual void ConfigureStartup(IApplicationBuilder applicationBuilder)
 		{
@@ -229,10 +227,13 @@ namespace JDevl32.Web.Host
 			// 1. Static files.
 			ConfigureStaticFiles(applicationBuilder);
 
-			// 2. Authentication
+			// 2. Authentication.
 			ConfigureAuthentication(applicationBuilder);
 
-			// 3. MVC -- typically last
+			// 3. CORS.
+			ConfigureCORS(applicationBuilder);
+
+			// 4. MVC -- typically last.
 			ConfigureMVC(applicationBuilder);
 		}
 
@@ -243,8 +244,6 @@ namespace JDevl32.Web.Host
 		/// </remarks>
 		public virtual void ConfigureStartup(IApplicationBuilder applicationBuilder, IHostingEnvironment hostingEnvironment, ILoggerFactory loggerFactory)
 		{
-			// todo|jdevl32: ???
-			//InitializeMapper();
 			ConfigureLoggerFactory(applicationBuilder, hostingEnvironment, loggerFactory);
 			ConfigureStartup(applicationBuilder);
 		}
@@ -262,7 +261,8 @@ namespace JDevl32.Web.Host
 				.SetBasePath(hostingEnvironment.ContentRootPath)
 				.AddJsonFile(path)
 				.AddEnvironmentVariables()
-				.Build();
+				.Build()
+				;
 
 		// todo|jdevl32: ???
 		/**
@@ -339,6 +339,59 @@ namespace JDevl32.Web.Host
 				}
 			};
 			cookieAuthenticationOptions.LoginPath = "/Auth/Login";
+		}
+
+		/// <summary>
+		/// Configure CORS.
+		/// </summary>
+		/// <param name="applicationBuilder">
+		/// An application builder.
+		/// </param>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		protected virtual void ConfigureCORS(IApplicationBuilder applicationBuilder)
+		{
+			if (UseCORS)
+			{
+				applicationBuilder.UseCors(ConfigureCORS);
+			} // if
+		}
+
+		/// <summary>
+		/// Configure CORS.
+		/// </summary>
+		/// <param name="corsOptions">
+		/// The CORS options.
+		/// </param>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		protected virtual void ConfigureCORS(CorsOptions corsOptions)
+		{
+		}
+
+		/// <summary>
+		/// Configure CORS.
+		/// </summary>
+		/// <param name="corsPolicyBuilder">
+		/// A CORS policy builder.
+		/// </param>
+		/// <remarks>
+		/// Last modification:
+		/// Modify order of allowance(s).
+		/// </remarks>
+		protected virtual void ConfigureCORS(CorsPolicyBuilder corsPolicyBuilder)
+		{
+			// Only in development environment.
+			if (HostingEnvironment.IsDevelopment())
+			{
+				corsPolicyBuilder
+					.AllowAnyOrigin()
+					.AllowAnyMethod()
+					.AllowAnyHeader()
+					;
+			} // if
 		}
 
 		protected virtual void ConfigureEntityContext(IServiceCollection serviceCollection)
@@ -436,7 +489,7 @@ namespace JDevl32.Web.Host
 		/// </param>
 		/// <remarks>
 		/// Last modification:
-		/// Re-implement configure methods as virtual actions.
+		/// Use method group.
 		/// </remarks>
 		protected virtual void ConfigureIdentity<TIdentityUser, TEntityContext>(IServiceCollection serviceCollection)
 			where
@@ -451,7 +504,7 @@ namespace JDevl32.Web.Host
 				IdentityUser
 			=>
 			serviceCollection
-				.AddIdentity<TIdentityUser, IdentityRole>(ConfigureIdentityAction)
+				.AddIdentity<TIdentityUser, IdentityRole>(ConfigureIdentity)
 				.AddEntityFrameworkStores<TEntityContext>();
 
 		/// <summary>
@@ -490,13 +543,13 @@ namespace JDevl32.Web.Host
 		/// </param>
 		/// <remarks>
 		/// Last modification:
-		/// Re-implement configure methods as virtual actions.
+		/// Use method group.
 		/// </remarks>
 		protected virtual void ConfigureMVC(IApplicationBuilder applicationBuilder)
 		{
-			if (UseMvc)
+			if (UseMVC)
 			{
-				applicationBuilder.UseMvc(ConfigureRoutesAction);
+				applicationBuilder.UseMvc(ConfigureRoutes);
 			} // if
 		}
 

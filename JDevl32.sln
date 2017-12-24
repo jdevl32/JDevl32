@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2010
+VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JDevl32.Web", "JDevl32.Web\JDevl32.Web.csproj", "{2C950636-D29F-48EA-B013-9A4710E92BD2}"
 EndProject
@@ -10,7 +10,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "init", "init", "{3B1DAA99-B6F0-4EB1-A490-9521471B0CDF}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\init\globcopy.py = .nuget\init\globcopy.py
-		.nuget\init\run.bat = .nuget\init\run.bat
+		.nuget\init\run.cmd = .nuget\init\run.cmd
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JDevl32.Entity", "JDevl32.Entity\JDevl32.Entity.csproj", "{8D23D014-C579-461A-8CB5-C523EFD9B267}"
@@ -28,7 +28,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JDevl32.Web.Host", "JDevl32
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JDevl32.Mapper", "JDevl32.Mapper\JDevl32.Mapper.csproj", "{E4DD4A96-341A-4A7C-B013-71E1536BD6E9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JDevl32.Logging", "JDevl32.Logging\JDevl32.Logging.csproj", "{179CF74E-1A51-45D8-BCFA-31DA94FBFB11}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JDevl32.Logging", "JDevl32.Logging\JDevl32.Logging.csproj", "{179CF74E-1A51-45D8-BCFA-31DA94FBFB11}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

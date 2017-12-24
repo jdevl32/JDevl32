@@ -52,12 +52,21 @@ namespace JDevl32.Web.Host.Interface
 		bool UseAuthentication { get; }
 
 		/// <summary>
-		/// Flag to use MVC.
+		/// Flag to use CORS.
 		/// </summary>
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
-		bool UseMvc { get; }
+		bool UseCORS { get; }
+
+		/// <summary>
+		/// Flag to use MVC.
+		/// </summary>
+		/// <remarks>
+		/// Last modification:
+		/// Rename.
+		/// </remarks>
+		bool UseMVC { get; }
 
 		/// <summary>
 		/// Flag to use static files.

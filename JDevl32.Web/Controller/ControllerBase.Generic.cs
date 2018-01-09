@@ -1,4 +1,6 @@
-﻿using JDevl32.Logging.Interface;
+﻿using AutoMapper;
+using JDevl32.Logging.Interface;
+using JDevl32.Mapper.Interface;
 using JDevl32.Web.Controller.Interface;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
@@ -14,7 +16,7 @@ namespace JDevl32.Web.Controller
 	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
-	/// Implement loggable interface.
+	/// Implement instance mapper interface.
 	/// </remarks>
 	public abstract class ControllerBase<TDerivedClass>
 		:
@@ -23,6 +25,8 @@ namespace JDevl32.Web.Controller
 		ILoggable<TDerivedClass>
 		,
 		IController
+		,
+		IInstanceMapper
 		where TDerivedClass : class
 	{
 
@@ -31,11 +35,8 @@ namespace JDevl32.Web.Controller
 #region IController
 
 		/// <inheritdoc />
-		/// <summary>
-		/// 
-		/// </summary>
 		/// <remarks>
-		/// 
+		/// Last modification:
 		/// </remarks>
 		public IHostingEnvironment HostingEnvironment { get; }
 
@@ -49,6 +50,16 @@ namespace JDevl32.Web.Controller
 		/// Make public (for loggable interface implementation) and virtual.
 		/// </remarks>
 		public virtual ILogger<TDerivedClass> Logger { get; }
+
+#endregion
+
+#region IInstanceMapper
+
+		/// <inheritdoc />
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		public IMapper Mapper { get; }
 
 #endregion
 
@@ -75,15 +86,19 @@ namespace JDevl32.Web.Controller
 		/// Create a controller base.
 		/// </summary>
 		/// <param name="hostingEnvironment">
-		/// The hosting environment.
+		/// The (injected) hosting environment.
 		/// </param>
 		/// <param name="logger">
-		/// The logger.
+		/// The (injected) logger.
+		/// </param>
+		/// <param name="mapper">
+		/// The (injected) mapper.
 		/// </param>
 		/// <remarks>
 		/// Last modification:
+		/// Implement instance mapper interface.
 		/// </remarks>
-		protected ControllerBase(IHostingEnvironment hostingEnvironment, ILogger<TDerivedClass> logger)
+		protected ControllerBase(IHostingEnvironment hostingEnvironment, ILogger<TDerivedClass> logger, IMapper mapper)
 			// todo|jdevl32: (see above) ???
 			//:
 			//this(logger) => HostingEnvironment = hostingEnvironment;
@@ -91,6 +106,7 @@ namespace JDevl32.Web.Controller
 		{
 			HostingEnvironment = hostingEnvironment;
 			Logger = logger;
+			Mapper = mapper;
 		}
 
 #endregion

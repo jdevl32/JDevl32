@@ -9,11 +9,10 @@
     <PackageProjectUrl></PackageProjectUrl>
     <RepositoryUrl>https://github.com/jdevl32/JDevl32/JDevl32.Web</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Refactor (move) source files.
-Create (generic) entity context sower (base class).</PackageReleaseNotes>
-    <Version>1.0.4.3</Version>
-    <FileVersion>1.0.4.3</FileVersion>
-    <AssemblyVersion>1.0.4.3</AssemblyVersion>
+    <PackageReleaseNotes>Implement instance mapper interface.</PackageReleaseNotes>
+    <Version>1.0.5.1</Version>
+    <FileVersion>1.0.5.1</FileVersion>
+    <AssemblyVersion>1.0.5.1</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

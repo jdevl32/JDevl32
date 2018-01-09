@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace JDevl32.Web.Controller
@@ -19,9 +20,13 @@ namespace JDevl32.Web.Controller
 #region Instance Initialization
 
 		/// <inheritdoc />
-		protected ControllerBase(IHostingEnvironment hostingEnvironment, ILogger<ControllerBase> logger)
+		/// <remarks>
+		/// Last modification:
+		/// Implement instance mapper interface.
+		/// </remarks>
+		protected ControllerBase(IHostingEnvironment hostingEnvironment, ILogger<ControllerBase> logger, IMapper mapper)
 			:
-			base(hostingEnvironment, logger)
+			base(hostingEnvironment, logger, mapper)
 		{
 		}
 

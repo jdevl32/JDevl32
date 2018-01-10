@@ -15,7 +15,7 @@ namespace JDevl32.Web.Controller.Interface
 #region Property
 
 		/// <summary>
-		/// 
+		/// The hosting environment.
 		/// </summary>
 		/// <remarks>
 		/// Last modification:

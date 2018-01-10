@@ -7,6 +7,9 @@ namespace JDevl32.Web.Repository.Interface
 	/// <summary>
 	/// A (generic) entity context repository.
 	/// </summary>
+	/// <typeparam name="TDerivedClass">
+	/// This should be the type of the derived class from this base class (for the logger).
+	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
 	/// Rename.

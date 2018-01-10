@@ -27,7 +27,10 @@ namespace JDevl32.Web.Controller
 		IController
 		,
 		IInstanceMapper
-		where TDerivedClass : class
+		where
+			TDerivedClass
+			:
+			class
 	{
 
 #region Property

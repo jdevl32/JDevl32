@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using JDevl32.Entity.Interface;
+using JDevl32.Entity.Model;
 using JDevl32.Web.Controller.Interface;
 using JDevl32.Web.Repository.Interface;
 using JDevl32.Web.ViewModel.Interface;
@@ -22,10 +23,14 @@ namespace JDevl32.Web.Controller
 	/// <typeparam name="TUnique">
 	/// The unique item type.
 	/// </typeparam>
+	/// <typeparam name="TUniqueEntity">
+	/// The unique item entity type.
+	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
+	/// Add unique item entity type.
 	/// </remarks>
-	public abstract class UniqueEntityContextControllerBase<TDerivedClass, TUnique>
+	public abstract class UniqueEntityContextControllerBase<TDerivedClass, TUnique, TUniqueEntity>
 		:
 		ControllerBase<TDerivedClass>
 		,
@@ -38,6 +43,10 @@ namespace JDevl32.Web.Controller
 			TUnique
 			:
 			IUnique
+		where
+			TUniqueEntity
+			:
+			UniqueBase
 	{
 
 #region Property
@@ -57,8 +66,10 @@ namespace JDevl32.Web.Controller
 		/// </summary>
 		/// <remarks>
 		/// Last modification:
+		/// Remove derived class type.
+		/// Add unique item entity type.
 		/// </remarks>
-		public virtual IUniqueEntityContextRepository<TDerivedClass, TUnique> UniqueEntityContextRepository { get; }
+		public virtual IUniqueEntityContextRepository<TUnique, TUniqueEntity> UniqueEntityContextRepository { get; }
 
 #endregion
 
@@ -67,13 +78,19 @@ namespace JDevl32.Web.Controller
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
+		/// Remove derived class type from unique entity context repository.
+		/// Add unique item entity type to unique entity context repository.
 		/// </remarks>
-		protected UniqueEntityContextControllerBase(IHostingEnvironment hostingEnvironment, ILogger<TDerivedClass> logger, IMapper mapper, IUniqueEntityContextRepository<TDerivedClass, TUnique> uniqueEntityContextRepository, string displayName)
+		protected UniqueEntityContextControllerBase(IHostingEnvironment hostingEnvironment, ILogger<TDerivedClass> logger, IMapper mapper,  IUniqueEntityContextRepository<TUnique, TUniqueEntity> uniqueEntityContextRepository, string displayName)
 			:
 			base(hostingEnvironment, logger, mapper)
 		{
 			DisplayName = displayName;
 			UniqueEntityContextRepository = uniqueEntityContextRepository;
+
+			// todo|jdevl32: ??? consider display name property instead ???
+			// Set the controller of the repository (for display name).
+			UniqueEntityContextRepository.UniqueController = this;
 		}
 
 #endregion
@@ -104,7 +121,7 @@ namespace JDevl32.Web.Controller
 			} // try
 			catch (Exception exception)
 			{
-				Logger.LogError($"Error removing {DisplayName}(s) from the repository:  {exception}");
+				Logger.LogError($"Error removing (all) the {DisplayName}(s) from the repository:  {exception}");
 			} // catch
 
 			return BadRequest();
@@ -137,7 +154,7 @@ namespace JDevl32.Web.Controller
 			} // try
 			catch (Exception exception)
 			{
-				Logger.LogError($"Error removing {DisplayName} ({uniqueViewModel}) from the repository:  {exception}");
+				Logger.LogError($"Error removing the {DisplayName} ({uniqueViewModel}) from the repository:  {exception}");
 			} // catch
 
 			return BadRequest();
@@ -155,7 +172,7 @@ namespace JDevl32.Web.Controller
 			} // try
 			catch (Exception ex)
 			{
-				Logger.LogError(ex, $"Error retrieving {DisplayName}(s) from the repository:  {ex}");
+				Logger.LogError(ex, $"Error retrieving (all) the {DisplayName}(s) from the repository:  {ex}");
 			} // catch
 
 			return BadRequest();
@@ -197,7 +214,7 @@ namespace JDevl32.Web.Controller
 			} // try
 			catch (Exception ex)
 			{
-				Logger.LogError($"Error posting {DisplayName} ({uniqueViewModel}) to the repository:  {ex}");
+				Logger.LogError($"Error posting the {DisplayName} ({uniqueViewModel}) to the repository:  {ex}");
 			} // catch
 
 			return BadRequest();

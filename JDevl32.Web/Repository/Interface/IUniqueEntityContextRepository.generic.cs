@@ -1,4 +1,5 @@
 ﻿using JDevl32.Entity.Interface;
+using JDevl32.Entity.Model;
 
 namespace JDevl32.Web.Repository.Interface
 {
@@ -6,28 +7,31 @@ namespace JDevl32.Web.Repository.Interface
 	/// <summary>
 	/// A (generic) unique item entity context repository.
 	/// </summary>
-	/// <typeparam name="TDerivedClass">
-	/// This should be the type of the derived class from this base class (for the logger).
-	/// </typeparam>
 	/// <typeparam name="TUnique">
 	/// The unique item type.
 	/// </typeparam>
+	/// <typeparam name="TUniqueEntity">
+	/// The unique item entity type.
+	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
+	/// Remove derived class type.
+	/// (Re-)inherit non-generic entity context repository.
+	/// Add unique item entity type.
 	/// </remarks>
-	public interface IUniqueEntityContextRepository<TDerivedClass, TUnique>
+	public interface IUniqueEntityContextRepository<TUnique, TUniqueEntity>
 		:
-		IEntityContextRepository<TDerivedClass>
+		IEntityContextRepository
 		,
-		IUniqueRepository<TUnique>
-		where
-			TDerivedClass
-			:
-			class
+		IUniqueRepository<TUnique, TUniqueEntity>
 		where
 			TUnique
 			:
 			IUnique
+		where
+			TUniqueEntity
+			:
+			UniqueBase
 	{
 
 #region Property

@@ -9,10 +9,15 @@
     <PackageProjectUrl></PackageProjectUrl>
     <RepositoryUrl>https://github.com/jdevl32/JDevl32/JDevl32.Web</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Add (generic) unique item repository and controller interface(s), view model interface and base class, and entity context repository interface and controller base class.</PackageReleaseNotes>
-    <Version>1.0.5.2</Version>
-    <FileVersion>1.0.5.2</FileVersion>
-    <AssemblyVersion>1.0.5.2</AssemblyVersion>
+    <PackageReleaseNotes>Add a (generic) unique item entity context repository (base class).
+Remove derived class type from unique entity context repository.
+Add unique item entity type to unique entity context repository.
+(Re-)inherit non-generic entity context repository.
+Add unique item controller (for display name).
+Add method to get unique item entity db-set.</PackageReleaseNotes>
+    <Version>1.0.6.1</Version>
+    <FileVersion>1.0.6.1</FileVersion>
+    <AssemblyVersion>1.0.6.1</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

@@ -40,16 +40,13 @@ namespace JDevl32.Web.Repository
 
 #region IEntityContextRepository
 
+		// todo|jdevl32: ??? is the setter needed ???
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
 		/// Re-implement explicitly.
 		/// </remarks>
-		IEntityContext IEntityContextRepository.EntityContext
-		{
-			get => Mapper.Map<IEntityContext>(EntityContext);
-			// todo|jdevl32: is the setter needed ???
-		}
+		IEntityContext IEntityContextRepository.EntityContext => Mapper.Map<IEntityContext>(EntityContext);
 
 #endregion
 

@@ -13,8 +13,9 @@ namespace JDevl32.Web.ViewModel.Interface
 	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
+	/// Make unique item type covariant.
 	/// </remarks>
-	public interface IUniqueViewModel<TUnique>
+	public interface IUniqueViewModel<out TUnique>
 		// todo|jdevl32 ??? not possible (without actual interface) ???
 		:
 		//TUnique

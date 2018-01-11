@@ -100,7 +100,9 @@ namespace JDevl32.Web.Controller
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
+		/// Add (missing) HTTP method attribute specification(s).
 		/// </remarks>
+		[HttpDelete("/*", Name = "RemoveAll")]
 		public virtual async Task<IActionResult> Delete()
 		{
 			try
@@ -130,7 +132,9 @@ namespace JDevl32.Web.Controller
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
+		/// Add (missing) HTTP method attribute specification(s).
 		/// </remarks>
+		[HttpDelete]
 		public virtual async Task<IActionResult> Delete(IUniqueViewModel<TUnique> uniqueViewModel)
 		{
 			try
@@ -163,7 +167,9 @@ namespace JDevl32.Web.Controller
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
+		/// Add (missing) HTTP method attribute specification(s).
 		/// </remarks>
+		[HttpGet]
 		public virtual IActionResult Get()
 		{
 			try
@@ -181,7 +187,9 @@ namespace JDevl32.Web.Controller
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
+		/// Add (missing) HTTP method attribute specification(s).
 		/// </remarks>
+		[HttpPost]
 		public virtual async Task<IActionResult> Post(IUniqueViewModel<TUnique> uniqueViewModel)
 		{
 			// todo|jdevl32: contant(s)...

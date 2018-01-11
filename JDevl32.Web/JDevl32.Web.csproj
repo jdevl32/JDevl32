@@ -9,10 +9,10 @@
     <PackageProjectUrl></PackageProjectUrl>
     <RepositoryUrl>https://github.com/jdevl32/JDevl32/JDevl32.Web</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Make view model unique item type covariant.</PackageReleaseNotes>
-    <Version>1.0.7.1</Version>
-    <FileVersion>1.0.7.1</FileVersion>
-    <AssemblyVersion>1.0.7.1</AssemblyVersion>
+    <PackageReleaseNotes>Add (missing) HTTP method attribute specification(s).</PackageReleaseNotes>
+    <Version>1.0.8.1</Version>
+    <FileVersion>1.0.8.1</FileVersion>
+    <AssemblyVersion>1.0.8.1</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

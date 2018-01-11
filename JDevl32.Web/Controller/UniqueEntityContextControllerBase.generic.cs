@@ -100,9 +100,9 @@ namespace JDevl32.Web.Controller
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Add (missing) HTTP method attribute specification(s).
+		/// Correct HTTP method attribute specification(s).
 		/// </remarks>
-		[HttpDelete("/*", Name = "RemoveAll")]
+		[HttpDelete("*", Name = "RemoveAll")]
 		public virtual async Task<IActionResult> Delete()
 		{
 			try

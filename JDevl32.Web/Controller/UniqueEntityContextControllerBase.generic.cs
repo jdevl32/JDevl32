@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
-using JDevl32.Entity.Interface;
-using JDevl32.Entity.Model;
 using JDevl32.Web.Controller.Interface;
 using JDevl32.Web.Repository.Interface;
-using JDevl32.Web.ViewModel.Interface;
+using JDevl32.Web.ViewModel;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -20,38 +18,24 @@ namespace JDevl32.Web.Controller
 	/// <typeparam name="TDerivedClass">
 	/// This should be the type of the derived class from this base class (for the logger).
 	/// </typeparam>
-	/// <typeparam name="TUnique">
-	/// The unique item type.
-	/// </typeparam>
-	/// <typeparam name="TUniqueEntity">
-	/// The unique item entity type.
-	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
-	/// Add unique item entity type.
+	/// Remove unique item (and entity) type(s).
 	/// </remarks>
-	public abstract class UniqueEntityContextControllerBase<TDerivedClass, TUnique, TUniqueEntity>
+	public abstract class UniqueEntityContextControllerBase<TDerivedClass>
 		:
 		ControllerBase<TDerivedClass>
 		,
-		IUniqueController<TUnique>
+		IUniqueController
 		where
 			TDerivedClass
 			:
 			class
-		where
-			TUnique
-			:
-			IUnique
-		where
-			TUniqueEntity
-			:
-			UniqueBase
 	{
 
 #region Property
 
-#region IUniqueController<TUnique>
+#region IUniqueController
 
 		/// <inheritdoc />
 		/// <remarks>
@@ -69,7 +53,7 @@ namespace JDevl32.Web.Controller
 		/// Remove derived class type.
 		/// Add unique item entity type.
 		/// </remarks>
-		public virtual IUniqueEntityContextRepository<TUnique, TUniqueEntity> UniqueEntityContextRepository { get; }
+		public virtual IUniqueEntityContextRepository UniqueEntityContextRepository { get; }
 
 #endregion
 
@@ -78,10 +62,9 @@ namespace JDevl32.Web.Controller
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Remove derived class type from unique entity context repository.
-		/// Add unique item entity type to unique entity context repository.
+		/// Remove unique item (and entity) type(s) from unique entity context repository.
 		/// </remarks>
-		protected UniqueEntityContextControllerBase(IHostingEnvironment hostingEnvironment, ILogger<TDerivedClass> logger, IMapper mapper,  IUniqueEntityContextRepository<TUnique, TUniqueEntity> uniqueEntityContextRepository, string displayName)
+		protected UniqueEntityContextControllerBase(IHostingEnvironment hostingEnvironment, ILogger<TDerivedClass> logger, IMapper mapper,  IUniqueEntityContextRepository uniqueEntityContextRepository, string displayName)
 			:
 			base(hostingEnvironment, logger, mapper)
 		{
@@ -135,16 +118,16 @@ namespace JDevl32.Web.Controller
 		/// Add (missing) HTTP method attribute specification(s).
 		/// </remarks>
 		[HttpDelete]
-		public virtual async Task<IActionResult> Delete(IUniqueViewModel<TUnique> uniqueViewModel)
+		public virtual async Task<IActionResult> Delete(UniqueViewModelBase uniqueViewModel)
 		{
 			try
 			{
 				if (ModelState.IsValid)
 				{
-					var uniqueItem = uniqueViewModel.Map();
-					//uniqueItem.UserName = User.Identity.Name;
+					// todo|jdevl32: ???
+					//uniqueViewModel.UserName = User.Identity.Name;
 
-					UniqueEntityContextRepository.Remove(uniqueItem);
+					UniqueEntityContextRepository.Remove(uniqueViewModel);
 
 					if (await UniqueEntityContextRepository.SaveChangesAsync())
 					{
@@ -174,7 +157,7 @@ namespace JDevl32.Web.Controller
 		{
 			try
 			{
-				return Ok(Mapper.Map<IEnumerable<IUniqueViewModel<TUnique>>>(UniqueEntityContextRepository.Get()));
+				return Ok(Mapper.Map<IEnumerable<UniqueViewModelBase>>(UniqueEntityContextRepository.Get()));
 			} // try
 			catch (Exception ex)
 			{
@@ -190,29 +173,28 @@ namespace JDevl32.Web.Controller
 		/// Add (missing) HTTP method attribute specification(s).
 		/// </remarks>
 		[HttpPost]
-		public virtual async Task<IActionResult> Post(IUniqueViewModel<TUnique> uniqueViewModel)
+		public virtual async Task<IActionResult> Post(UniqueViewModelBase uniqueViewModel)
 		{
 			// todo|jdevl32: contant(s)...
 			try
 			{
 				if (ModelState.IsValid)
 				{
-					var uniqueItem = uniqueViewModel.Map();
-					//uniqueItem.UserName = User.Identity.Name;
+					//uniqueViewModel.UserName = User.Identity.Name;
 
-					UniqueEntityContextRepository.Update(uniqueItem);
+					UniqueEntityContextRepository.Update(uniqueViewModel);
 
 					if (await UniqueEntityContextRepository.SaveChangesAsync())
 					{
 						// todo|jdevl32: !!! revisit this !!!
 						/**
 						// Use map in case database modified the unique item in any way.
-						var value = Mapper.Map<IUniqueViewModel<TUnique>>(uniqueItem);
+						var value = Mapper.Map<IUniqueViewModel<TUnique>>(uniqueViewModel);
 
 						return Accepted($"{Request.Path.Value}/{value.Id}", value);
 						/**/
 						// todo|jdevl32: ??? does this work for add/new ???
-						return Accepted($"{Request.Path.Value}/{uniqueItem.Id}", uniqueItem);
+						return Accepted($"{Request.Path.Value}/{uniqueViewModel.Id}", uniqueViewModel);
 					} // if
 				} // if
 				else if (HostingEnvironment.IsDevelopment())

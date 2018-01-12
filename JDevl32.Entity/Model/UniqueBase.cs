@@ -8,7 +8,7 @@ namespace JDevl32.Entity.Model
 	/// <inheritdoc />
 	/// <remarks>
 	/// Last modification:
-	/// Add default (parameterless) consctructor (required by Entity Framework).
+	/// Remove constructor(s).
 	/// </remarks>
 	public abstract class UniqueBase
 		:

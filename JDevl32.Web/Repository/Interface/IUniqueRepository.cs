@@ -11,27 +11,10 @@ namespace JDevl32.Web.Repository.Interface
 	/// <summary>
 	/// A (generic) unique item repository.
 	/// </summary>
-	/// <typeparam name="TUnique">
-	/// The unique item type.
-	/// </typeparam>
-	/// <typeparam name="TUniqueEntity">
-	/// The unique item entity type.
-	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
-	/// Add unique item controller (for display name).
-	/// Add method to get unique item entity db-set.
-	/// Add unique item entity type.
 	/// </remarks>
-	public interface IUniqueRepository<TUnique, TUniqueEntity>
-		where
-			TUnique
-			:
-			IUnique
-		where
-			TUniqueEntity
-			:
-			UniqueBase
+	public interface IUniqueRepository
 	{
 
 #region Property
@@ -42,7 +25,7 @@ namespace JDevl32.Web.Repository.Interface
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
-		Func<DbSet<TUniqueEntity>> GetUniqueEntityDbSet { get; set; }
+		Func<DbSet<UniqueBase>> GetUniqueEntityDbSet { get; set; }
 
 		/// <summary>
 		/// A unique item controller.
@@ -50,7 +33,7 @@ namespace JDevl32.Web.Repository.Interface
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
-		IUniqueController<TUnique> UniqueController { get; set; }
+		IUniqueController UniqueController { get; set; }
 
 #endregion
 
@@ -63,7 +46,7 @@ namespace JDevl32.Web.Repository.Interface
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
-		IEnumerable<TUnique> Get();
+		IEnumerable<IUnique> Get();
 
 		/// <summary>
 		/// Remove (all) the unique item(s).
@@ -79,7 +62,7 @@ namespace JDevl32.Web.Repository.Interface
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
-		void Remove(TUnique uniqueItem);
+		void Remove(IUnique uniqueItem);
 
 		/// <summary>
 		/// Update the unique item.
@@ -88,7 +71,7 @@ namespace JDevl32.Web.Repository.Interface
 		/// Update is either add or modify (depending on existence).
 		/// Last modification:
 		/// </remarks>
-		void Update(TUnique uniqueItem);
+		void Update(IUnique uniqueItem);
 
 	}
 

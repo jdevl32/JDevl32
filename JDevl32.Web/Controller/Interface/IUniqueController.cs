@@ -1,5 +1,4 @@
-﻿using JDevl32.Entity.Interface;
-using JDevl32.Web.ViewModel.Interface;
+﻿using JDevl32.Web.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -10,19 +9,12 @@ namespace JDevl32.Web.Controller.Interface
 	/// <summary>
 	/// A unique item controller.
 	/// </summary>
-	/// <typeparam name="TUnique">
-	/// The unique item type.
-	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
 	/// </remarks>
-	public interface IUniqueController<TUnique>
+	public interface IUniqueController
 		:
 		IController
-		where
-			TUnique
-			:
-			IUnique
 	{
 
 #region Property
@@ -43,7 +35,7 @@ namespace JDevl32.Web.Controller.Interface
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
-		IUniqueRepository<TUnique> UniqueRepository { get; }
+		IUniqueRepository UniqueRepository { get; }
 		/**/
 
 #endregion
@@ -73,7 +65,7 @@ namespace JDevl32.Web.Controller.Interface
 		/// Last modification:
 		/// </remarks>
 		[HttpDelete]
-		Task<IActionResult> Delete([FromBody] IUniqueViewModel<TUnique> uniqueViewModel);
+		Task<IActionResult> Delete([FromBody] UniqueViewModelBase uniqueViewModel);
 
 		/// <summary>
 		/// Get (all) the unique item(s).
@@ -100,7 +92,7 @@ namespace JDevl32.Web.Controller.Interface
 		/// Last modification:
 		/// </remarks>
 		[HttpPost]
-		Task<IActionResult> Post([FromBody] IUniqueViewModel<TUnique> uniqueViewModel);
+		Task<IActionResult> Post([FromBody] UniqueViewModelBase uniqueViewModel);
 
 	}
 

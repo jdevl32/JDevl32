@@ -21,20 +21,15 @@ namespace JDevl32.Web.Repository
 	/// <typeparam name="TEntityContext">
 	/// The entity context type.
 	/// </typeparam>
-	/// <typeparam name="TUnique">
-	/// The unique item type.
-	/// </typeparam>
-	/// <typeparam name="TUniqueEntity">
-	/// The unique item entity type.
-	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
+	/// Remove unique item (and entity) type(s).
 	/// </remarks>
-	public abstract class UniqueEntityContextRepositoryBase<TDerivedClass, TEntityContext, TUnique, TUniqueEntity>
+	public abstract class UniqueEntityContextRepositoryBase<TDerivedClass, TEntityContext>
 		:
 		EntityContextRepositoryBase<TDerivedClass, TEntityContext>
 		,
-		IUniqueEntityContextRepository<TUnique, TUniqueEntity>
+		IUniqueEntityContextRepository
 		where
 			TDerivedClass
 			:
@@ -45,14 +40,6 @@ namespace JDevl32.Web.Repository
 			DbContext
 			,
 			IEntityContext
-		where
-			TUnique
-			:
-			IUnique
-		where
-			TUniqueEntity
-			:
-			UniqueBase
 	{
 
 #region Property
@@ -69,27 +56,19 @@ namespace JDevl32.Web.Repository
 
 #endregion
 
-#region ILoggable<TDerivedClass>
-
-#endregion
-
-#region IInstanceMapper
-
-#endregion
-
-#region IUniqueRepository<TUnique, TUniqueEntity>
+#region IUniqueRepository
 
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
-		public Func<DbSet<TUniqueEntity>> GetUniqueEntityDbSet { get; set; }
+		public Func<DbSet<UniqueBase>> GetUniqueEntityDbSet { get; set; }
 
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
-		public IUniqueController<TUnique> UniqueController { get; set; }
+		public IUniqueController UniqueController { get; set; }
 
 		#endregion
 
@@ -120,9 +99,9 @@ namespace JDevl32.Web.Repository
 		/// </param>
 		/// <remarks>
 		/// Last modification:
-		/// Add the method to get the db-set of all (the) unique item entity item(s) as an argument.
+		/// Remove unique item (and entity) type(s).
 		/// </remarks>
-		protected UniqueEntityContextRepositoryBase(TEntityContext entityContext, ILogger<TDerivedClass> logger, IMapper mapper, Func<DbSet<TUniqueEntity>> getUniqueEntityDbSet)
+		protected UniqueEntityContextRepositoryBase(TEntityContext entityContext, ILogger<TDerivedClass> logger, IMapper mapper, Func<DbSet<UniqueBase>> getUniqueEntityDbSet)
 			:
 			base(entityContext, logger, mapper)
 		{
@@ -141,11 +120,11 @@ namespace JDevl32.Web.Repository
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
-		public IEnumerable<TUnique> Get()
+		public IEnumerable<IUnique> Get()
 		{
 			Logger.LogInformation($"Get (all) the {UniqueController.DisplayName}(s) from the entity context...");
 
-			return Mapper.Map<IEnumerable<TUnique>>(GetUniqueEntityDbSet().ToList());
+			return Mapper.Map<IEnumerable<IUnique>>(GetUniqueEntityDbSet().ToList());
 		}
 
 		/// <inheritdoc />
@@ -163,22 +142,22 @@ namespace JDevl32.Web.Repository
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
-		public void Remove(TUnique uniqueItem)
+		public void Remove(IUnique uniqueItem)
 		{
 			Logger.LogInformation($"Remove the {UniqueController.DisplayName} ({uniqueItem}) from the entity context...");
 
-			GetUniqueEntityDbSet().Remove(Mapper.Map<TUniqueEntity>(uniqueItem));
+			GetUniqueEntityDbSet().Remove(Mapper.Map<UniqueBase>(uniqueItem));
 		}
 
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
-		public void Update(TUnique uniqueItem)
+		public void Update(IUnique uniqueItem)
 		{
 			Logger.LogInformation($"Update the entity context with the {UniqueController.DisplayName} ({uniqueItem})...");
 
-			GetUniqueEntityDbSet().Update(Mapper.Map<TUniqueEntity>(uniqueItem));
+			GetUniqueEntityDbSet().Update(Mapper.Map<UniqueBase>(uniqueItem));
 		}
 
 #endregion

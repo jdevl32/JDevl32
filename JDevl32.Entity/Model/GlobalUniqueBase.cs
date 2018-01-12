@@ -20,6 +20,8 @@ namespace JDevl32.Entity.Model
 		IGlobalUnique
 	{
 
+#region Property
+
 #region IGlobalUnique
 
 		/// <inheritdoc />
@@ -37,6 +39,23 @@ namespace JDevl32.Entity.Model
 
 #endregion
 
+#region IUnique
+
+		// todo|jdevl32: is this necessary ???
+		/// <inheritdoc />
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		int IUnique.Id
+		{
+			get => Id.GetHashCode();
+			set => throw new NotImplementedException();
+		}
+
+#endregion
+
+#endregion
+
 #region Instance Initialization
 
 		/// <inheritdoc />
@@ -45,22 +64,31 @@ namespace JDevl32.Entity.Model
 		/// </summary>
 		/// <remarks>
 		/// Last modification:
+		/// Remove (unnecessary) overloaded constructor(s).
 		/// </remarks>
 		protected GlobalUniqueBase()
-			:
-			this(Guid.NewGuid())
 		{
+			Id = Guid.NewGuid();
 		}
 
+		// todo|jdevl32: cleanup...
+		/**
 		/// <inheritdoc />
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
 		protected GlobalUniqueBase(Guid id)
 			:
 			base(id.GetHashCode()) => Id = id;
 
 		/// <inheritdoc />
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
 		protected GlobalUniqueBase(Guid id, string shortName, string fullName, string description)
 			:
 			base(id.GetHashCode(), shortName, fullName, description) => Id = id;
+		/**/
 
 #endregion
 

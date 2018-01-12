@@ -49,6 +49,8 @@ namespace JDevl32.Entity.Model
 
 #region Instance Initialization
 
+		// todo|jdevl32: cleanup...
+		/**
 		/// <summary>
 		/// Create a unique item.
 		/// </summary>
@@ -114,6 +116,7 @@ namespace JDevl32.Entity.Model
 			FullName = fullName;
 			Description = description;
 		}
+		/**/
 
 #endregion
 

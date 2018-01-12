@@ -8,8 +8,9 @@
     <Copyright>Copyright © 2017 Jeremy Paiz</Copyright>
     <RepositoryUrl>https://github.com/jdevl32/JDevl32/JDevl32.Entity</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Add database generated identity annotation.</PackageReleaseNotes>
-    <Version>1.0.5.1</Version>
+    <PackageReleaseNotes>Remove (unnecessary) overloaded constructor(s).
+Inherit unique (item) (base class).</PackageReleaseNotes>
+    <Version>1.0.6.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,20 +1,23 @@
 ﻿using AutoMapper;
 using JDevl32.Entity.Interface;
+using JDevl32.Entity.Model;
 using JDevl32.Web.ViewModel.Interface;
 
 namespace JDevl32.Web.ViewModel
 {
 
-	/// <inheritdoc />
 	/// <typeparam name="TUnique">
 	/// The unique item type.
 	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
+	/// Inherit unique (item) (base class).
 	/// </remarks>
 	public abstract class UniqueViewModelBase<TUnique>
-		// todo|jdevl32 ??? not possible (without actual interface) ???
 		:
+		UniqueBase
+		,
+		// todo|jdevl32 ??? not possible (without actual interface) ???
 		//TUnique
 		//,
 		//IUnique

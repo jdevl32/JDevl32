@@ -91,7 +91,7 @@ namespace JDevl32.Web.Repository
 		/// </remarks>
 		public IUniqueController<TUnique> UniqueController { get; set; }
 
-#endregion
+		#endregion
 
 		///// <summary>
 		///// The entity context.
@@ -115,13 +115,18 @@ namespace JDevl32.Web.Repository
 		/// <param name="mapper">
 		/// The mapper.
 		/// </param>
+		/// <param name="getUniqueEntityDbSet">
+		/// The method to get the db-set of unique item entity item(s).
+		/// </param>
 		/// <remarks>
 		/// Last modification:
+		/// Add the method to get the db-set of all (the) unique item entity item(s) as an argument.
 		/// </remarks>
-		protected UniqueEntityContextRepositoryBase(TEntityContext entityContext, ILogger<TDerivedClass> logger, IMapper mapper)
+		protected UniqueEntityContextRepositoryBase(TEntityContext entityContext, ILogger<TDerivedClass> logger, IMapper mapper, Func<DbSet<TUniqueEntity>> getUniqueEntityDbSet)
 			:
 			base(entityContext, logger, mapper)
 		{
+			GetUniqueEntityDbSet = getUniqueEntityDbSet;
 		}
 
 #endregion

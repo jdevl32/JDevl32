@@ -2,7 +2,6 @@
 using JDevl32.Entity.Model;
 using JDevl32.Web.Controller.Interface;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 
 namespace JDevl32.Web.Repository.Interface
@@ -13,19 +12,12 @@ namespace JDevl32.Web.Repository.Interface
 	/// </summary>
 	/// <remarks>
 	/// Last modification:
+	/// Replace method to get a db-set of (all) the unique item entity items(s) with property.
 	/// </remarks>
 	public interface IUniqueRepository
 	{
 
 #region Property
-
-		/// <summary>
-		/// A method that returns a db-set of (all) the unique item entity item(s).
-		/// </summary>
-		/// <remarks>
-		/// Last modification:
-		/// </remarks>
-		Func<DbSet<UniqueBase>> GetUniqueEntityDbSet { get; set; }
 
 		/// <summary>
 		/// A unique item controller.
@@ -34,6 +26,14 @@ namespace JDevl32.Web.Repository.Interface
 		/// Last modification:
 		/// </remarks>
 		IUniqueController UniqueController { get; set; }
+
+		/// <summary>
+		/// The db-set of (all) the unique item entity item(s).
+		/// </summary>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		DbSet<UniqueBase> UniqueDbSet { get; }
 
 #endregion
 

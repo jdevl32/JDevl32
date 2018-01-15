@@ -5,7 +5,6 @@ using JDevl32.Web.Controller.Interface;
 using JDevl32.Web.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -62,15 +61,16 @@ namespace JDevl32.Web.Repository
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
-		public Func<DbSet<UniqueBase>> GetUniqueEntityDbSet { get; set; }
+		public IUniqueController UniqueController { get; set; }
 
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
+		/// Replace method to get a db-set of (all) the unique item entity items(s) with property.
 		/// </remarks>
-		public IUniqueController UniqueController { get; set; }
+		public DbSet<UniqueBase> UniqueDbSet { get; }
 
-		#endregion
+#endregion
 
 		///// <summary>
 		///// The entity context.
@@ -94,18 +94,18 @@ namespace JDevl32.Web.Repository
 		/// <param name="mapper">
 		/// The mapper.
 		/// </param>
-		/// <param name="getUniqueEntityDbSet">
-		/// The method to get the db-set of unique item entity item(s).
+		/// <param name="uniqueDbSet">
+		/// The db-set of unique item entity item(s).
 		/// </param>
 		/// <remarks>
 		/// Last modification:
-		/// Remove unique item (and entity) type(s).
+		/// Replace method to get a db-set of (all) the unique item entity items(s) with property.
 		/// </remarks>
-		protected UniqueEntityContextRepositoryBase(TEntityContext entityContext, ILogger<TDerivedClass> logger, IMapper mapper, Func<DbSet<UniqueBase>> getUniqueEntityDbSet)
+		protected UniqueEntityContextRepositoryBase(TEntityContext entityContext, ILogger<TDerivedClass> logger, IMapper mapper, DbSet<UniqueBase> uniqueDbSet)
 			:
 			base(entityContext, logger, mapper)
 		{
-			GetUniqueEntityDbSet = getUniqueEntityDbSet;
+			UniqueDbSet = uniqueDbSet;
 		}
 
 #endregion
@@ -119,45 +119,49 @@ namespace JDevl32.Web.Repository
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
+		/// Replace method to get a db-set of (all) the unique item entity items(s) with property.
 		/// </remarks>
 		public IEnumerable<IUnique> Get()
 		{
 			Logger.LogInformation($"Get (all) the {UniqueController.DisplayName}(s) from the entity context...");
 
-			return Mapper.Map<IEnumerable<IUnique>>(GetUniqueEntityDbSet().ToList());
+			return Mapper.Map<IEnumerable<IUnique>>(UniqueDbSet.ToList());
 		}
 
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
+		/// Replace method to get a db-set of (all) the unique item entity items(s) with property.
 		/// </remarks>
 		public void Remove()
 		{
 			Logger.LogInformation($"Remove (all) the {UniqueController.DisplayName}(s) from the entity context...");
 
-			GetUniqueEntityDbSet().RemoveRange(GetUniqueEntityDbSet().ToList());
+			UniqueDbSet.RemoveRange(UniqueDbSet.ToList());
 		}
 
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
+		/// Replace method to get a db-set of (all) the unique item entity items(s) with property.
 		/// </remarks>
 		public void Remove(IUnique uniqueItem)
 		{
 			Logger.LogInformation($"Remove the {UniqueController.DisplayName} ({uniqueItem}) from the entity context...");
 
-			GetUniqueEntityDbSet().Remove(Mapper.Map<UniqueBase>(uniqueItem));
+			UniqueDbSet.Remove(Mapper.Map<UniqueBase>(uniqueItem));
 		}
 
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
+		/// Replace method to get a db-set of (all) the unique item entity items(s) with property.
 		/// </remarks>
 		public void Update(IUnique uniqueItem)
 		{
 			Logger.LogInformation($"Update the entity context with the {UniqueController.DisplayName} ({uniqueItem})...");
 
-			GetUniqueEntityDbSet().Update(Mapper.Map<UniqueBase>(uniqueItem));
+			UniqueDbSet.Update(Mapper.Map<UniqueBase>(uniqueItem));
 		}
 
 #endregion

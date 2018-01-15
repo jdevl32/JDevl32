@@ -9,13 +9,10 @@
     <PackageProjectUrl></PackageProjectUrl>
     <RepositoryUrl>https://github.com/jdevl32/JDevl32/JDevl32.Web</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Remove (in favor of non-)generic unique item controller and entity context (and repository) interface(s).
-Remove unique item (and entity) type(s) from unique entity context controller and repository (base class(es)).
-Remove (generic) unique item view model interface.
-Re-implement id as protected (from view model).</PackageReleaseNotes>
-    <Version>1.0.11.1</Version>
-    <FileVersion>1.0.11.1</FileVersion>
-    <AssemblyVersion>1.0.11.1</AssemblyVersion>
+    <PackageReleaseNotes>Replace method to get a db-set of (all) the unique item entity items(s) with property.</PackageReleaseNotes>
+    <Version>1.0.12.1</Version>
+    <FileVersion>1.0.12.1</FileVersion>
+    <AssemblyVersion>1.0.12.1</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

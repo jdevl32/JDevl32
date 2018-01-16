@@ -9,10 +9,10 @@
     <PackageProjectUrl></PackageProjectUrl>
     <RepositoryUrl>https://github.com/jdevl32/JDevl32/JDevl32.Web</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Replace method to get a db-set of (all) the unique item entity items(s) with property.</PackageReleaseNotes>
-    <Version>1.0.12.1</Version>
-    <FileVersion>1.0.12.1</FileVersion>
-    <AssemblyVersion>1.0.12.1</AssemblyVersion>
+    <PackageReleaseNotes>Enhance/add exception handling.</PackageReleaseNotes>
+    <Version>1.0.12.2</Version>
+    <FileVersion>1.0.12.2</FileVersion>
+    <AssemblyVersion>1.0.12.2</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

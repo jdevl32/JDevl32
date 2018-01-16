@@ -5,6 +5,7 @@ using JDevl32.Web.Controller.Interface;
 using JDevl32.Web.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -119,49 +120,133 @@ namespace JDevl32.Web.Repository
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Replace method to get a db-set of (all) the unique item entity items(s) with property.
+		/// Add exception handling.
 		/// </remarks>
 		public IEnumerable<IUnique> Get()
 		{
-			Logger.LogInformation($"Get (all) the {UniqueController.DisplayName}(s) from the entity context...");
+			var introAction = nameof(Get);
+			var errorAction = "retrieving";
+			var info = string.Empty;
 
-			return Mapper.Map<IEnumerable<IUnique>>(UniqueDbSet.ToList());
+			try
+			{
+				info = $" (all) the {UniqueController.DisplayName}(s) from the entity context";
+			} // try
+			catch (Exception ex)
+			{
+				Logger.LogError(ex, string.Empty);
+			} // catch
+
+			Logger.LogInformation($"{introAction}{info}...");
+
+			try
+			{
+				return Mapper.Map<IEnumerable<IUnique>>(UniqueDbSet.ToList());
+			} // try
+			catch (Exception ex)
+			{
+				Logger.LogError(ex, $"Error {errorAction}{info}:  {ex}");
+				throw;
+			} // catch
 		}
 
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Replace method to get a db-set of (all) the unique item entity items(s) with property.
+		/// Add exception handling.
 		/// </remarks>
 		public void Remove()
 		{
-			Logger.LogInformation($"Remove (all) the {UniqueController.DisplayName}(s) from the entity context...");
+			var introAction = nameof(Remove);
+			var errorAction = "removing";
+			var info = string.Empty;
 
-			UniqueDbSet.RemoveRange(UniqueDbSet.ToList());
+			try
+			{
+				info = $" (all) the {UniqueController.DisplayName}(s) from the entity context";
+			} // try
+			catch (Exception ex)
+			{
+				Logger.LogError(ex, string.Empty);
+			} // catch
+
+			Logger.LogInformation($"{introAction}{info}...");
+
+			try
+			{
+				UniqueDbSet.RemoveRange(UniqueDbSet.ToList());
+			} // try
+			catch (Exception ex)
+			{
+				Logger.LogError(ex, $"Error {errorAction}{info}:  {ex}");
+				throw;
+			} // catch
 		}
 
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Replace method to get a db-set of (all) the unique item entity items(s) with property.
+		/// Add exception handling.
 		/// </remarks>
 		public void Remove(IUnique uniqueItem)
 		{
-			Logger.LogInformation($"Remove the {UniqueController.DisplayName} ({uniqueItem}) from the entity context...");
+			var introAction = nameof(Remove);
+			var errorAction = "removing";
+			var info = string.Empty;
 
-			UniqueDbSet.Remove(Mapper.Map<UniqueBase>(uniqueItem));
+			try
+			{
+				info = $" the {UniqueController.DisplayName} ({uniqueItem}) from the entity context";
+			} // try
+			catch (Exception ex)
+			{
+				Logger.LogError(ex, string.Empty);
+			} // catch
+
+			Logger.LogInformation($"{introAction}{info}...");
+
+			try
+			{
+				UniqueDbSet.Remove(Mapper.Map<UniqueBase>(uniqueItem));
+			} // try
+			catch (Exception ex)
+			{
+				Logger.LogError(ex, $"Error {errorAction}{info}:  {ex}");
+				throw;
+			} // catch
 		}
 
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Replace method to get a db-set of (all) the unique item entity items(s) with property.
+		/// Add exception handling.
 		/// </remarks>
 		public void Update(IUnique uniqueItem)
 		{
-			Logger.LogInformation($"Update the entity context with the {UniqueController.DisplayName} ({uniqueItem})...");
+			var introAction = nameof(Update);
+			var errorAction = "updating";
+			var info = string.Empty;
 
-			UniqueDbSet.Update(Mapper.Map<UniqueBase>(uniqueItem));
+			try
+			{
+				info = $" the entity context with the {UniqueController.DisplayName} ({uniqueItem})";
+			} // try
+			catch (Exception ex)
+			{
+				Logger.LogError(ex, string.Empty);
+			} // catch
+
+			Logger.LogInformation($"{introAction}{info}...");
+
+			try
+			{
+				UniqueDbSet.Update(Mapper.Map<UniqueBase>(uniqueItem));
+			} // try
+			catch (Exception ex)
+			{
+				Logger.LogError(ex, $"Error {errorAction}{info}:  {ex}");
+				throw;
+			} // catch
 		}
 
 #endregion

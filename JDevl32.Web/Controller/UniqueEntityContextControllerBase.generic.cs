@@ -83,68 +83,82 @@ namespace JDevl32.Web.Controller
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Correct HTTP method attribute specification(s).
+		/// Enhance exception handling.
 		/// </remarks>
 		[HttpDelete("*", Name = "RemoveAll")]
 		public virtual async Task<IActionResult> Delete()
 		{
-			try
-			{
-				if (ModelState.IsValid)
-				{
-					UniqueEntityContextRepository.Remove();
-
-					if (await UniqueEntityContextRepository.SaveChangesAsync())
+			// todo|jdevl32: contant(s)...
+			var task =
+				new Task<IActionResult>
+				(
+					() =>
 					{
-						return Ok();
-					} // if
-				} // if
-				else if (HostingEnvironment.IsDevelopment())
-				{
-					return BadRequest(ModelState);
-				} // if
-			} // try
-			catch (Exception exception)
-			{
-				Logger.LogError($"Error removing (all) the {DisplayName}(s) from the repository:  {exception}");
-			} // catch
+						if (ModelState.IsValid)
+						{
+							UniqueEntityContextRepository.Remove();
 
-			return BadRequest();
+							var saveChangesAsync = UniqueEntityContextRepository.SaveChangesAsync();
+							saveChangesAsync.Wait();
+
+							if (saveChangesAsync.Result)
+							{
+								return Ok();
+							} // if
+						} // if
+						else if (HostingEnvironment.IsDevelopment())
+						{
+							return BadRequest(ModelState);
+						} // if
+
+						return BadRequest();
+					}
+				)
+			;
+
+			return await Do(GetInfo(nameof(Delete), "from"), "removing", task);
 		}
 
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Add (missing) HTTP method attribute specification(s).
+		/// Enhance exception handling.
 		/// </remarks>
 		[HttpDelete]
 		public virtual async Task<IActionResult> Delete(UniqueViewModelBase uniqueViewModel)
 		{
-			try
-			{
-				if (ModelState.IsValid)
-				{
-					// todo|jdevl32: ???
-					//uniqueViewModel.UserName = User.Identity.Name;
+			// todo|jdevl32: contant(s)...
+			var task =
+				new Task<IActionResult>
+					(
+						() =>
+						{
+							if (ModelState.IsValid)
+							{
+								// todo|jdevl32: ???
+								//uniqueViewModel.UserName = User.Identity.Name;
 
-					UniqueEntityContextRepository.Remove(uniqueViewModel);
+								UniqueEntityContextRepository.Remove(uniqueViewModel);
 
-					if (await UniqueEntityContextRepository.SaveChangesAsync())
-					{
-						return Ok();
-					} // if
-				} // if
-				else if (HostingEnvironment.IsDevelopment())
-				{
-					return BadRequest(ModelState);
-				} // if
-			} // try
-			catch (Exception exception)
-			{
-				Logger.LogError($"Error removing the {DisplayName} ({uniqueViewModel}) from the repository:  {exception}");
-			} // catch
+								var saveChangesAsync = UniqueEntityContextRepository.SaveChangesAsync();
+								saveChangesAsync.Wait();
 
-			return BadRequest();
+								if (saveChangesAsync.Result)
+								{
+									return Ok();
+								} // if
+							} // if
+							else if (HostingEnvironment.IsDevelopment())
+							{
+								return BadRequest(ModelState);
+							} // if
+
+							return BadRequest();
+						}
+					)
+			;
+
+			return await Do(GetInfo(nameof(Delete), "from", uniqueViewModel), "removing", task);
 		}
 
 		/// <inheritdoc />
@@ -155,62 +169,226 @@ namespace JDevl32.Web.Controller
 		[HttpGet]
 		public virtual IActionResult Get()
 		{
-			try
-			{
-				return Ok(Mapper.Map<IEnumerable<UniqueViewModelBase>>(UniqueEntityContextRepository.Get()));
-			} // try
-			catch (Exception ex)
-			{
-				Logger.LogError(ex, $"Error retrieving (all) the {DisplayName}(s) from the repository:  {ex}");
-			} // catch
+			// todo|jdevl32: contant(s)...
+			var func = new Func<IActionResult>(() => Ok(Mapper.Map<IEnumerable<UniqueViewModelBase>>(UniqueEntityContextRepository.Get())));
 
-			return BadRequest();
+			return Do(GetInfo(nameof(Get), "from"), "retrieving", func);
 		}
 
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Add (missing) HTTP method attribute specification(s).
+		/// Enhance exception handling.
 		/// </remarks>
 		[HttpPost]
 		public virtual async Task<IActionResult> Post(UniqueViewModelBase uniqueViewModel)
 		{
 			// todo|jdevl32: contant(s)...
+			var task =
+				new Task<IActionResult>
+					(
+						() =>
+						{
+							if (ModelState.IsValid)
+							{
+								//uniqueViewModel.UserName = User.Identity.Name;
+
+								UniqueEntityContextRepository.Update(uniqueViewModel);
+
+								var saveChangesAsync = UniqueEntityContextRepository.SaveChangesAsync();
+								saveChangesAsync.Wait();
+
+								if (saveChangesAsync.Result)
+								{
+									// todo|jdevl32: !!! revisit this !!!
+									/**
+									// Use map in case database modified the unique item in any way.
+									var value = Mapper.Map<IUniqueViewModel<TUnique>>(uniqueViewModel);
+	
+									return Accepted($"{Request.Path.Value}/{value.Id}", value);
+									/**/
+									// todo|jdevl32: ??? does this work for add/new ???
+									return Accepted($"{Request.Path.Value}/{uniqueViewModel.Id}", uniqueViewModel);
+								} // if
+							} // if
+							else if (HostingEnvironment.IsDevelopment())
+							{
+								return BadRequest(ModelState);
+							} // if
+
+							return BadRequest();
+						}
+					)
+			;
+
+			return await Do(GetInfo(nameof(Post), "to", uniqueViewModel), "posting", task);
+		}
+
+#endregion
+
+		/// <summary>
+		/// Invoke a method, logging possible error information, and return the value (of the method invocation).
+		/// </summary>
+		/// <param name="info">
+		/// (Logging) information.
+		/// </param>
+		/// <param name="action">
+		/// An action to include in the (logging) information.
+		/// </param>
+		/// <param name="method">
+		/// A method to invoke.
+		/// </param>
+		/// <returns>
+		/// The value (of the method invocation).
+		/// </returns>
+		protected virtual IActionResult Do(string info, string action, Func<IActionResult> method)
+		{
 			try
 			{
-				if (ModelState.IsValid)
-				{
-					//uniqueViewModel.UserName = User.Identity.Name;
-
-					UniqueEntityContextRepository.Update(uniqueViewModel);
-
-					if (await UniqueEntityContextRepository.SaveChangesAsync())
-					{
-						// todo|jdevl32: !!! revisit this !!!
-						/**
-						// Use map in case database modified the unique item in any way.
-						var value = Mapper.Map<IUniqueViewModel<TUnique>>(uniqueViewModel);
-
-						return Accepted($"{Request.Path.Value}/{value.Id}", value);
-						/**/
-						// todo|jdevl32: ??? does this work for add/new ???
-						return Accepted($"{Request.Path.Value}/{uniqueViewModel.Id}", uniqueViewModel);
-					} // if
-				} // if
-				else if (HostingEnvironment.IsDevelopment())
-				{
-					return BadRequest(ModelState);
-				} // if
+				return method();
 			} // try
 			catch (Exception ex)
 			{
-				Logger.LogError($"Error posting the {DisplayName} ({uniqueViewModel}) to the repository:  {ex}");
+				Logger.LogError(ex, $"Error {action}{info}:  {ex}");
 			} // catch
 
 			return BadRequest();
 		}
 
-#endregion
+		/// <summary>
+		/// Await a task, logging possible error information, and return the result (of the task).
+		/// </summary>
+		/// <param name="info">
+		/// (Logging) information.
+		/// </param>
+		/// <param name="action">
+		/// An action to include in the (logging) information.
+		/// </param>
+		/// <param name="task">
+		/// A task to await.
+		/// </param>
+		/// <returns>
+		/// The result (of the task).
+		/// </returns>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		protected virtual async Task<IActionResult> Do(string info, string action, Task<IActionResult> task)
+		{
+			try
+			{
+				return await task;
+			} // try
+			catch (Exception ex)
+			{
+				Logger.LogError(ex, $"Error {action}{info}:  {ex}");
+			} // catch
+
+			return BadRequest();
+		}
+
+		/// <summary>
+		/// Get (logging) information.
+		/// </summary>
+		/// <param name="action">
+		/// An action to include in the (logging) information.
+		/// </param>
+		/// <param name="direction">
+		/// The direction that the (logging) information flows.
+		/// </param>
+		/// <returns>
+		/// The (logging) information.
+		/// </returns>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		protected virtual string GetInfo(string action, string direction) => GetInfo(action, () => GetInfo(direction));
+
+		/// <summary>
+		/// Get (logging) information.
+		/// </summary>
+		/// <param name="action">
+		/// An action to include in the (logging) information.
+		/// </param>
+		/// <param name="direction">
+		/// The direction that the (logging) information flows.
+		/// </param>
+		/// <param name="item">
+		/// An item to include in the (logging) information.
+		/// </param>
+		/// <returns>
+		/// The (logging) information.
+		/// </returns>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		protected virtual string GetInfo(string action, string direction, object item) => GetInfo(action, () => GetInfo(direction, item));
+
+		/// <summary>
+		/// Get (logging) information.
+		/// </summary>
+		/// <param name="action">
+		/// An action to include in the (logging) information.
+		/// </param>
+		/// <param name="method">
+		/// A method to get (logging) information.
+		/// </param>
+		/// <returns>
+		/// The (logging) information.
+		/// </returns>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		protected virtual string GetInfo(string action, Func<string> method)
+		{
+			Logger.LogInformation(action);
+
+			var info = string.Empty;
+
+			try
+			{
+				info = method();
+
+				Logger.LogInformation($"...{info}...");
+			} // try
+			catch (Exception ex)
+			{
+				Logger.LogError(ex, string.Empty);
+			} // catch
+
+			return info;
+		}
+
+		/// <summary>
+		/// Get (logging) information.
+		/// </summary>
+		/// <param name="direction">
+		/// The direction that the (logging) information flows.
+		/// </param>
+		/// <returns>
+		/// The (logging) information.
+		/// </returns>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		protected virtual string GetInfo(string direction) => $" (all) the {DisplayName}(s) {direction} the repository";
+
+		/// <summary>
+		/// Get (logging) information.
+		/// </summary>
+		/// <param name="direction">
+		/// The direction that the (logging) information flows.
+		/// </param>
+		/// <param name="item">
+		/// An item to include in the (logging) information.
+		/// </param>
+		/// <returns>
+		/// The (logging) information.
+		/// </returns>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		protected virtual string GetInfo(string direction, object item) => $" the {DisplayName} ({item}) {direction} the repository";
 
 	}
 

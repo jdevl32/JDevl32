@@ -1,12 +1,12 @@
-﻿using JDevl32.Entity.Interface;
-using JDevl32.Logging.Interface;
+﻿using System.Threading.Tasks;
+using JDevl32.Entity.Interface;
+using JDevl32.Logging.Interface.Generic;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
 
-namespace JDevl32.Entity
+namespace JDevl32.Entity.Generic
 {
 
 	/// <summary>

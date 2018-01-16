@@ -4,15 +4,12 @@ namespace JDevl32.Logging.Interface
 {
 
 	/// <inheritdoc />
-	/// <summary>
-	/// A loggable object.
-	/// </summary>
 	/// <remarks>
 	/// Last modification:
-	/// </remarks>
-	public interface ILoggable
+	/// </remarks>>
+	public interface IInformable
 		:
-		ILoggable<ILoggable>
+		IInformable<IInformable>
 	{
 	}
 

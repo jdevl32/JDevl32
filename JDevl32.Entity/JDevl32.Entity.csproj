@@ -8,9 +8,8 @@
     <Copyright>Copyright © 2017 Jeremy Paiz</Copyright>
     <RepositoryUrl>https://github.com/jdevl32/JDevl32/JDevl32.Entity</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Remove (unnecessary) overloaded constructor(s).
-Inherit unique (item) (base class).</PackageReleaseNotes>
-    <Version>1.0.6.1</Version>
+    <PackageReleaseNotes>Relocate (generic) interface(s) and implementation(s).</PackageReleaseNotes>
+    <Version>1.0.7.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

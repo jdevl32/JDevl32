@@ -1,7 +1,8 @@
-﻿using JDevl32.Entity;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using JDevl32.Entity;
+using JDevl32.Entity.Generic;
 
-namespace JDevl32.Web.Repository.Interface
+namespace JDevl32.Web.Repository.Interface.Generic
 {
 
 	/// <summary>

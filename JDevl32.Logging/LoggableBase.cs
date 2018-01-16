@@ -1,10 +1,15 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using JDevl32.Logging.Generic;
+using Microsoft.Extensions.Logging;
 
 namespace JDevl32.Logging
 {
 
 	/// <inheritdoc />
-	public class LoggableBase
+	/// <remarks>
+	/// Last modification:
+	/// (Correctly) make abstract.
+	/// </remarks>
+	public abstract class LoggableBase
 		:
 		LoggableBase<LoggableBase>
 	{
@@ -12,7 +17,11 @@ namespace JDevl32.Logging
 #region Instance Initialization
 
 		/// <inheritdoc />
-		public LoggableBase(ILogger<LoggableBase> logger)
+		/// <remarks>
+		/// Last modification:
+		/// (Correctly) make abstract/protected.
+		/// </remarks>
+		protected LoggableBase(ILogger<LoggableBase> logger)
 			:
 			base(logger)
 		{

@@ -5,7 +5,7 @@ namespace JDevl32.Web.Repository.Interface
 {
 
 	/// <summary>
-	/// 
+	/// An entity context repository.
 	/// </summary>
 	/// <remarks>
 	/// Last modification:

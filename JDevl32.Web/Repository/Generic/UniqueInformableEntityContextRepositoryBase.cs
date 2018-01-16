@@ -1,15 +1,15 @@
 ﻿using AutoMapper;
 using JDevl32.Entity.Interface;
 using JDevl32.Entity.Model;
-using JDevl32.Web.Controller.Interface;
-using JDevl32.Web.Repository.Interface;
+using JDevl32.Logging.Interface.Generic;
+using JDevl32.Web.Repository.Interface.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace JDevl32.Web.Repository
+namespace JDevl32.Web.Repository.Generic
 {
 
 	/// <summary>
@@ -23,13 +23,13 @@ namespace JDevl32.Web.Repository
 	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
-	/// Remove unique item (and entity) type(s).
+	/// Remove unique item controller.
 	/// </remarks>
-	public abstract class UniqueEntityContextRepositoryBase<TDerivedClass, TEntityContext>
+	public abstract class UniqueInformableEntityContextRepositoryBase<TDerivedClass, TEntityContext>
 		:
 		EntityContextRepositoryBase<TDerivedClass, TEntityContext>
 		,
-		IUniqueEntityContextRepository
+		IUniqueInformableEntityContextRepository<TDerivedClass>
 		where
 			TDerivedClass
 			:
@@ -56,13 +56,29 @@ namespace JDevl32.Web.Repository
 
 #endregion
 
-#region IUniqueRepository
+#region IInformable<out TDerivedClass>
 
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
+		/// (Re-)implement explicitly.
 		/// </remarks>
-		public IUniqueController UniqueController { get; set; }
+		string IInformable<TDerivedClass>.DisplayName => DisplayName;
+
+#endregion
+
+#region IUniqueInformableEntityContextRepository<out TDerivedClass>
+
+		/// <inheritdoc />
+		/// <remarks>
+		/// Last modification:
+		/// Add setter.
+		/// </remarks>
+		public string DisplayName{ get; set; }
+
+#endregion
+
+#region IUniqueRepository
 
 		/// <inheritdoc />
 		/// <remarks>
@@ -73,6 +89,7 @@ namespace JDevl32.Web.Repository
 
 #endregion
 
+		// todo|jdevl32: ???
 		///// <summary>
 		///// The entity context.
 		///// </summary>
@@ -102,7 +119,7 @@ namespace JDevl32.Web.Repository
 		/// Last modification:
 		/// Replace method to get a db-set of (all) the unique item entity items(s) with property.
 		/// </remarks>
-		protected UniqueEntityContextRepositoryBase(TEntityContext entityContext, ILogger<TDerivedClass> logger, IMapper mapper, DbSet<UniqueBase> uniqueDbSet)
+		protected UniqueInformableEntityContextRepositoryBase(TEntityContext entityContext, ILogger<TDerivedClass> logger, IMapper mapper, DbSet<UniqueBase> uniqueDbSet)
 			:
 			base(entityContext, logger, mapper)
 		{
@@ -111,12 +128,12 @@ namespace JDevl32.Web.Repository
 
 #endregion
 
-#region IUniqueRepository<TUnique, TUniqueEntity>
+#region IUniqueInformableEntityContextRepository<TDerivedClass>
 
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Add exception handling.
+		/// Refactor display name to informable (interface).
 		/// </remarks>
 		public IEnumerable<IUnique> Get()
 		{
@@ -126,7 +143,7 @@ namespace JDevl32.Web.Repository
 
 			try
 			{
-				info = $" (all) the {UniqueController.DisplayName}(s) from the entity context";
+				info = $" (all) the {DisplayName}(s) from the entity context";
 			} // try
 			catch (Exception ex)
 			{
@@ -149,7 +166,7 @@ namespace JDevl32.Web.Repository
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Add exception handling.
+		/// Refactor display name to informable (interface).
 		/// </remarks>
 		public void Remove()
 		{
@@ -159,7 +176,7 @@ namespace JDevl32.Web.Repository
 
 			try
 			{
-				info = $" (all) the {UniqueController.DisplayName}(s) from the entity context";
+				info = $" (all) the {DisplayName}(s) from the entity context";
 			} // try
 			catch (Exception ex)
 			{
@@ -182,7 +199,7 @@ namespace JDevl32.Web.Repository
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Add exception handling.
+		/// Refactor display name to informable (interface).
 		/// </remarks>
 		public void Remove(IUnique uniqueItem)
 		{
@@ -192,7 +209,7 @@ namespace JDevl32.Web.Repository
 
 			try
 			{
-				info = $" the {UniqueController.DisplayName} ({uniqueItem}) from the entity context";
+				info = $" the {DisplayName} ({uniqueItem}) from the entity context";
 			} // try
 			catch (Exception ex)
 			{
@@ -215,7 +232,7 @@ namespace JDevl32.Web.Repository
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Add exception handling.
+		/// Refactor display name to informable (interface).
 		/// </remarks>
 		public void Update(IUnique uniqueItem)
 		{
@@ -225,7 +242,7 @@ namespace JDevl32.Web.Repository
 
 			try
 			{
-				info = $" the entity context with the {UniqueController.DisplayName} ({uniqueItem})";
+				info = $" the entity context with the {DisplayName} ({uniqueItem})";
 			} // try
 			catch (Exception ex)
 			{

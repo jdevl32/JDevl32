@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using JDevl32.Web.Controller.Generic;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
 

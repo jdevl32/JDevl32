@@ -1,14 +1,20 @@
-﻿using JDevl32.Logging.Interface;
+﻿using JDevl32.Logging.Interface.Generic;
 using Microsoft.Extensions.Logging;
 
-namespace JDevl32.Logging
+namespace JDevl32.Logging.Generic
 {
 
 	/// <inheritdoc />
+	/// <remarks>
+	/// Last modification:
+	/// </remarks>
 	public abstract class LoggableBase<TDerivedClass>
 		:
 		ILoggable<TDerivedClass>
-		where TDerivedClass : class
+		where
+			TDerivedClass
+			:
+			class
 	{
 
 #region Property
@@ -16,6 +22,9 @@ namespace JDevl32.Logging
 #region ILoggable<TDerivedClass>
 
 		/// <inheritdoc />
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
 		public virtual ILogger<TDerivedClass> Logger { get; }
 
 #endregion

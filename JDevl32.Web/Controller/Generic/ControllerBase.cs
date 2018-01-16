@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using JDevl32.Logging.Interface;
+using JDevl32.Logging.Interface.Generic;
 using JDevl32.Mapper.Interface;
 using JDevl32.Web.Controller.Interface;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace JDevl32.Web.Controller
+namespace JDevl32.Web.Controller.Generic
 {
 
 	/// <summary>

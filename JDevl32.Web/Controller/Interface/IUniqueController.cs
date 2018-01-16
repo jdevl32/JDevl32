@@ -11,6 +11,7 @@ namespace JDevl32.Web.Controller.Interface
 	/// </summary>
 	/// <remarks>
 	/// Last modification:
+	/// Refactor display name to informable (interface).
 	/// </remarks>
 	public interface IUniqueController
 		:
@@ -18,14 +19,6 @@ namespace JDevl32.Web.Controller.Interface
 	{
 
 #region Property
-
-		/// <summary>
-		/// The display name for the unique item.
-		/// </summary>
-		/// <remarks>
-		/// Last modification:
-		/// </remarks>
-		string DisplayName { get; }
 
 		// todo|jdevl32: (if specified at all) needs to be refactored out into separate interface...
 		/**

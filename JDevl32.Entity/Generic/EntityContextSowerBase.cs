@@ -1,12 +1,12 @@
-﻿using AutoMapper;
+﻿using System.Threading.Tasks;
+using AutoMapper;
 using JDevl32.Entity.Interface;
-using JDevl32.Logging.Interface;
+using JDevl32.Logging.Interface.Generic;
 using JDevl32.Mapper.Interface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
 
-namespace JDevl32.Entity
+namespace JDevl32.Entity.Generic
 {
 
 	/// <summary>

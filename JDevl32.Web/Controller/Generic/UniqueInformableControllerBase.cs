@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using JDevl32.Logging.Extension;
+using JDevl32.Logging.Interface.Generic;
 using JDevl32.Web.Controller.Interface;
-using JDevl32.Web.Repository.Interface;
+using JDevl32.Web.Repository.Interface.Generic;
 using JDevl32.Web.ViewModel;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace JDevl32.Web.Controller
+namespace JDevl32.Web.Controller.Generic
 {
 
 	/// <summary>
@@ -20,11 +22,14 @@ namespace JDevl32.Web.Controller
 	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
-	/// Remove unique item (and entity) type(s).
+	/// Refactor display name to informable (interface).
+	/// Implement informable (interface).
 	/// </remarks>
-	public abstract class UniqueEntityContextControllerBase<TDerivedClass>
+	public abstract class UniqueInformableControllerBase<TDerivedClass>
 		:
 		ControllerBase<TDerivedClass>
+		,
+		IInformable<TDerivedClass>
 		,
 		IUniqueController
 		where
@@ -35,7 +40,7 @@ namespace JDevl32.Web.Controller
 
 #region Property
 
-#region IUniqueController
+#region IInformable<out TDerivedClass>
 
 		/// <inheritdoc />
 		/// <remarks>
@@ -46,14 +51,14 @@ namespace JDevl32.Web.Controller
 #endregion
 
 		/// <summary>
-		/// A unique item entity context repository.
+		/// A unique item informable entity context repository.
 		/// </summary>
 		/// <remarks>
 		/// Last modification:
-		/// Remove derived class type.
-		/// Add unique item entity type.
+		/// Add derived class type.
+		/// Refactor (rename).
 		/// </remarks>
-		public virtual IUniqueEntityContextRepository UniqueEntityContextRepository { get; }
+		public virtual IUniqueInformableEntityContextRepository<TDerivedClass> UniqueInformableEntityContextRepository { get; }
 
 #endregion
 
@@ -62,28 +67,30 @@ namespace JDevl32.Web.Controller
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Remove unique item (and entity) type(s) from unique entity context repository.
+		/// Remove unique item controller from unique entity context repository.
+		/// Add derived class type (to unique entity context repository).
+		/// Refactor display name to informable (interface).
+		/// Refactor (rename) repository.
 		/// </remarks>
-		protected UniqueEntityContextControllerBase(IHostingEnvironment hostingEnvironment, ILogger<TDerivedClass> logger, IMapper mapper,  IUniqueEntityContextRepository uniqueEntityContextRepository, string displayName)
+		protected UniqueInformableControllerBase(IHostingEnvironment hostingEnvironment, ILogger<TDerivedClass> logger, IMapper mapper, IUniqueInformableEntityContextRepository<TDerivedClass> uniqueInformableEntityContextRepository, string displayName)
 			:
 			base(hostingEnvironment, logger, mapper)
 		{
-			DisplayName = displayName;
-			UniqueEntityContextRepository = uniqueEntityContextRepository;
+			UniqueInformableEntityContextRepository = uniqueInformableEntityContextRepository;
 
-			// todo|jdevl32: ??? consider display name property instead ???
-			// Set the controller of the repository (for display name).
-			UniqueEntityContextRepository.UniqueController = this;
+			// Set the display name (and the same for the repository).
+			UniqueInformableEntityContextRepository.DisplayName = DisplayName = displayName;
 		}
 
 #endregion
 
-#region IUniqueController<TUnique>
+#region IUniqueController
 
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Enhance exception handling.
+		/// Add container name.
+		/// (Re-)implement extension (class).
 		/// </remarks>
 		[HttpDelete("*", Name = "RemoveAll")]
 		public virtual async Task<IActionResult> Delete()
@@ -96,9 +103,9 @@ namespace JDevl32.Web.Controller
 					{
 						if (ModelState.IsValid)
 						{
-							UniqueEntityContextRepository.Remove();
+							UniqueInformableEntityContextRepository.Remove();
 
-							var saveChangesAsync = UniqueEntityContextRepository.SaveChangesAsync();
+							var saveChangesAsync = UniqueInformableEntityContextRepository.SaveChangesAsync();
 							saveChangesAsync.Wait();
 
 							if (saveChangesAsync.Result)
@@ -116,13 +123,14 @@ namespace JDevl32.Web.Controller
 				)
 			;
 
-			return await Do(GetInfo(nameof(Delete), "from"), "removing", task);
+			return await Do(this.GetInfo(nameof(Delete), "from", "repository"), "removing", task);
 		}
 
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Enhance exception handling.
+		/// Add container name.
+		/// (Re-)implement extension (class).
 		/// </remarks>
 		[HttpDelete]
 		public virtual async Task<IActionResult> Delete(UniqueViewModelBase uniqueViewModel)
@@ -138,9 +146,9 @@ namespace JDevl32.Web.Controller
 								// todo|jdevl32: ???
 								//uniqueViewModel.UserName = User.Identity.Name;
 
-								UniqueEntityContextRepository.Remove(uniqueViewModel);
+								UniqueInformableEntityContextRepository.Remove(uniqueViewModel);
 
-								var saveChangesAsync = UniqueEntityContextRepository.SaveChangesAsync();
+								var saveChangesAsync = UniqueInformableEntityContextRepository.SaveChangesAsync();
 								saveChangesAsync.Wait();
 
 								if (saveChangesAsync.Result)
@@ -158,27 +166,29 @@ namespace JDevl32.Web.Controller
 					)
 			;
 
-			return await Do(GetInfo(nameof(Delete), "from", uniqueViewModel), "removing", task);
+			return await Do(this.GetInfo(nameof(Delete), "from", "repository", uniqueViewModel), "removing", task);
 		}
 
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Add (missing) HTTP method attribute specification(s).
+		/// Add container name.
+		/// (Re-)implement extension (class).
 		/// </remarks>
 		[HttpGet]
 		public virtual IActionResult Get()
 		{
 			// todo|jdevl32: contant(s)...
-			var func = new Func<IActionResult>(() => Ok(Mapper.Map<IEnumerable<UniqueViewModelBase>>(UniqueEntityContextRepository.Get())));
+			var func = new Func<IActionResult>(() => Ok(Mapper.Map<IEnumerable<UniqueViewModelBase>>(UniqueInformableEntityContextRepository.Get())));
 
-			return Do(GetInfo(nameof(Get), "from"), "retrieving", func);
+			return Do(this.GetInfo(nameof(Get), "from", "repository"), "retrieving", func);
 		}
 
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Enhance exception handling.
+		/// Add container name.
+		/// (Re-)implement extension (class).
 		/// </remarks>
 		[HttpPost]
 		public virtual async Task<IActionResult> Post(UniqueViewModelBase uniqueViewModel)
@@ -193,9 +203,9 @@ namespace JDevl32.Web.Controller
 							{
 								//uniqueViewModel.UserName = User.Identity.Name;
 
-								UniqueEntityContextRepository.Update(uniqueViewModel);
+								UniqueInformableEntityContextRepository.Update(uniqueViewModel);
 
-								var saveChangesAsync = UniqueEntityContextRepository.SaveChangesAsync();
+								var saveChangesAsync = UniqueInformableEntityContextRepository.SaveChangesAsync();
 								saveChangesAsync.Wait();
 
 								if (saveChangesAsync.Result)
@@ -221,7 +231,7 @@ namespace JDevl32.Web.Controller
 					)
 			;
 
-			return await Do(GetInfo(nameof(Post), "to", uniqueViewModel), "posting", task);
+			return await Do(this.GetInfo(nameof(Post), "to", "repository", uniqueViewModel), "posting", task);
 		}
 
 #endregion
@@ -287,6 +297,8 @@ namespace JDevl32.Web.Controller
 			return BadRequest();
 		}
 
+		// todo|jdevl32: cleanup...
+		/**
 		/// <summary>
 		/// Get (logging) information.
 		/// </summary>
@@ -296,13 +308,17 @@ namespace JDevl32.Web.Controller
 		/// <param name="direction">
 		/// The direction that the (logging) information flows.
 		/// </param>
+		/// <param name="containerName">
+		/// A container name.
+		/// </param>
 		/// <returns>
 		/// The (logging) information.
 		/// </returns>
 		/// <remarks>
 		/// Last modification:
+		/// Add container name.
 		/// </remarks>
-		protected virtual string GetInfo(string action, string direction) => GetInfo(action, () => GetInfo(direction));
+		protected virtual string GetInfo(string action, string direction, string containerName) => GetInfo(action, () => GetInfo(direction, containerName));
 
 		/// <summary>
 		/// Get (logging) information.
@@ -313,6 +329,9 @@ namespace JDevl32.Web.Controller
 		/// <param name="direction">
 		/// The direction that the (logging) information flows.
 		/// </param>
+		/// <param name="containerName">
+		/// A container name.
+		/// </param>
 		/// <param name="item">
 		/// An item to include in the (logging) information.
 		/// </param>
@@ -321,8 +340,9 @@ namespace JDevl32.Web.Controller
 		/// </returns>
 		/// <remarks>
 		/// Last modification:
+		/// Add container name.
 		/// </remarks>
-		protected virtual string GetInfo(string action, string direction, object item) => GetInfo(action, () => GetInfo(direction, item));
+		protected virtual string GetInfo(string action, string direction, string containerName, object item) => GetInfo(action, () => GetInfo(direction, item, containerName));
 
 		/// <summary>
 		/// Get (logging) information.
@@ -365,13 +385,17 @@ namespace JDevl32.Web.Controller
 		/// <param name="direction">
 		/// The direction that the (logging) information flows.
 		/// </param>
+		/// <param name="containerName">
+		/// A container name.
+		/// </param>
 		/// <returns>
 		/// The (logging) information.
 		/// </returns>
 		/// <remarks>
 		/// Last modification:
+		/// Add container name.
 		/// </remarks>
-		protected virtual string GetInfo(string direction) => $" (all) the {DisplayName}(s) {direction} the repository";
+		protected virtual string GetInfo(string direction, string containerName) => $" (all) the {DisplayName}(s) {direction} the {containerName}";
 
 		/// <summary>
 		/// Get (logging) information.
@@ -382,13 +406,18 @@ namespace JDevl32.Web.Controller
 		/// <param name="item">
 		/// An item to include in the (logging) information.
 		/// </param>
+		/// <param name="containerName">
+		/// A container name.
+		/// </param>
 		/// <returns>
 		/// The (logging) information.
 		/// </returns>
 		/// <remarks>
 		/// Last modification:
+		/// Add container name.
 		/// </remarks>
-		protected virtual string GetInfo(string direction, object item) => $" the {DisplayName} ({item}) {direction} the repository";
+		protected virtual string GetInfo(string direction, object item, string containerName) => $" the {DisplayName} ({item}) {direction} the {containerName}";
+		/**/
 
 	}
 

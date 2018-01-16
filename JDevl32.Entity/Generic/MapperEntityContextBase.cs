@@ -1,12 +1,12 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using JDevl32.Mapper.Interface;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using System;
 
-namespace JDevl32.Entity
+namespace JDevl32.Entity.Generic
 {
 
 	/// <summary>

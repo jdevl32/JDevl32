@@ -111,10 +111,6 @@ namespace JDevl32.Web.Repository
 
 #endregion
 
-#region IEntityContextRepository
-
-#endregion
-
 #region IUniqueRepository<TUnique, TUniqueEntity>
 
 		/// <inheritdoc />

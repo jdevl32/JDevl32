@@ -44,7 +44,7 @@ namespace JDevl32.Web.Controller.Interface
 		/// Delete (remove) (all) the unique item(s).
 		/// </summary>
 		/// <returns>
-		/// A(n) (async) action result task.
+		/// An (async) action result task.
 		/// </returns>
 		/// <remarks>
 		/// Last modification:
@@ -59,7 +59,7 @@ namespace JDevl32.Web.Controller.Interface
 		/// The unique item view model.
 		/// </param>
 		/// <returns>
-		/// A(n) (async) action result task.
+		/// An (async) action result task.
 		/// </returns>
 		/// <remarks>
 		/// Last modification:
@@ -86,7 +86,7 @@ namespace JDevl32.Web.Controller.Interface
 		/// The unique item view model.
 		/// </param>
 		/// <returns>
-		/// A(n) (async) action result task.
+		/// An (async) action result task.
 		/// </returns>
 		/// <remarks>
 		/// Last modification:

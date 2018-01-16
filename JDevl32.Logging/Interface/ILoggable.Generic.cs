@@ -3,6 +3,7 @@
 namespace JDevl32.Logging.Interface
 {
 
+	// todo|jdevl32: make covariant ???
 	/// <summary>
 	/// A (generic) loggable object.
 	/// </summary>
@@ -10,8 +11,13 @@ namespace JDevl32.Logging.Interface
 	/// Last modification:
 	/// </remarks>
 	public interface ILoggable<TDerivedClass>
-		where TDerivedClass : class
+		where
+			TDerivedClass
+			:
+			class
 	{
+
+#region Property
 
 		/// <summary>
 		/// The logger.
@@ -20,6 +26,8 @@ namespace JDevl32.Logging.Interface
 		/// Last modification:
 		/// </remarks>
 		ILogger<TDerivedClass> Logger { get; }
+
+#endregion
 
 	}
 

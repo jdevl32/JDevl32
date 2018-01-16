@@ -20,12 +20,14 @@ namespace JDevl32.Web.Controller.Generic
 	/// <typeparam name="TDerivedClass">
 	/// This should be the type of the derived class from this base class (for the logger).
 	/// </typeparam>
+	/// <typeparam name="TRepository">
+	/// This should be the type of the derived class of the repository (for the logger).
+	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
-	/// Refactor display name to informable (interface).
-	/// Implement informable (interface).
+	/// Add repository type.
 	/// </remarks>
-	public abstract class UniqueInformableControllerBase<TDerivedClass>
+	public abstract class UniqueInformableControllerBase<TDerivedClass, TRepository>
 		:
 		ControllerBase<TDerivedClass>
 		,
@@ -34,6 +36,10 @@ namespace JDevl32.Web.Controller.Generic
 		IUniqueController
 		where
 			TDerivedClass
+			:
+			class
+		where
+			TRepository
 			:
 			class
 	{
@@ -55,10 +61,9 @@ namespace JDevl32.Web.Controller.Generic
 		/// </summary>
 		/// <remarks>
 		/// Last modification:
-		/// Add derived class type.
-		/// Refactor (rename).
+		/// Replace derived class with repository type.
 		/// </remarks>
-		public virtual IUniqueInformableEntityContextRepository<TDerivedClass> UniqueInformableEntityContextRepository { get; }
+		public virtual IUniqueInformableEntityContextRepository<TRepository> UniqueInformableEntityContextRepository { get; }
 
 #endregion
 
@@ -67,12 +72,9 @@ namespace JDevl32.Web.Controller.Generic
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Remove unique item controller from unique entity context repository.
-		/// Add derived class type (to unique entity context repository).
-		/// Refactor display name to informable (interface).
-		/// Refactor (rename) repository.
+		/// Replace derived class with repository type.
 		/// </remarks>
-		protected UniqueInformableControllerBase(IHostingEnvironment hostingEnvironment, ILogger<TDerivedClass> logger, IMapper mapper, IUniqueInformableEntityContextRepository<TDerivedClass> uniqueInformableEntityContextRepository, string displayName)
+		protected UniqueInformableControllerBase(IHostingEnvironment hostingEnvironment, ILogger<TDerivedClass> logger, IMapper mapper, IUniqueInformableEntityContextRepository<TRepository> uniqueInformableEntityContextRepository, string displayName)
 			:
 			base(hostingEnvironment, logger, mapper)
 		{
@@ -95,7 +97,7 @@ namespace JDevl32.Web.Controller.Generic
 		[HttpDelete("*", Name = "RemoveAll")]
 		public virtual async Task<IActionResult> Delete()
 		{
-			// todo|jdevl32: contant(s)...
+			// todo|jdevl32: constant(s)...
 			var task =
 				new Task<IActionResult>
 				(
@@ -135,7 +137,7 @@ namespace JDevl32.Web.Controller.Generic
 		[HttpDelete]
 		public virtual async Task<IActionResult> Delete(UniqueViewModelBase uniqueViewModel)
 		{
-			// todo|jdevl32: contant(s)...
+			// todo|jdevl32: constant(s)...
 			var task =
 				new Task<IActionResult>
 					(
@@ -178,7 +180,7 @@ namespace JDevl32.Web.Controller.Generic
 		[HttpGet]
 		public virtual IActionResult Get()
 		{
-			// todo|jdevl32: contant(s)...
+			// todo|jdevl32: constant(s)...
 			var func = new Func<IActionResult>(() => Ok(Mapper.Map<IEnumerable<UniqueViewModelBase>>(UniqueInformableEntityContextRepository.Get())));
 
 			return Do(this.GetInfo(nameof(Get), "from", "repository"), "retrieving", func);
@@ -193,7 +195,7 @@ namespace JDevl32.Web.Controller.Generic
 		[HttpPost]
 		public virtual async Task<IActionResult> Post(UniqueViewModelBase uniqueViewModel)
 		{
-			// todo|jdevl32: contant(s)...
+			// todo|jdevl32: constant(s)...
 			var task =
 				new Task<IActionResult>
 					(

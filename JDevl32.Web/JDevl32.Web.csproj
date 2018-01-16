@@ -11,9 +11,9 @@
     <RepositoryType>GitHub</RepositoryType>
     <PackageReleaseNotes>Add container name.
 (Re-)implement extension (class).</PackageReleaseNotes>
-    <Version>1.0.13.2</Version>
-    <FileVersion>1.0.13.2</FileVersion>
-    <AssemblyVersion>1.0.13.2</AssemblyVersion>
+    <Version>1.0.14.1</Version>
+    <FileVersion>1.0.14.1</FileVersion>
+    <AssemblyVersion>1.0.14.1</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

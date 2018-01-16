@@ -251,6 +251,9 @@ namespace JDevl32.Web.Controller.Generic
 		/// <returns>
 		/// The value (of the method invocation).
 		/// </returns>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
 		protected virtual IActionResult Do(string info, string action, Func<IActionResult> method)
 		{
 			try
@@ -296,128 +299,6 @@ namespace JDevl32.Web.Controller.Generic
 
 			return BadRequest();
 		}
-
-		// todo|jdevl32: cleanup...
-		/**
-		/// <summary>
-		/// Get (logging) information.
-		/// </summary>
-		/// <param name="action">
-		/// An action to include in the (logging) information.
-		/// </param>
-		/// <param name="direction">
-		/// The direction that the (logging) information flows.
-		/// </param>
-		/// <param name="containerName">
-		/// A container name.
-		/// </param>
-		/// <returns>
-		/// The (logging) information.
-		/// </returns>
-		/// <remarks>
-		/// Last modification:
-		/// Add container name.
-		/// </remarks>
-		protected virtual string GetInfo(string action, string direction, string containerName) => GetInfo(action, () => GetInfo(direction, containerName));
-
-		/// <summary>
-		/// Get (logging) information.
-		/// </summary>
-		/// <param name="action">
-		/// An action to include in the (logging) information.
-		/// </param>
-		/// <param name="direction">
-		/// The direction that the (logging) information flows.
-		/// </param>
-		/// <param name="containerName">
-		/// A container name.
-		/// </param>
-		/// <param name="item">
-		/// An item to include in the (logging) information.
-		/// </param>
-		/// <returns>
-		/// The (logging) information.
-		/// </returns>
-		/// <remarks>
-		/// Last modification:
-		/// Add container name.
-		/// </remarks>
-		protected virtual string GetInfo(string action, string direction, string containerName, object item) => GetInfo(action, () => GetInfo(direction, item, containerName));
-
-		/// <summary>
-		/// Get (logging) information.
-		/// </summary>
-		/// <param name="action">
-		/// An action to include in the (logging) information.
-		/// </param>
-		/// <param name="method">
-		/// A method to get (logging) information.
-		/// </param>
-		/// <returns>
-		/// The (logging) information.
-		/// </returns>
-		/// <remarks>
-		/// Last modification:
-		/// </remarks>
-		protected virtual string GetInfo(string action, Func<string> method)
-		{
-			Logger.LogInformation(action);
-
-			var info = string.Empty;
-
-			try
-			{
-				info = method();
-
-				Logger.LogInformation($"...{info}...");
-			} // try
-			catch (Exception ex)
-			{
-				Logger.LogError(ex, string.Empty);
-			} // catch
-
-			return info;
-		}
-
-		/// <summary>
-		/// Get (logging) information.
-		/// </summary>
-		/// <param name="direction">
-		/// The direction that the (logging) information flows.
-		/// </param>
-		/// <param name="containerName">
-		/// A container name.
-		/// </param>
-		/// <returns>
-		/// The (logging) information.
-		/// </returns>
-		/// <remarks>
-		/// Last modification:
-		/// Add container name.
-		/// </remarks>
-		protected virtual string GetInfo(string direction, string containerName) => $" (all) the {DisplayName}(s) {direction} the {containerName}";
-
-		/// <summary>
-		/// Get (logging) information.
-		/// </summary>
-		/// <param name="direction">
-		/// The direction that the (logging) information flows.
-		/// </param>
-		/// <param name="item">
-		/// An item to include in the (logging) information.
-		/// </param>
-		/// <param name="containerName">
-		/// A container name.
-		/// </param>
-		/// <returns>
-		/// The (logging) information.
-		/// </returns>
-		/// <remarks>
-		/// Last modification:
-		/// Add container name.
-		/// </remarks>
-		protected virtual string GetInfo(string direction, object item, string containerName) => $" the {DisplayName} ({item}) {direction} the {containerName}";
-		/**/
 
 	}
 

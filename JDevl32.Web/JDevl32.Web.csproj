@@ -9,17 +9,11 @@
     <PackageProjectUrl></PackageProjectUrl>
     <RepositoryUrl>https://github.com/jdevl32/JDevl32/JDevl32.Web</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Relocate (generic) interface(s) and implementation(s).
-
-Add informable interface(s) and implementation(s).
-
-Refactor display name to informable (interface).
-Remove unique item controller.
-Add container name.
+    <PackageReleaseNotes>Add container name.
 (Re-)implement extension (class).</PackageReleaseNotes>
-    <Version>1.0.13.1</Version>
-    <FileVersion>1.0.13.1</FileVersion>
-    <AssemblyVersion>1.0.13.1</AssemblyVersion>
+    <Version>1.0.13.2</Version>
+    <FileVersion>1.0.13.2</FileVersion>
+    <AssemblyVersion>1.0.13.2</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

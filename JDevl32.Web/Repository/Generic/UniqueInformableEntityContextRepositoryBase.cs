@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using JDevl32.Entity.Interface;
 using JDevl32.Entity.Model;
+using JDevl32.Logging.Extension;
 using JDevl32.Logging.Interface.Generic;
 using JDevl32.Web.Repository.Interface.Generic;
 using Microsoft.EntityFrameworkCore;
@@ -133,136 +134,152 @@ namespace JDevl32.Web.Repository.Generic
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Refactor display name to informable (interface).
+		/// Add container name.
+		/// (Re-)implement extension (class).
 		/// </remarks>
 		public IEnumerable<IUnique> Get()
 		{
-			var introAction = nameof(Get);
-			var errorAction = "retrieving";
-			var info = string.Empty;
+			// todo|jdevl32: constant(s)...
+			var method =
+				new Func<IEnumerable<IUnique>>
+					(
+						() =>
+						Mapper.Map<IEnumerable<IUnique>>(UniqueDbSet.ToList())
+					)
+			;
 
-			try
-			{
-				info = $" (all) the {DisplayName}(s) from the entity context";
-			} // try
-			catch (Exception ex)
-			{
-				Logger.LogError(ex, string.Empty);
-			} // catch
-
-			Logger.LogInformation($"{introAction}{info}...");
-
-			try
-			{
-				return Mapper.Map<IEnumerable<IUnique>>(UniqueDbSet.ToList());
-			} // try
-			catch (Exception ex)
-			{
-				Logger.LogError(ex, $"Error {errorAction}{info}:  {ex}");
-				throw;
-			} // catch
+			return Do(this.GetInfo(nameof(Get), "from", "entity context"), "retrieving", method);
 		}
 
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Refactor display name to informable (interface).
+		/// Add container name.
+		/// (Re-)implement extension (class).
 		/// </remarks>
 		public void Remove()
 		{
-			var introAction = nameof(Remove);
-			var errorAction = "removing";
-			var info = string.Empty;
+			// todo|jdevl32: constant(s)...
+			var method =
+				new Action
+					(
+						() =>
+						UniqueDbSet.RemoveRange(UniqueDbSet.ToList())
+					)
+			;
 
-			try
-			{
-				info = $" (all) the {DisplayName}(s) from the entity context";
-			} // try
-			catch (Exception ex)
-			{
-				Logger.LogError(ex, string.Empty);
-			} // catch
-
-			Logger.LogInformation($"{introAction}{info}...");
-
-			try
-			{
-				UniqueDbSet.RemoveRange(UniqueDbSet.ToList());
-			} // try
-			catch (Exception ex)
-			{
-				Logger.LogError(ex, $"Error {errorAction}{info}:  {ex}");
-				throw;
-			} // catch
+			Do(this.GetInfo(nameof(Remove), "from", "entity context"), "removing", method);
 		}
 
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Refactor display name to informable (interface).
+		/// Add container name.
+		/// (Re-)implement extension (class).
 		/// </remarks>
 		public void Remove(IUnique uniqueItem)
 		{
-			var introAction = nameof(Remove);
-			var errorAction = "removing";
-			var info = string.Empty;
+			// todo|jdevl32: constant(s)...
+			var method =
+				new Action
+					(
+						() =>
+						UniqueDbSet.Remove(Mapper.Map<UniqueBase>(uniqueItem))
+					)
+			;
 
-			try
-			{
-				info = $" the {DisplayName} ({uniqueItem}) from the entity context";
-			} // try
-			catch (Exception ex)
-			{
-				Logger.LogError(ex, string.Empty);
-			} // catch
-
-			Logger.LogInformation($"{introAction}{info}...");
-
-			try
-			{
-				UniqueDbSet.Remove(Mapper.Map<UniqueBase>(uniqueItem));
-			} // try
-			catch (Exception ex)
-			{
-				Logger.LogError(ex, $"Error {errorAction}{info}:  {ex}");
-				throw;
-			} // catch
+			Do(this.GetInfo(nameof(Remove), "from", "entity context", uniqueItem), "removing", method);
 		}
 
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Refactor display name to informable (interface).
+		/// Add container name.
+		/// (Re-)implement extension (class).
 		/// </remarks>
 		public void Update(IUnique uniqueItem)
 		{
-			var introAction = nameof(Update);
-			var errorAction = "updating";
-			var info = string.Empty;
+			// todo|jdevl32: constant(s)...
+			var getInfo =
+				new Func<string>
+					(
+						() =>
+						$" the entity context with the {DisplayName} ({uniqueItem})"
+					)
+			;
+			var method =
+				new Action
+					(
+						() =>
+						UniqueDbSet.Update(Mapper.Map<UniqueBase>(uniqueItem))
+					)
+			;
 
+			Do(this.GetInfo(nameof(Update), getInfo), "updating", method);
+		}
+
+#endregion
+
+		/// <summary>
+		/// Invoke a(n) (action) method, logging possible error information.
+		/// </summary>
+		/// <param name="info">
+		/// (Logging) information.
+		/// </param>
+		/// <param name="action">
+		/// An action to include in the (logging) information.
+		/// </param>
+		/// <param name="method">
+		/// A(n) (action) method to invoke.
+		/// </param>
+		/// <remarks>
+		/// This method re-throws any (and all) exception(s) caught during the try of the (action) method to invoke.
+		/// Last modification:
+		/// </remarks>
+		protected virtual void Do(string info, string action, Action method)
+		{
 			try
 			{
-				info = $" the entity context with the {DisplayName} ({uniqueItem})";
+				method();
 			} // try
 			catch (Exception ex)
 			{
-				Logger.LogError(ex, string.Empty);
-			} // catch
-
-			Logger.LogInformation($"{introAction}{info}...");
-
-			try
-			{
-				UniqueDbSet.Update(Mapper.Map<UniqueBase>(uniqueItem));
-			} // try
-			catch (Exception ex)
-			{
-				Logger.LogError(ex, $"Error {errorAction}{info}:  {ex}");
+				Logger.LogError(ex, $"Error {action}{info}:  {ex}");
 				throw;
 			} // catch
 		}
 
-#endregion
+		/// <summary>
+		/// Invoke a method, logging possible error information, and return the value (of the method invocation).
+		/// </summary>
+		/// <param name="info">
+		/// (Logging) information.
+		/// </param>
+		/// <param name="action">
+		/// An action to include in the (logging) information.
+		/// </param>
+		/// <param name="method">
+		/// A method to invoke.
+		/// </param>
+		/// <returns>
+		/// The value (of the method invocation).
+		/// </returns>
+		/// <remarks>
+		/// This method re-throws any (and all) exception(s) caught during the try of the method to invoke.
+		/// Last modification:
+		/// </remarks>
+		protected virtual IEnumerable<IUnique> Do(string info, string action, Func<IEnumerable<IUnique>> method)
+		{
+			try
+			{
+				return method();
+			} // try
+			catch (Exception ex)
+			{
+				Logger.LogError(ex, $"Error {action}{info}:  {ex}");
+				throw;
+			} // catch
+		}
 
 	}
 

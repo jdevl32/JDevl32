@@ -1,4 +1,5 @@
-﻿using JDevl32.Logging.Interface.Generic;
+﻿using JDevl32.Entity.Model;
+using JDevl32.Logging.Interface.Generic;
 
 namespace JDevl32.Web.Repository.Interface.Generic
 {
@@ -9,20 +10,28 @@ namespace JDevl32.Web.Repository.Interface.Generic
 	/// <typeparam name="TDerivedClass">
 	/// This should be the type of the derived class from this base class (for the logger).
 	/// </typeparam>
+	/// <typeparam name="TUnique">
+	/// The unique item type.
+	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
+	/// Add unique item type.
 	/// </remarks>
-	public interface IUniqueInformableEntityContextRepository<out TDerivedClass>
+	public interface IUniqueInformableEntityContextRepository<out TDerivedClass, TUnique>
 		:
 		IEntityContextRepository
 		,
 		IInformable<TDerivedClass>
 		,
-		IUniqueRepository
+		IUniqueRepository<TUnique>
 		where
 			TDerivedClass
 			:
 			class
+		where
+			TUnique
+			:
+			UniqueBase
 	{
 
 #region Property

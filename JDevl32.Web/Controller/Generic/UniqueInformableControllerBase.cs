@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using JDevl32.Entity.Model;
 using JDevl32.Logging.Extension;
 using JDevl32.Logging.Interface.Generic;
 using JDevl32.Web.Controller.Interface;
@@ -23,11 +24,14 @@ namespace JDevl32.Web.Controller.Generic
 	/// <typeparam name="TRepository">
 	/// This should be the type of the derived class of the repository (for the logger).
 	/// </typeparam>
+	/// <typeparam name="TUnique">
+	/// The unique item type.
+	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
-	/// Add repository type.
+	/// Add unique item type.
 	/// </remarks>
-	public abstract class UniqueInformableControllerBase<TDerivedClass, TRepository>
+	public abstract class UniqueInformableControllerBase<TDerivedClass, TRepository, TUnique>
 		:
 		ControllerBase<TDerivedClass>
 		,
@@ -42,6 +46,10 @@ namespace JDevl32.Web.Controller.Generic
 			TRepository
 			:
 			class
+		where
+			TUnique
+			:
+			UniqueBase
 	{
 
 #region Property
@@ -61,9 +69,9 @@ namespace JDevl32.Web.Controller.Generic
 		/// </summary>
 		/// <remarks>
 		/// Last modification:
-		/// Replace derived class with repository type.
+		/// Add unique item type.
 		/// </remarks>
-		public virtual IUniqueInformableEntityContextRepository<TRepository> UniqueInformableEntityContextRepository { get; }
+		public virtual IUniqueInformableEntityContextRepository<TRepository, TUnique> UniqueInformableEntityContextRepository { get; }
 
 #endregion
 
@@ -72,9 +80,9 @@ namespace JDevl32.Web.Controller.Generic
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Replace derived class with repository type.
+		/// Add unique item type.
 		/// </remarks>
-		protected UniqueInformableControllerBase(IHostingEnvironment hostingEnvironment, ILogger<TDerivedClass> logger, IMapper mapper, IUniqueInformableEntityContextRepository<TRepository> uniqueInformableEntityContextRepository, string displayName)
+		protected UniqueInformableControllerBase(IHostingEnvironment hostingEnvironment, ILogger<TDerivedClass> logger, IMapper mapper, IUniqueInformableEntityContextRepository<TRepository, TUnique> uniqueInformableEntityContextRepository, string displayName)
 			:
 			base(hostingEnvironment, logger, mapper)
 		{
@@ -131,8 +139,7 @@ namespace JDevl32.Web.Controller.Generic
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Add container name.
-		/// (Re-)implement extension (class).
+		/// Add unique item type.
 		/// </remarks>
 		[HttpDelete]
 		public virtual async Task<IActionResult> Delete(UniqueViewModelBase uniqueViewModel)
@@ -147,8 +154,9 @@ namespace JDevl32.Web.Controller.Generic
 							{
 								// todo|jdevl32: ???
 								//uniqueViewModel.UserName = User.Identity.Name;
+								var uniqueItem = Mapper.Map<TUnique>(uniqueViewModel);
 
-								UniqueInformableEntityContextRepository.Remove(uniqueViewModel);
+								UniqueInformableEntityContextRepository.Remove(uniqueItem);
 
 								var saveChangesAsync = UniqueInformableEntityContextRepository.SaveChangesAsync();
 								saveChangesAsync.Wait();
@@ -181,16 +189,24 @@ namespace JDevl32.Web.Controller.Generic
 		public virtual IActionResult Get()
 		{
 			// todo|jdevl32: constant(s)...
-			var func = new Func<IActionResult>(() => Ok(Mapper.Map<IEnumerable<UniqueViewModelBase>>(UniqueInformableEntityContextRepository.Get())));
+			var method =
+				new Func<IActionResult>
+					(
+						() =>
+						Ok
+							(
+								Mapper.Map<IEnumerable<UniqueViewModelBase>>(UniqueInformableEntityContextRepository.Get())
+							)
+					)
+			;
 
-			return Do(this.GetInfo(nameof(Get), "from", "repository"), "retrieving", func);
+			return Do(this.GetInfo(nameof(Get), "from", "repository"), "retrieving", method);
 		}
 
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Add container name.
-		/// (Re-)implement extension (class).
+		/// Add unique item type.
 		/// </remarks>
 		[HttpPost]
 		public virtual async Task<IActionResult> Post(UniqueViewModelBase uniqueViewModel)
@@ -203,9 +219,11 @@ namespace JDevl32.Web.Controller.Generic
 						{
 							if (ModelState.IsValid)
 							{
+								// todo|jdevl32: ???
 								//uniqueViewModel.UserName = User.Identity.Name;
+								var uniqueItem = Mapper.Map<TUnique>(uniqueViewModel);
 
-								UniqueInformableEntityContextRepository.Update(uniqueViewModel);
+								UniqueInformableEntityContextRepository.Update(uniqueItem);
 
 								var saveChangesAsync = UniqueInformableEntityContextRepository.SaveChangesAsync();
 								saveChangesAsync.Wait();

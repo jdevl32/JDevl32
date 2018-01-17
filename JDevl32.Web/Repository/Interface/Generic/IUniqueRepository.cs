@@ -1,19 +1,25 @@
-﻿using JDevl32.Entity.Interface;
-using JDevl32.Entity.Model;
+﻿using JDevl32.Entity.Model;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
-namespace JDevl32.Web.Repository.Interface
+namespace JDevl32.Web.Repository.Interface.Generic
 {
 
 	/// <summary>
 	/// A (generic) unique item repository.
 	/// </summary>
+	/// <typeparam name="TUnique">
+	/// The unique item type.
+	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
-	/// Remove unique item controller.
+	/// Add unique item type.
 	/// </remarks>
-	public interface IUniqueRepository
+	public interface IUniqueRepository<TUnique>
+		where
+			TUnique
+			:
+			UniqueBase
 	{
 
 #region Property
@@ -23,21 +29,23 @@ namespace JDevl32.Web.Repository.Interface
 		/// </summary>
 		/// <remarks>
 		/// Last modification:
+		/// Add unique item type.
 		/// </remarks>
-		DbSet<UniqueBase> UniqueDbSet { get; }
+		DbSet<TUnique> UniqueDbSet { get; }
 
 #endregion
 
 		/// <summary>
-		/// Get the unique item(s).
+		/// Get (all) the unique item(s).
 		/// </summary>
 		/// <returns>
-		/// The unique item(s).
+		/// (All) the unique item(s).
 		/// </returns>
 		/// <remarks>
 		/// Last modification:
+		/// Add unique item type.
 		/// </remarks>
-		IEnumerable<IUnique> Get();
+		IEnumerable<TUnique> Get();
 
 		/// <summary>
 		/// Remove (all) the unique item(s).
@@ -52,8 +60,9 @@ namespace JDevl32.Web.Repository.Interface
 		/// </summary>
 		/// <remarks>
 		/// Last modification:
+		/// Add unique item type.
 		/// </remarks>
-		void Remove(IUnique uniqueItem);
+		void Remove(TUnique uniqueItem);
 
 		/// <summary>
 		/// Update the unique item.
@@ -61,8 +70,9 @@ namespace JDevl32.Web.Repository.Interface
 		/// <remarks>
 		/// Update is either add or modify (depending on existence).
 		/// Last modification:
+		/// Add unique item type.
 		/// </remarks>
-		void Update(IUnique uniqueItem);
+		void Update(TUnique uniqueItem);
 
 	}
 

@@ -106,7 +106,7 @@ namespace JDevl32.Web.Controller.Generic
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Add (missing) task start.
+		/// Remove (redundant) task wait (handled by result).
 		/// </remarks>
 		[HttpDelete("*", Name = "RemoveAll")]
 		public virtual async Task<IActionResult> Delete()
@@ -123,7 +123,7 @@ namespace JDevl32.Web.Controller.Generic
 
 							var saveChangesAsync = UniqueInformableEntityContextRepository.SaveChangesAsync();
 							saveChangesAsync.Start();
-							saveChangesAsync.Wait();
+							//saveChangesAsync.Wait();
 
 							if (saveChangesAsync.Result)
 							{
@@ -146,7 +146,7 @@ namespace JDevl32.Web.Controller.Generic
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Add (missing) task start.
+		/// Remove (redundant) task wait (handled by result).
 		/// </remarks>
 		[HttpDelete]
 		public virtual async Task<IActionResult> Delete(TUniqueViewModel uniqueViewModel)
@@ -167,7 +167,7 @@ namespace JDevl32.Web.Controller.Generic
 
 								var saveChangesAsync = UniqueInformableEntityContextRepository.SaveChangesAsync();
 								saveChangesAsync.Start();
-								saveChangesAsync.Wait();
+								//saveChangesAsync.Wait();
 
 								if (saveChangesAsync.Result)
 								{
@@ -214,7 +214,7 @@ namespace JDevl32.Web.Controller.Generic
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Add (missing) task start.
+		/// Remove (redundant) task wait (handled by result).
 		/// </remarks>
 		[HttpPost]
 		public virtual async Task<IActionResult> Post(TUniqueViewModel uniqueViewModel)
@@ -235,7 +235,7 @@ namespace JDevl32.Web.Controller.Generic
 
 								var saveChangesAsync = UniqueInformableEntityContextRepository.SaveChangesAsync();
 								saveChangesAsync.Start();
-								saveChangesAsync.Wait();
+								//saveChangesAsync.Wait();
 
 								if (saveChangesAsync.Result)
 								{

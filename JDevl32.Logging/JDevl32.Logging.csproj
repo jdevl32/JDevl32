@@ -3,13 +3,10 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.1.1</Version>
+    <Version>1.0.1.2</Version>
     <Authors>Jeremy Paiz</Authors>
     <Company />
-    <PackageReleaseNotes>Relocate (generic) interface(s) and implementation(s).
-Add informable interface(s) and implementation(s).
-Add common (helper) class.
-(Correctly) make abstract/protected.</PackageReleaseNotes>
+    <PackageReleaseNotes>Correct whitespace usage.</PackageReleaseNotes>
     <RepositoryUrl>https://github.com/jdevl32/JDevl32/JDevl32.Logging</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
     <Copyright>Copyright © 2017 Jeremy Paiz</Copyright>

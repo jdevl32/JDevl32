@@ -2,7 +2,7 @@
 using JDevl32.Entity.Model;
 using JDevl32.Logging.Extension;
 using JDevl32.Logging.Interface.Generic;
-using JDevl32.Web.Controller.Interface;
+using JDevl32.Web.Controller.Interface.Generic;
 using JDevl32.Web.Repository.Interface.Generic;
 using JDevl32.Web.ViewModel;
 using Microsoft.AspNetCore.Hosting;
@@ -27,17 +27,20 @@ namespace JDevl32.Web.Controller.Generic
 	/// <typeparam name="TUnique">
 	/// The unique item type.
 	/// </typeparam>
+	/// <typeparam name="TUniqueViewModel">
+	/// A unique item view model type.
+	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
-	/// Add unique item type.
+	/// Add unique item view model type.
 	/// </remarks>
-	public abstract class UniqueInformableControllerBase<TDerivedClass, TRepository, TUnique>
+	public abstract class UniqueInformableControllerBase<TDerivedClass, TRepository, TUnique, TUniqueViewModel>
 		:
 		ControllerBase<TDerivedClass>
 		,
 		IInformable<TDerivedClass>
 		,
-		IUniqueController
+		IUniqueController<TUniqueViewModel>
 		where
 			TDerivedClass
 			:
@@ -50,6 +53,10 @@ namespace JDevl32.Web.Controller.Generic
 			TUnique
 			:
 			UniqueBase
+		where
+			TUniqueViewModel
+			:
+			UniqueViewModelBase
 	{
 
 #region Property
@@ -94,7 +101,7 @@ namespace JDevl32.Web.Controller.Generic
 
 #endregion
 
-#region IUniqueController
+#region IUniqueController<TUniqueViewModel>
 
 		/// <inheritdoc />
 		/// <remarks>
@@ -139,10 +146,10 @@ namespace JDevl32.Web.Controller.Generic
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Add unique item type.
+		/// Add unique item view model type.
 		/// </remarks>
 		[HttpDelete]
-		public virtual async Task<IActionResult> Delete(UniqueViewModelBase uniqueViewModel)
+		public virtual async Task<IActionResult> Delete(TUniqueViewModel uniqueViewModel)
 		{
 			// todo|jdevl32: constant(s)...
 			var task =
@@ -206,10 +213,10 @@ namespace JDevl32.Web.Controller.Generic
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Add unique item type.
+		/// Add unique item view model type.
 		/// </remarks>
 		[HttpPost]
-		public virtual async Task<IActionResult> Post(UniqueViewModelBase uniqueViewModel)
+		public virtual async Task<IActionResult> Post(TUniqueViewModel uniqueViewModel)
 		{
 			// todo|jdevl32: constant(s)...
 			var task =

@@ -2,20 +2,27 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace JDevl32.Web.Controller.Interface
+namespace JDevl32.Web.Controller.Interface.Generic
 {
 
 	/// <inheritdoc />
 	/// <summary>
-	/// A unique item controller.
+	/// A (generic) unique item controller.
 	/// </summary>
+	/// <typeparam name="TUniqueViewModel">
+	/// A unique item view model type.
+	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
-	/// Refactor display name to informable (interface).
+	/// Add unique item view model type.
 	/// </remarks>
-	public interface IUniqueController
+	public interface IUniqueController<in TUniqueViewModel>
 		:
 		IController
+		where
+			TUniqueViewModel
+			:
+			UniqueViewModelBase
 	{
 
 #region Property
@@ -56,9 +63,10 @@ namespace JDevl32.Web.Controller.Interface
 		/// </returns>
 		/// <remarks>
 		/// Last modification:
+		/// Add unique item view model type.
 		/// </remarks>
 		[HttpDelete]
-		Task<IActionResult> Delete([FromBody] UniqueViewModelBase uniqueViewModel);
+		Task<IActionResult> Delete([FromBody] TUniqueViewModel uniqueViewModel);
 
 		/// <summary>
 		/// Get (all) the unique item(s).
@@ -83,9 +91,10 @@ namespace JDevl32.Web.Controller.Interface
 		/// </returns>
 		/// <remarks>
 		/// Last modification:
+		/// Add unique item view model type.
 		/// </remarks>
 		[HttpPost]
-		Task<IActionResult> Post([FromBody] UniqueViewModelBase uniqueViewModel);
+		Task<IActionResult> Post([FromBody] TUniqueViewModel uniqueViewModel);
 
 	}
 

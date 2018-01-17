@@ -106,8 +106,7 @@ namespace JDevl32.Web.Controller.Generic
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Add container name.
-		/// (Re-)implement extension (class).
+		/// Add (missing) task start.
 		/// </remarks>
 		[HttpDelete("*", Name = "RemoveAll")]
 		public virtual async Task<IActionResult> Delete()
@@ -123,6 +122,7 @@ namespace JDevl32.Web.Controller.Generic
 							UniqueInformableEntityContextRepository.Remove();
 
 							var saveChangesAsync = UniqueInformableEntityContextRepository.SaveChangesAsync();
+							saveChangesAsync.Start();
 							saveChangesAsync.Wait();
 
 							if (saveChangesAsync.Result)
@@ -146,7 +146,7 @@ namespace JDevl32.Web.Controller.Generic
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Add unique item view model type.
+		/// Add (missing) task start.
 		/// </remarks>
 		[HttpDelete]
 		public virtual async Task<IActionResult> Delete(TUniqueViewModel uniqueViewModel)
@@ -166,6 +166,7 @@ namespace JDevl32.Web.Controller.Generic
 								UniqueInformableEntityContextRepository.Remove(uniqueItem);
 
 								var saveChangesAsync = UniqueInformableEntityContextRepository.SaveChangesAsync();
+								saveChangesAsync.Start();
 								saveChangesAsync.Wait();
 
 								if (saveChangesAsync.Result)
@@ -213,7 +214,7 @@ namespace JDevl32.Web.Controller.Generic
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Add unique item view model type.
+		/// Add (missing) task start.
 		/// </remarks>
 		[HttpPost]
 		public virtual async Task<IActionResult> Post(TUniqueViewModel uniqueViewModel)
@@ -233,6 +234,7 @@ namespace JDevl32.Web.Controller.Generic
 								UniqueInformableEntityContextRepository.Update(uniqueItem);
 
 								var saveChangesAsync = UniqueInformableEntityContextRepository.SaveChangesAsync();
+								saveChangesAsync.Start();
 								saveChangesAsync.Wait();
 
 								if (saveChangesAsync.Result)

@@ -176,7 +176,7 @@ namespace JDevl32.Web.Repository.Generic
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Add unique item type.
+		/// Correct whitespace usage.
 		/// </remarks>
 		public void Update(TUnique uniqueItem)
 		{
@@ -185,7 +185,7 @@ namespace JDevl32.Web.Repository.Generic
 				new Func<string>
 					(
 						() =>
-						$" the entity context with the {DisplayName} ({uniqueItem})"
+						$"the entity context with the {DisplayName} ({uniqueItem})"
 					)
 			;
 

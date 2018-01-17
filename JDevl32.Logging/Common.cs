@@ -110,7 +110,7 @@ namespace JDevl32.Logging
 				:
 				class
 		{
-			informable.Logger.LogInformation(action);
+			informable.Logger.LogInformation($"{action}...");
 
 			var info = string.Empty;
 
@@ -148,7 +148,7 @@ namespace JDevl32.Logging
 		/// </returns>
 		/// <remarks>
 		/// Last modification:
-		/// Add container name.
+		/// Correct whitespace usage.
 		/// </remarks>
 		public static string GetInfo<TDerivedClass>(IInformable<TDerivedClass> informable, string direction, string containerName)
 			where
@@ -156,7 +156,7 @@ namespace JDevl32.Logging
 				:
 				class
 			=>
-			$" (all) the {informable.DisplayName}(s) {direction} the {containerName}";
+			$"(all) the {informable.DisplayName}(s) {direction} the {containerName}";
 
 		/// <summary>
 		/// Get (logging) information.
@@ -181,7 +181,7 @@ namespace JDevl32.Logging
 		/// </returns>
 		/// <remarks>
 		/// Last modification:
-		/// Add container name.
+		/// Correct whitespace usage.
 		/// </remarks>
 		public static string GetInfo<TDerivedClass>(IInformable<TDerivedClass> informable, string direction, string containerName, object item)
 			where
@@ -189,7 +189,7 @@ namespace JDevl32.Logging
 				:
 				class
 			=>
-			$" the {informable.DisplayName} ({item}) {direction} the {containerName}";
+			$"the {informable.DisplayName} ({item}) {direction} the {containerName}";
 
 	}
 

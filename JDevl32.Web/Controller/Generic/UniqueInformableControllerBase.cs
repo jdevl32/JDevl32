@@ -106,26 +106,22 @@ namespace JDevl32.Web.Controller.Generic
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Remove (redundant) task wait (handled by result).
+		/// Correct async.
 		/// </remarks>
 		[HttpDelete("*", Name = "RemoveAll")]
 		public virtual async Task<IActionResult> Delete()
 		{
 			// todo|jdevl32: constant(s)...
 			var task =
-				new Task<IActionResult>
+				new Func<Task<IActionResult>>
 				(
-					() =>
+					async () =>
 					{
 						if (ModelState.IsValid)
 						{
 							UniqueInformableEntityContextRepository.Remove();
 
-							var saveChangesAsync = UniqueInformableEntityContextRepository.SaveChangesAsync();
-							saveChangesAsync.Start();
-							//saveChangesAsync.Wait();
-
-							if (saveChangesAsync.Result)
+							if (await UniqueInformableEntityContextRepository.SaveChangesAsync())
 							{
 								return Ok();
 							} // if
@@ -146,42 +142,38 @@ namespace JDevl32.Web.Controller.Generic
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Remove (redundant) task wait (handled by result).
+		/// Correct async.
 		/// </remarks>
 		[HttpDelete]
 		public virtual async Task<IActionResult> Delete(TUniqueViewModel uniqueViewModel)
 		{
 			// todo|jdevl32: constant(s)...
 			var task =
-				new Task<IActionResult>
-					(
-						() =>
+				new Func<Task<IActionResult>>
+				(
+					async () =>
+					{
+						if (ModelState.IsValid)
 						{
-							if (ModelState.IsValid)
+							// todo|jdevl32: ???
+							//uniqueViewModel.UserName = User.Identity.Name;
+							var uniqueItem = Mapper.Map<TUnique>(uniqueViewModel);
+
+							UniqueInformableEntityContextRepository.Remove(uniqueItem);
+
+							if (await UniqueInformableEntityContextRepository.SaveChangesAsync())
 							{
-								// todo|jdevl32: ???
-								//uniqueViewModel.UserName = User.Identity.Name;
-								var uniqueItem = Mapper.Map<TUnique>(uniqueViewModel);
-
-								UniqueInformableEntityContextRepository.Remove(uniqueItem);
-
-								var saveChangesAsync = UniqueInformableEntityContextRepository.SaveChangesAsync();
-								saveChangesAsync.Start();
-								//saveChangesAsync.Wait();
-
-								if (saveChangesAsync.Result)
-								{
-									return Ok();
-								} // if
+								return Ok();
 							} // if
-							else if (HostingEnvironment.IsDevelopment())
-							{
-								return BadRequest(ModelState);
-							} // if
+						} // if
+						else if (HostingEnvironment.IsDevelopment())
+						{
+							return BadRequest(ModelState);
+						} // if
 
-							return BadRequest();
-						}
-					)
+						return BadRequest();
+					}
+				)
 			;
 
 			return await Do(this.GetInfo(nameof(Delete), "from", "repository", uniqueViewModel), "removing", task);
@@ -214,50 +206,46 @@ namespace JDevl32.Web.Controller.Generic
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Remove (redundant) task wait (handled by result).
+		/// Correct async.
 		/// </remarks>
 		[HttpPost]
 		public virtual async Task<IActionResult> Post(TUniqueViewModel uniqueViewModel)
 		{
 			// todo|jdevl32: constant(s)...
 			var task =
-				new Task<IActionResult>
-					(
-						() =>
+				new Func<Task<IActionResult>>
+				(
+					async () =>
+					{
+						if (ModelState.IsValid)
 						{
-							if (ModelState.IsValid)
+							// todo|jdevl32: ???
+							//uniqueViewModel.UserName = User.Identity.Name;
+							var uniqueItem = Mapper.Map<TUnique>(uniqueViewModel);
+
+							UniqueInformableEntityContextRepository.Update(uniqueItem);
+
+							if (await UniqueInformableEntityContextRepository.SaveChangesAsync())
 							{
-								// todo|jdevl32: ???
-								//uniqueViewModel.UserName = User.Identity.Name;
-								var uniqueItem = Mapper.Map<TUnique>(uniqueViewModel);
-
-								UniqueInformableEntityContextRepository.Update(uniqueItem);
-
-								var saveChangesAsync = UniqueInformableEntityContextRepository.SaveChangesAsync();
-								saveChangesAsync.Start();
-								//saveChangesAsync.Wait();
-
-								if (saveChangesAsync.Result)
-								{
-									// todo|jdevl32: !!! revisit this !!!
-									/**
-									// Use map in case database modified the unique item in any way.
-									var value = Mapper.Map<IUniqueViewModel<TUnique>>(uniqueViewModel);
+								// todo|jdevl32: !!! revisit this !!!
+								/**
+								// Use map in case database modified the unique item in any way.
+								var value = Mapper.Map<IUniqueViewModel<TUnique>>(uniqueViewModel);
 	
-									return Accepted($"{Request.Path.Value}/{value.Id}", value);
-									/**/
-									// todo|jdevl32: ??? does this work for add/new ???
-									return Accepted($"{Request.Path.Value}/{uniqueViewModel.Id}", uniqueViewModel);
-								} // if
+								return Accepted($"{Request.Path.Value}/{value.Id}", value);
+								/**/
+								// todo|jdevl32: ??? does this work for add/new ???
+								return Accepted($"{Request.Path.Value}/{uniqueViewModel.Id}", uniqueViewModel);
 							} // if
-							else if (HostingEnvironment.IsDevelopment())
-							{
-								return BadRequest(ModelState);
-							} // if
+						} // if
+						else if (HostingEnvironment.IsDevelopment())
+						{
+							return BadRequest(ModelState);
+						} // if
 
-							return BadRequest();
-						}
-					)
+						return BadRequest();
+					}
+				)
 			;
 
 			return await Do(this.GetInfo(nameof(Post), "to", "repository", uniqueViewModel), "posting", task);
@@ -314,12 +302,13 @@ namespace JDevl32.Web.Controller.Generic
 		/// </returns>
 		/// <remarks>
 		/// Last modification:
+		/// Correct async.
 		/// </remarks>
-		protected virtual async Task<IActionResult> Do(string info, string action, Task<IActionResult> task)
+		protected virtual async Task<IActionResult> Do(string info, string action, Func<Task<IActionResult>> task)
 		{
 			try
 			{
-				return await task;
+				return await task();
 			} // try
 			catch (Exception ex)
 			{
@@ -328,6 +317,28 @@ namespace JDevl32.Web.Controller.Generic
 
 			return BadRequest();
 		}
+
+		// todo|jdevl32: ???
+		/**
+		protected virtual async Task<IActionResult> DoDelete()
+		{
+			if (ModelState.IsValid)
+			{
+				UniqueInformableEntityContextRepository.Remove();
+
+				if (await UniqueInformableEntityContextRepository.SaveChangesAsync())
+				{
+					return Ok();
+				} // if
+			} // if
+			else if (HostingEnvironment.IsDevelopment())
+			{
+				return BadRequest(ModelState);
+			} // if
+
+			return BadRequest();
+		}
+		/**/
 
 	}
 

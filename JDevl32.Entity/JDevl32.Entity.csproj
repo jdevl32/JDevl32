@@ -8,8 +8,8 @@
     <Copyright>Copyright © 2017 Jeremy Paiz</Copyright>
     <RepositoryUrl>https://github.com/jdevl32/JDevl32/JDevl32.Entity</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Update NuGet package(s).</PackageReleaseNotes>
-    <Version>1.0.7.2</Version>
+    <PackageReleaseNotes>Add extension to the unique item interface.</PackageReleaseNotes>
+    <Version>1.0.7.3</Version>
   </PropertyGroup>
 
   <ItemGroup>

@@ -8,7 +8,7 @@ namespace JDevl32.Entity.Model
 	/// <inheritdoc />
 	/// <remarks>
 	/// Last modification:
-	/// Remove constructor(s).
+	/// Add to-string override.
 	/// </remarks>
 	public abstract class UniqueBase
 		:
@@ -49,74 +49,15 @@ namespace JDevl32.Entity.Model
 
 #region Instance Initialization
 
-		// todo|jdevl32: cleanup...
-		/**
-		/// <summary>
-		/// Create a unique item.
-		/// </summary>
-		/// <remarks>
-		/// Last modification:
-		/// </remarks>
-		protected UniqueBase()
-		{
-		}
+#endregion
 
-		/// <summary>
-		/// Create a unique item.
-		/// </summary>
-		/// <param name="id">
-		/// The unique identifier.
-		/// </param>
-		/// <remarks>
-		/// Last modification:
-		/// </remarks>
-		protected UniqueBase(int id) => Id = id;
+#region Object
 
 		/// <inheritdoc />
-		/// <summary>
-		/// Create a unique item.
-		/// </summary>
-		/// <param name="id">
-		/// The unique identifier.
-		/// </param>
-		/// <param name="shortName">
-		/// The short name.
-		/// </param>
-		/// <param name="fullName">
-		/// The full (long) name.
-		/// </param>
-		/// <param name="description">
-		/// The description.
-		/// </param>
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
-		protected UniqueBase(int id, string shortName, string fullName, string description)
-			:
-			this(shortName, fullName, description) => Id = id;
-
-		/// <summary>
-		/// Create a unique item.
-		/// </summary>
-		/// <param name="shortName">
-		/// The short name.
-		/// </param>
-		/// <param name="fullName">
-		/// The full (long) name.
-		/// </param>
-		/// <param name="description">
-		/// The description.
-		/// </param>
-		/// <remarks>
-		/// Last modification:
-		/// </remarks>
-		protected UniqueBase(string shortName, string fullName, string description)
-		{
-			ShortName = shortName;
-			FullName = fullName;
-			Description = description;
-		}
-		/**/
+		public override string ToString() => $"[{base.ToString()}|{Extension.IUnique.ToString(this)}]";
 
 #endregion
 

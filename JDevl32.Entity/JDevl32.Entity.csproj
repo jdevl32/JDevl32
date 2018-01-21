@@ -8,8 +8,10 @@
     <Copyright>Copyright © 2017 Jeremy Paiz</Copyright>
     <RepositoryUrl>https://github.com/jdevl32/JDevl32/JDevl32.Entity</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Add extension to the unique item interface.</PackageReleaseNotes>
-    <Version>1.0.7.3</Version>
+    <PackageReleaseNotes>Add to-string override.</PackageReleaseNotes>
+    <Version>1.1.0.1</Version>
+    <AssemblyVersion>1.1.0.1</AssemblyVersion>
+    <FileVersion>1.1.0.1</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

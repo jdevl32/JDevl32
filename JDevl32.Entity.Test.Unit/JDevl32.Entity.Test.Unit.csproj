@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+
+    <Version>1.0.0.1</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
+    <PackageReference Include="Moq" Version="4.8.1" />
+    <PackageReference Include="MSTest.TestAdapter" Version="1.2.0" />
+    <PackageReference Include="MSTest.TestFramework" Version="1.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Extension.IUnique\" />
+    <Folder Include="Generic.EntityContextBase\" />
+    <Folder Include="Interface.IEntityContext\" />
+    <Folder Include="Model.GlobalUniqueBase\" />
+    <Folder Include="Generic.EntityContextSowerBase\" />
+    <Folder Include="Generic.MapperEntityContextBase\" />
+    <Folder Include="Interface.IEntityContextSower\" />
+    <Folder Include="Interface.IGlobalUnique\" />
+    <Folder Include="Interface.IUnique\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\JDevl32.Entity\JDevl32.Entity.csproj" />
+    <ProjectReference Include="..\JDevl32.Logging\JDevl32.Logging.csproj" />
+  </ItemGroup>
+
+</Project>

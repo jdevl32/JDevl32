@@ -9,11 +9,11 @@
     <PackageProjectUrl></PackageProjectUrl>
     <RepositoryUrl>https://github.com/jdevl32/JDevl32/JDevl32.Web</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Add debugging.
-Add (missing) from-body attribute specification.</PackageReleaseNotes>
-    <Version>1.0.16.10</Version>
-    <FileVersion>1.0.16.10</FileVersion>
-    <AssemblyVersion>1.0.16.10</AssemblyVersion>
+    <PackageReleaseNotes>Add (missing) from-body attribute specification.
+Revert/remove debugging.</PackageReleaseNotes>
+    <Version>1.0.16.11</Version>
+    <FileVersion>1.0.16.11</FileVersion>
+    <AssemblyVersion>1.0.16.11</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

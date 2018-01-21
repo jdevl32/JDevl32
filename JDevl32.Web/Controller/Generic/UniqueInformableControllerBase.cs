@@ -207,6 +207,7 @@ namespace JDevl32.Web.Controller.Generic
 		/// <remarks>
 		/// Last modification:
 		/// Add (missing) from-body attribute specification.
+		/// Revert/remove debugging.
 		/// </remarks>
 		[HttpPost]
 		public virtual async Task<IActionResult> Post([FromBody] TUniqueViewModel uniqueViewModel)
@@ -219,13 +220,9 @@ namespace JDevl32.Web.Controller.Generic
 					{
 						if (ModelState.IsValid)
 						{
-							Logger.LogInformation($"BEFORE MAP:[{nameof(uniqueViewModel)}={uniqueViewModel}]");
-
 							// todo|jdevl32: ???
 							//uniqueViewModel.UserName = User.Identity.Name;
 							var uniqueItem = Mapper.Map<TUnique>(uniqueViewModel);
-
-							Logger.LogInformation($"AFTER MAP:[{nameof(uniqueItem)}={uniqueItem}]");
 
 							UniqueInformableEntityContextRepository.Update(uniqueItem);
 

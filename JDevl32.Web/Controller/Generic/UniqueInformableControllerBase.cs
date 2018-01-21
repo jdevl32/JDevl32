@@ -142,10 +142,10 @@ namespace JDevl32.Web.Controller.Generic
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Correct async.
+		/// Add (missing) from-body attribute specification.
 		/// </remarks>
 		[HttpDelete]
-		public virtual async Task<IActionResult> Delete(TUniqueViewModel uniqueViewModel)
+		public virtual async Task<IActionResult> Delete([FromBody] TUniqueViewModel uniqueViewModel)
 		{
 			// todo|jdevl32: constant(s)...
 			var task =
@@ -206,10 +206,10 @@ namespace JDevl32.Web.Controller.Generic
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Correct async.
+		/// Add (missing) from-body attribute specification.
 		/// </remarks>
 		[HttpPost]
-		public virtual async Task<IActionResult> Post(TUniqueViewModel uniqueViewModel)
+		public virtual async Task<IActionResult> Post([FromBody] TUniqueViewModel uniqueViewModel)
 		{
 			// todo|jdevl32: constant(s)...
 			var task =
@@ -219,9 +219,13 @@ namespace JDevl32.Web.Controller.Generic
 					{
 						if (ModelState.IsValid)
 						{
+							Logger.LogInformation($"BEFORE MAP:[{nameof(uniqueViewModel)}={uniqueViewModel}]");
+
 							// todo|jdevl32: ???
 							//uniqueViewModel.UserName = User.Identity.Name;
 							var uniqueItem = Mapper.Map<TUnique>(uniqueViewModel);
+
+							Logger.LogInformation($"AFTER MAP:[{nameof(uniqueItem)}={uniqueItem}]");
 
 							UniqueInformableEntityContextRepository.Update(uniqueItem);
 

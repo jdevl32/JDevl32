@@ -1,6 +1,6 @@
-﻿using JDevl32.Web.ViewModel;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
+﻿// todo|jdevl32: ???
+/**
+using JDevl32.Web.ViewModel;
 
 namespace JDevl32.Web.Controller.Interface.Generic
 {
@@ -14,11 +14,11 @@ namespace JDevl32.Web.Controller.Interface.Generic
 	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
-	/// Add unique item view model type.
+	/// (Re-)implement as (generic) HTTP controller.
 	/// </remarks>
 	public interface IUniqueController<in TUniqueViewModel>
 		:
-		IController
+		IHttpController<TUniqueViewModel>
 		where
 			TUniqueViewModel
 			:
@@ -36,10 +36,12 @@ namespace JDevl32.Web.Controller.Interface.Generic
 		/// Last modification:
 		/// </remarks>
 		IUniqueRepository UniqueRepository { get; }
-		/**/
+		/** /
 
 #endregion
 
+		// todo|jdevl32: cleanup...
+		/**
 		/// <summary>
 		/// Delete (remove) (all) the unique item(s).
 		/// </summary>
@@ -95,7 +97,9 @@ namespace JDevl32.Web.Controller.Interface.Generic
 		/// </remarks>
 		[HttpPost]
 		Task<IActionResult> Post([FromBody] TUniqueViewModel uniqueViewModel);
+		/** /
 
 	}
 
 }
+/**/

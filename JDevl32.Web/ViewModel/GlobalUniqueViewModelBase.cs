@@ -1,31 +1,30 @@
 ﻿using JDevl32.Entity.Model;
+using System;
 
 namespace JDevl32.Web.ViewModel
 {
 
 	/// <inheritdoc />
 	/// <summary>
-	/// A unique item view model (base class).
+	/// A (global) unique item view model (base class).
 	/// </summary>
 	/// <remarks>
 	/// Last modification:
-	/// Remove (generic) unique item type.
-	/// Re-implement id as protected (from view model).
 	/// </remarks>
-	public abstract class UniqueViewModelBase
+	public abstract class GlobalUniqueViewModelBase
 		:
-		UniqueBase
+		GlobalUniqueBase
 	{
 
 #region Property
 
 		/// <summary>
-		/// The unique identifier.
+		/// The (globally) unique identifier.
 		/// </summary>
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
-		protected new int Id { get; set; }
+		protected new Guid Id { get; set; }
 
 #endregion
 

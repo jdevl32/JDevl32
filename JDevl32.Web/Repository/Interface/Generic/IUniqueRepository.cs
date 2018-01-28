@@ -1,10 +1,9 @@
 ﻿using JDevl32.Entity.Model;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 
 namespace JDevl32.Web.Repository.Interface.Generic
 {
 
+	/// <inheritdoc />
 	/// <summary>
 	/// A (generic) unique item repository.
 	/// </summary>
@@ -13,9 +12,11 @@ namespace JDevl32.Web.Repository.Interface.Generic
 	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
-	/// Add unique item type.
+	/// (Re-)implement as (generic) HTTP repository.
 	/// </remarks>
 	public interface IUniqueRepository<TUnique>
+		:
+		IHttpRepository<TUnique>
 		where
 			TUnique
 			:
@@ -24,17 +25,30 @@ namespace JDevl32.Web.Repository.Interface.Generic
 
 #region Property
 
+		// todo|jdevl32: how to best handle these (is new/override required) ???
+		/**
 		/// <summary>
-		/// The db-set of (all) the unique item entity item(s).
+		/// The db-set of (all) the (unique) entity item(s).
+		/// </summary>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		new DbSet<TUnique> EntityDbSet { get; }
+
+		/// <summary>
+		/// The db-set of (all) the unique item(s).
 		/// </summary>
 		/// <remarks>
 		/// Last modification:
 		/// Add unique item type.
 		/// </remarks>
 		DbSet<TUnique> UniqueDbSet { get; }
+		/**/
 
 #endregion
 
+		// todo|jdevl32: cleanup...
+		/**
 		/// <summary>
 		/// Get (all) the unique item(s).
 		/// </summary>
@@ -73,6 +87,7 @@ namespace JDevl32.Web.Repository.Interface.Generic
 		/// Add unique item type.
 		/// </remarks>
 		void Update(TUnique uniqueItem);
+		/**/
 
 	}
 

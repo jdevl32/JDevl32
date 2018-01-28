@@ -2,7 +2,6 @@
 using JDevl32.Entity.Interface;
 using JDevl32.Entity.Model;
 using JDevl32.Logging.Extension;
-using JDevl32.Logging.Interface.Generic;
 using JDevl32.Web.Repository.Interface.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -28,7 +27,7 @@ namespace JDevl32.Web.Repository.Generic
 	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
-	/// Add unique item type.
+	/// Refactor display-name (re-implement setter in base (informable) interface).
 	/// </remarks>
 	public abstract class UniqueInformableEntityContextRepositoryBase<TDerivedClass, TEntityContext, TUnique>
 		:
@@ -65,6 +64,8 @@ namespace JDevl32.Web.Repository.Generic
 
 #endregion
 
+		// todo|jdevl32: cleanup...
+		/**
 #region IInformable<out TDerivedClass>
 
 		/// <inheritdoc />
@@ -75,13 +76,14 @@ namespace JDevl32.Web.Repository.Generic
 		string IInformable<TDerivedClass>.DisplayName => DisplayName;
 
 #endregion
+		/**/
 
 #region IUniqueInformableEntityContextRepository<out TDerivedClass>
 
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Add setter.
+		/// Refactor display-name (re-implement setter in base (informable) interface).
 		/// </remarks>
 		public string DisplayName{ get; set; }
 

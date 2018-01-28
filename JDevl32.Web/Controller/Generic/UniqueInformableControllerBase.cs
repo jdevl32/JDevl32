@@ -66,10 +66,20 @@ namespace JDevl32.Web.Controller.Generic
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
+		/// Refactor display-name (re-implement setter in base (informable) interface).
 		/// </remarks>
-		public virtual string DisplayName { get; }
+		string IInformable<TDerivedClass>.DisplayName
+		{
+			get => DisplayName;
+			set => throw new NotImplementedException();
+		}
 
 #endregion
+
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		public virtual string DisplayName { get; }
 
 		/// <summary>
 		/// A unique item informable entity context repository.

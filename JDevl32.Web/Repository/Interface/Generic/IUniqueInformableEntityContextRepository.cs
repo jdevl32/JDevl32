@@ -16,6 +16,7 @@ namespace JDevl32.Web.Repository.Interface.Generic
 	/// <remarks>
 	/// Last modification:
 	/// Add unique item type.
+	/// Refactor display-name (re-implement setter in base (informable) interface).
 	/// </remarks>
 	public interface IUniqueInformableEntityContextRepository<out TDerivedClass, TUnique>
 		:
@@ -35,15 +36,6 @@ namespace JDevl32.Web.Repository.Interface.Generic
 	{
 
 #region Property
-
-		/// <summary>
-		/// The display name.
-		/// </summary>
-		/// <remarks>
-		/// Last modification:
-		/// Hide/redefine base (to add setter).
-		/// </remarks>
-		new string DisplayName { get; set; }
 
 #endregion
 

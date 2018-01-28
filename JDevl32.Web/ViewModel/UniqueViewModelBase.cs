@@ -20,7 +20,7 @@ namespace JDevl32.Web.ViewModel
 #region Property
 
 		/// <summary>
-		/// 
+		/// The unique identifier.
 		/// </summary>
 		/// <remarks>
 		/// Last modification:

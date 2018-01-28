@@ -27,8 +27,9 @@ namespace JDevl32.Logging.Interface.Generic
 		/// </summary>
 		/// <remarks>
 		/// Last modification:
+		/// Add/refactor setter.
 		/// </remarks>
-		string DisplayName { get; }
+		string DisplayName { get; set; }
 
 #endregion
 

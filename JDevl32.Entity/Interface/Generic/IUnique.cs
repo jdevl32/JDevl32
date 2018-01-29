@@ -1,20 +1,23 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace JDevl32.Entity.Interface
+namespace JDevl32.Entity.Interface.Generic
 {
 
-	/// <inheritdoc />
 	/// <summary>
-	/// A global unique entity.
+	/// A (generic) unique item.
 	/// </summary>
+	/// <typeparam name="T">
+	/// The (value) type of the unique item.
+	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
 	/// </remarks>
-	public interface IGlobalUnique
-		:
-		IUnique
+	public interface IUnique<T>
+		where
+			T
+			:
+			struct
 	{
 
 #region Property
@@ -22,16 +25,15 @@ namespace JDevl32.Entity.Interface
 #region EF - Primary Key
 
 		/// <summary>
-		/// A global unique identifier for the entity.
+		/// A unique identifier for the unique item.
 		/// </summary>
 		/// <remarks>
 		/// Last modification:
-		/// Add database generated identity annotation.
 		/// </remarks>
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Key]
 		[Required]
-		new Guid Id { get; }
+		T Id { get; set; }
 
 #endregion
 

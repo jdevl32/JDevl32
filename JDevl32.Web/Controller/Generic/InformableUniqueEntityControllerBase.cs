@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using JDevl32.Entity.Model;
+using JDevl32.Entity.Generic;
 using JDevl32.Logging.Extension;
 using JDevl32.Logging.Interface.Generic;
 using JDevl32.Web.Controller.Interface.Generic;
 using JDevl32.Web.Repository.Interface.Generic;
-using JDevl32.Web.ViewModel;
+using JDevl32.Web.ViewModel.Generic;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -16,7 +16,7 @@ namespace JDevl32.Web.Controller.Generic
 {
 
 	/// <summary>
-	/// A unique item controller.
+	/// A unique entity item controller (base class).
 	/// </summary>
 	/// <typeparam name="TDerivedClass">
 	/// This should be the type of the derived class from this base class (for the logger).
@@ -24,23 +24,19 @@ namespace JDevl32.Web.Controller.Generic
 	/// <typeparam name="TRepository">
 	/// This should be the type of the derived class of the repository (for the logger).
 	/// </typeparam>
-	/// <typeparam name="TUnique">
-	/// The unique item type.
-	/// </typeparam>
-	/// <typeparam name="TUniqueViewModel">
-	/// A unique item view model type.
+	/// <typeparam name="TUniqueValue">
+	/// The (value) type of the unique entity item.
 	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
-	/// Add unique item view model type.
 	/// </remarks>
-	public abstract class UniqueInformableControllerBase<TDerivedClass, TRepository, TUnique, TUniqueViewModel>
+	public abstract class InformableUniqueEntityControllerBase<TDerivedClass, TRepository, TUniqueValue>
 		:
 		ControllerBase<TDerivedClass>
 		,
 		IInformable<TDerivedClass>
 		,
-		IUniqueController<TUniqueViewModel>
+		IUniqueEntityController<TUniqueValue>
 		where
 			TDerivedClass
 			:
@@ -50,23 +46,18 @@ namespace JDevl32.Web.Controller.Generic
 			:
 			class
 		where
-			TUnique
+			TUniqueValue
 			:
-			UniqueBase
-		where
-			TUniqueViewModel
-			:
-			UniqueViewModelBase
+			struct
 	{
 
 #region Property
 
-#region IInformable<out TDerivedClass>
+#region Implementation of IInformable<out TDerivedClass>
 
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Refactor display-name (re-implement setter in base (informable) interface).
 		/// </remarks>
 		string IInformable<TDerivedClass>.DisplayName
 		{
@@ -76,19 +67,21 @@ namespace JDevl32.Web.Controller.Generic
 
 #endregion
 
+		/// <summary>
+		/// The display name.
+		/// </summary>
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
 		public virtual string DisplayName { get; }
 
 		/// <summary>
-		/// A unique item informable entity context repository.
+		/// An informable unique entity item context repository.
 		/// </summary>
 		/// <remarks>
 		/// Last modification:
-		/// Add unique item type.
 		/// </remarks>
-		public virtual IUniqueInformableEntityContextRepository<TRepository, TUnique> UniqueInformableEntityContextRepository { get; }
+		public virtual IInformableUniqueEntityContextRepository<TRepository, TUniqueValue> InformableUniqueEntityContextRepository { get; }
 
 #endregion
 
@@ -97,26 +90,24 @@ namespace JDevl32.Web.Controller.Generic
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Add unique item type.
 		/// </remarks>
-		protected UniqueInformableControllerBase(IHostingEnvironment hostingEnvironment, ILogger<TDerivedClass> logger, IMapper mapper, IUniqueInformableEntityContextRepository<TRepository, TUnique> uniqueInformableEntityContextRepository, string displayName)
+		protected InformableUniqueEntityControllerBase(IHostingEnvironment hostingEnvironment, ILogger<TDerivedClass> logger, IMapper mapper, IInformableUniqueEntityContextRepository<TRepository, TUniqueValue> informableUniqueEntityContextRepository, string displayName)
 			:
 			base(hostingEnvironment, logger, mapper)
 		{
-			UniqueInformableEntityContextRepository = uniqueInformableEntityContextRepository;
+			InformableUniqueEntityContextRepository = informableUniqueEntityContextRepository;
 
 			// Set the display name (and the same for the repository).
-			UniqueInformableEntityContextRepository.DisplayName = DisplayName = displayName;
+			InformableUniqueEntityContextRepository.DisplayName = DisplayName = displayName;
 		}
 
 #endregion
 
-#region IUniqueController<TUniqueViewModel>
+#region Implementation of IUniqueController<TUnique>
 
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Correct async.
 		/// </remarks>
 		[HttpDelete("*", Name = "RemoveAll")]
 		public virtual async Task<IActionResult> Delete()
@@ -129,9 +120,9 @@ namespace JDevl32.Web.Controller.Generic
 					{
 						if (ModelState.IsValid)
 						{
-							UniqueInformableEntityContextRepository.Remove();
+							InformableUniqueEntityContextRepository.Remove();
 
-							if (await UniqueInformableEntityContextRepository.SaveChangesAsync())
+							if (await InformableUniqueEntityContextRepository.SaveChangesAsync())
 							{
 								return Ok();
 							} // if
@@ -152,10 +143,9 @@ namespace JDevl32.Web.Controller.Generic
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Add (missing) from-body attribute specification.
 		/// </remarks>
 		[HttpDelete]
-		public virtual async Task<IActionResult> Delete([FromBody] TUniqueViewModel uniqueViewModel)
+		public virtual async Task<IActionResult> Delete([FromBody] UniqueEntityViewModelBase<TUniqueValue> uniqueEntityViewModel)
 		{
 			// todo|jdevl32: constant(s)...
 			var task =
@@ -166,12 +156,12 @@ namespace JDevl32.Web.Controller.Generic
 						if (ModelState.IsValid)
 						{
 							// todo|jdevl32: ???
-							//uniqueViewModel.UserName = User.Identity.Name;
-							var uniqueItem = Mapper.Map<TUnique>(uniqueViewModel);
+							//uniqueEntityViewModel.UserName = User.Identity.Name;
+							var uniqueEntity = Mapper.Map<UniqueEntityBase<TUniqueValue>>(uniqueEntityViewModel);
 
-							UniqueInformableEntityContextRepository.Remove(uniqueItem);
+							InformableUniqueEntityContextRepository.Remove(uniqueEntity);
 
-							if (await UniqueInformableEntityContextRepository.SaveChangesAsync())
+							if (await InformableUniqueEntityContextRepository.SaveChangesAsync())
 							{
 								return Ok();
 							} // if
@@ -186,14 +176,12 @@ namespace JDevl32.Web.Controller.Generic
 				)
 			;
 
-			return await Do(this.GetInfo(nameof(Delete), "from", "repository", uniqueViewModel), "removing", task);
+			return await Do(this.GetInfo(nameof(Delete), "from", "repository", uniqueEntityViewModel), "removing", task);
 		}
 
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Add container name.
-		/// (Re-)implement extension (class).
 		/// </remarks>
 		[HttpGet]
 		public virtual IActionResult Get()
@@ -205,7 +193,7 @@ namespace JDevl32.Web.Controller.Generic
 						() =>
 						Ok
 							(
-								Mapper.Map<IEnumerable<UniqueViewModelBase>>(UniqueInformableEntityContextRepository.Get())
+								Mapper.Map<IEnumerable<UniqueEntityViewModelBase<TUniqueValue>>>(InformableUniqueEntityContextRepository.Get())
 							)
 					)
 			;
@@ -216,11 +204,9 @@ namespace JDevl32.Web.Controller.Generic
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Add (missing) from-body attribute specification.
-		/// Revert/remove debugging.
 		/// </remarks>
 		[HttpPost]
-		public virtual async Task<IActionResult> Post([FromBody] TUniqueViewModel uniqueViewModel)
+		public virtual async Task<IActionResult> Post([FromBody] UniqueEntityViewModelBase<TUniqueValue> uniqueEntityViewModel)
 		{
 			// todo|jdevl32: constant(s)...
 			var task =
@@ -231,22 +217,17 @@ namespace JDevl32.Web.Controller.Generic
 						if (ModelState.IsValid)
 						{
 							// todo|jdevl32: ???
-							//uniqueViewModel.UserName = User.Identity.Name;
-							var uniqueItem = Mapper.Map<TUnique>(uniqueViewModel);
+							//uniqueEntityViewModel.UserName = User.Identity.Name;
+							var uniqueEntity = Mapper.Map<UniqueEntityBase<TUniqueValue>>(uniqueEntityViewModel);
 
-							UniqueInformableEntityContextRepository.Update(uniqueItem);
+							InformableUniqueEntityContextRepository.Update(uniqueEntity);
 
-							if (await UniqueInformableEntityContextRepository.SaveChangesAsync())
+							if (await InformableUniqueEntityContextRepository.SaveChangesAsync())
 							{
-								// todo|jdevl32: !!! revisit this !!!
-								/**
-								// Use map in case database modified the unique item in any way.
-								var value = Mapper.Map<IUniqueViewModel<TUnique>>(uniqueViewModel);
-	
-								return Accepted($"{Request.Path.Value}/{value.Id}", value);
-								/**/
+								// Use map in case database modified the unique entity item in any way.
+								var value = Mapper.Map<UniqueEntityViewModelBase<TUniqueValue>>(uniqueEntity);
 								// todo|jdevl32: ??? does this work for add/new ???
-								return Accepted($"{Request.Path.Value}/{uniqueViewModel.Id}", uniqueViewModel);
+								return Accepted($"{Request.Path.Value}/{value.Id}", value);
 							} // if
 						} // if
 						else if (HostingEnvironment.IsDevelopment())
@@ -259,7 +240,7 @@ namespace JDevl32.Web.Controller.Generic
 				)
 			;
 
-			return await Do(this.GetInfo(nameof(Post), "to", "repository", uniqueViewModel), "posting", task);
+			return await Do(this.GetInfo(nameof(Post), "to", "repository", uniqueEntityViewModel), "posting", task);
 		}
 
 #endregion
@@ -313,7 +294,6 @@ namespace JDevl32.Web.Controller.Generic
 		/// </returns>
 		/// <remarks>
 		/// Last modification:
-		/// Correct async.
 		/// </remarks>
 		protected virtual async Task<IActionResult> Do(string info, string action, Func<Task<IActionResult>> task)
 		{
@@ -328,28 +308,6 @@ namespace JDevl32.Web.Controller.Generic
 
 			return BadRequest();
 		}
-
-		// todo|jdevl32: ???
-		/**
-		protected virtual async Task<IActionResult> DoDelete()
-		{
-			if (ModelState.IsValid)
-			{
-				UniqueInformableEntityContextRepository.Remove();
-
-				if (await UniqueInformableEntityContextRepository.SaveChangesAsync())
-				{
-					return Ok();
-				} // if
-			} // if
-			else if (HostingEnvironment.IsDevelopment())
-			{
-				return BadRequest(ModelState);
-			} // if
-
-			return BadRequest();
-		}
-		/**/
 
 	}
 

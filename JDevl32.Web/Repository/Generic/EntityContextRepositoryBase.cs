@@ -1,12 +1,11 @@
-﻿using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using JDevl32.Entity.Interface;
-using JDevl32.Logging.Interface;
 using JDevl32.Logging.Interface.Generic;
 using JDevl32.Mapper.Interface;
 using JDevl32.Web.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace JDevl32.Web.Repository.Generic
 {
@@ -39,19 +38,19 @@ namespace JDevl32.Web.Repository.Generic
 
 #region Property
 
-#region IEntityContextRepository
+#region Implementation of IEntityContextRepository
 
 		// todo|jdevl32: ??? is the setter needed ???
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Re-implement explicitly.
+		/// (Re-)implement explicitly.
 		/// </remarks>
 		IEntityContext IEntityContextRepository.EntityContext => Mapper.Map<IEntityContext>(EntityContext);
 
 #endregion
 
-#region ILoggable<TDerivedClass>
+#region Implementation of ILoggable<TDerivedClass>
 
 		/// <inheritdoc />
 		/// <remarks>
@@ -61,7 +60,7 @@ namespace JDevl32.Web.Repository.Generic
 
 #endregion
 
-#region IInstanceMapper
+#region Implementation of IInstanceMapper
 
 		/// <inheritdoc />
 		/// <remarks>
@@ -87,13 +86,13 @@ namespace JDevl32.Web.Repository.Generic
 		/// Create an entity context repository.
 		/// </summary>
 		/// <param name="entityContext">
-		/// The entity context.
+		/// An entity context.
 		/// </param>
 		/// <param name="logger">
-		/// The logger.
+		/// A logger.
 		/// </param>
 		/// <param name="mapper">
-		/// The mapper.
+		/// A mapper.
 		/// </param>
 		/// <remarks>
 		/// Last modification:
@@ -107,7 +106,7 @@ namespace JDevl32.Web.Repository.Generic
 
 #endregion
 
-#region IEntityContextRepository
+#region Implementation of IEntityContextRepository
 
 		/// <inheritdoc />
 		/// <remarks>

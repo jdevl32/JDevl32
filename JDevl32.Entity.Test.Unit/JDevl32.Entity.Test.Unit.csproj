@@ -16,15 +16,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Extension.IUnique\" />
-    <Folder Include="Generic.EntityContextBase\" />
-    <Folder Include="Interface.IEntityContext\" />
-    <Folder Include="Model.GlobalUniqueBase\" />
-    <Folder Include="Generic.EntityContextSowerBase\" />
-    <Folder Include="Generic.MapperEntityContextBase\" />
-    <Folder Include="Interface.IEntityContextSower\" />
-    <Folder Include="Interface.IGlobalUnique\" />
-    <Folder Include="Interface.IUnique\" />
+    <Folder Include="Extension\UniqueEntity\" />
+    <Folder Include="Generic\EntityContextBase\" />
+    <Folder Include="Interface\IEntityContext\" />
+    <Folder Include="Interface\IEntity\" />
+    <Folder Include="Interface\Generic\" />
+    <Folder Include="Model\GuidUniqueEntity\" />
+    <Folder Include="Generic\EntityContextSowerBase\" />
+    <Folder Include="Generic\MapperEntityContextBase\" />
+    <Folder Include="Interface\IEntityContextSower\" />
+    <Folder Include="Interface\Generic\IUniqueEntity\" />
+    <Folder Include="Model\IntUniqueEntity\" />
   </ItemGroup>
 
   <ItemGroup>

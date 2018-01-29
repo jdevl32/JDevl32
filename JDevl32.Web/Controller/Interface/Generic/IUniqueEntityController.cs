@@ -1,4 +1,4 @@
-﻿using JDevl32.Web.ViewModel;
+﻿using JDevl32.Web.ViewModel.Generic;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -7,22 +7,21 @@ namespace JDevl32.Web.Controller.Interface.Generic
 
 	/// <inheritdoc />
 	/// <summary>
-	/// A (generic) unique item controller.
+	/// A (generic) unique entity item controller.
 	/// </summary>
-	/// <typeparam name="TUniqueViewModel">
-	/// A unique item view model type.
+	/// <typeparam name="T">
+	/// The (value) type of the unique entity item view model.
 	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
-	/// Add unique item view model type.
 	/// </remarks>
-	public interface IUniqueController<in TUniqueViewModel>
+	public interface IUniqueEntityController<T>
 		:
 		IController
 		where
-			TUniqueViewModel
+			T
 			:
-			UniqueViewModelBase
+			struct
 	{
 
 #region Property
@@ -30,7 +29,7 @@ namespace JDevl32.Web.Controller.Interface.Generic
 		// todo|jdevl32: (if specified at all) needs to be refactored out into separate interface...
 		/**
 		/// <summary>
-		/// A unique item repository.
+		/// A unique entity item repository.
 		/// </summary>
 		/// <remarks>
 		/// Last modification:
@@ -41,7 +40,7 @@ namespace JDevl32.Web.Controller.Interface.Generic
 #endregion
 
 		/// <summary>
-		/// Delete (remove) (all) the unique item(s).
+		/// Delete (remove) (all) the unique entity item(s).
 		/// </summary>
 		/// <returns>
 		/// An (async) action result task.
@@ -53,23 +52,22 @@ namespace JDevl32.Web.Controller.Interface.Generic
 		Task<IActionResult> Delete();
 
 		/// <summary>
-		/// Delete (remove) the unique item (specified by the view model).
+		/// Delete (remove) the unique entity item (specified by the view model).
 		/// </summary>
-		/// <param name="uniqueViewModel">
-		/// The unique item view model.
+		/// <param name="uniqueEntityViewModel">
+		/// The unique entity item view model.
 		/// </param>
 		/// <returns>
 		/// An (async) action result task.
 		/// </returns>
 		/// <remarks>
 		/// Last modification:
-		/// Add unique item view model type.
 		/// </remarks>
 		[HttpDelete]
-		Task<IActionResult> Delete([FromBody] TUniqueViewModel uniqueViewModel);
+		Task<IActionResult> Delete([FromBody] UniqueEntityViewModelBase<T> uniqueEntityViewModel);
 
 		/// <summary>
-		/// Get (all) the unique item(s).
+		/// Get (all) the unique entity item(s).
 		/// </summary>
 		/// <returns>
 		/// An action result.
@@ -81,20 +79,19 @@ namespace JDevl32.Web.Controller.Interface.Generic
 		IActionResult Get();
 
 		/// <summary>
-		/// Post (add or modify) the unique item (specified by the view model).
+		/// Post (add or modify) the unique entity item (specified by the view model).
 		/// </summary>
-		/// <param name="uniqueViewModel">
-		/// The unique item view model.
+		/// <param name="uniqueEntityViewModel">
+		/// The unique entity item view model.
 		/// </param>
 		/// <returns>
 		/// An (async) action result task.
 		/// </returns>
 		/// <remarks>
 		/// Last modification:
-		/// Add unique item view model type.
 		/// </remarks>
 		[HttpPost]
-		Task<IActionResult> Post([FromBody] TUniqueViewModel uniqueViewModel);
+		Task<IActionResult> Post([FromBody] UniqueEntityViewModelBase<T> uniqueEntityViewModel);
 
 	}
 

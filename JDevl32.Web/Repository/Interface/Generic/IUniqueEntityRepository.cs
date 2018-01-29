@@ -1,4 +1,4 @@
-﻿using JDevl32.Entity.Model;
+﻿using JDevl32.Entity.Generic;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
@@ -6,49 +6,46 @@ namespace JDevl32.Web.Repository.Interface.Generic
 {
 
 	/// <summary>
-	/// A (generic) unique item repository.
+	/// A (generic) unique entity item repository.
 	/// </summary>
-	/// <typeparam name="TUnique">
-	/// The unique item type.
+	/// <typeparam name="T">
+	/// The (value) type of the unique entity item.
 	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
-	/// Add unique item type.
 	/// </remarks>
-	public interface IUniqueRepository<TUnique>
+	public interface IUniqueEntityRepository<T>
 		where
-			TUnique
+			T
 			:
-			UniqueBase
+			struct
 	{
 
 #region Property
 
 		/// <summary>
-		/// The db-set of (all) the unique item entity item(s).
+		/// The db-set of (all) the unique entity item(s).
 		/// </summary>
 		/// <remarks>
 		/// Last modification:
-		/// Add unique item type.
 		/// </remarks>
-		DbSet<TUnique> UniqueDbSet { get; }
+		DbSet<UniqueEntityBase<T>> UniqueEntityDbSet { get; }
 
 #endregion
 
 		/// <summary>
-		/// Get (all) the unique item(s).
+		/// Get (all) the unique entity item(s).
 		/// </summary>
 		/// <returns>
-		/// (All) the unique item(s).
+		/// (All) the unique entity item(s).
 		/// </returns>
 		/// <remarks>
 		/// Last modification:
-		/// Add unique item type.
 		/// </remarks>
-		IEnumerable<TUnique> Get();
+		IEnumerable<UniqueEntityBase<T>> Get();
 
 		/// <summary>
-		/// Remove (all) the unique item(s).
+		/// Remove (all) the unique entity item(s).
 		/// </summary>
 		/// <remarks>
 		/// Last modification:
@@ -56,23 +53,22 @@ namespace JDevl32.Web.Repository.Interface.Generic
 		void Remove();
 
 		/// <summary>
-		/// Remove the unique item.
+		/// Remove the unique entity item.
 		/// </summary>
 		/// <remarks>
 		/// Last modification:
-		/// Add unique item type.
 		/// </remarks>
-		void Remove(TUnique uniqueItem);
+		void Remove(UniqueEntityBase<T> uniqueEntity);
 
 		/// <summary>
-		/// Update the unique item.
+		/// Update the unique entity item.
 		/// </summary>
 		/// <remarks>
 		/// Update is either add or modify (depending on existence).
 		/// Last modification:
-		/// Add unique item type.
+		/// Add unique entity item type.
 		/// </remarks>
-		void Update(TUnique uniqueItem);
+		void Update(UniqueEntityBase<T> uniqueEntity);
 
 	}
 

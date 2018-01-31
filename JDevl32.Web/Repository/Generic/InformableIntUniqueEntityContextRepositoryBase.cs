@@ -17,12 +17,16 @@ namespace JDevl32.Web.Repository.Generic
 	/// <typeparam name="TEntityContext">
 	/// The entity context type.
 	/// </typeparam>
+	/// <typeparam name="TUniqueEntity">
+	/// The type of the unique entity item.
+	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
+	/// Add the type of the unique entity item.
 	/// </remarks>
-	public abstract class InformableIntUniqueEntityContextRepositoryBase<TDerivedClass, TEntityContext>
+	public abstract class InformableIntUniqueEntityContextRepositoryBase<TDerivedClass, TEntityContext, TUniqueEntity>
 		:
-		InformableUniqueEntityContextRepositoryBase<TDerivedClass, TEntityContext, int>
+		InformableUniqueEntityContextRepositoryBase<TDerivedClass, TEntityContext, TUniqueEntity, int>
 		where
 			TDerivedClass
 			:
@@ -33,6 +37,10 @@ namespace JDevl32.Web.Repository.Generic
 			DbContext
 			,
 			IEntityContext
+		where
+			TUniqueEntity
+			:
+			UniqueEntityBase<int>
 	{
 
 #region Instance Initialization
@@ -52,8 +60,9 @@ namespace JDevl32.Web.Repository.Generic
 		/// </param>
 		/// <remarks>
 		/// Last modification:
+		/// Add the type of the unique entity item.
 		/// </remarks>
-		protected InformableIntUniqueEntityContextRepositoryBase(TEntityContext entityContext, ILogger<TDerivedClass> logger, IMapper mapper, DbSet<UniqueEntityBase<int>> uniqueEntityDbSet)
+		protected InformableIntUniqueEntityContextRepositoryBase(TEntityContext entityContext, ILogger<TDerivedClass> logger, IMapper mapper, DbSet<TUniqueEntity> uniqueEntityDbSet)
 			:
 			base(entityContext, logger, mapper, uniqueEntityDbSet)
 		{

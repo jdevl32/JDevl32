@@ -22,17 +22,21 @@ namespace JDevl32.Web.Repository.Generic
 	/// <typeparam name="TEntityContext">
 	/// The entity context type.
 	/// </typeparam>
+	/// <typeparam name="TUniqueEntity">
+	/// The type of the unique entity item.
+	/// </typeparam>
 	/// <typeparam name="TUniqueValue">
 	/// The (value) type of the unique entity item.
 	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
+	/// Add the type of the unique entity item.
 	/// </remarks>
-	public abstract class InformableUniqueEntityContextRepositoryBase<TDerivedClass, TEntityContext, TUniqueValue>
+	public abstract class InformableUniqueEntityContextRepositoryBase<TDerivedClass, TEntityContext, TUniqueEntity, TUniqueValue>
 		:
 		EntityContextRepositoryBase<TDerivedClass, TEntityContext>
 		,
-		IInformableUniqueEntityContextRepository<TDerivedClass, TUniqueValue>
+		IInformableUniqueEntityContextRepository<TDerivedClass, TUniqueEntity, TUniqueValue>
 		where
 			TDerivedClass
 			:
@@ -43,6 +47,10 @@ namespace JDevl32.Web.Repository.Generic
 			DbContext
 			,
 			IEntityContext
+		where
+			TUniqueEntity
+			:
+			UniqueEntityBase<TUniqueValue>
 		where
 			TUniqueValue
 			:
@@ -85,13 +93,14 @@ namespace JDevl32.Web.Repository.Generic
 
 #endregion
 
-#region Implementation of IUniqueRepository<TUnique>
+#region Implementation of IUniqueEntityRepository<TUniqueEntity, TUniqueValue>
 
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
+		/// Add the type of the unique entity item.
 		/// </remarks>
-		public DbSet<UniqueEntityBase<TUniqueValue>> UniqueEntityDbSet { get; }
+		public DbSet<TUniqueEntity> UniqueEntityDbSet { get; }
 
 #endregion
 
@@ -125,8 +134,9 @@ namespace JDevl32.Web.Repository.Generic
 		/// </param>
 		/// <remarks>
 		/// Last modification:
+		/// Add the type of the unique entity item.
 		/// </remarks>
-		protected InformableUniqueEntityContextRepositoryBase(TEntityContext entityContext, ILogger<TDerivedClass> logger, IMapper mapper, DbSet<UniqueEntityBase<TUniqueValue>> uniqueEntityDbSet)
+		protected InformableUniqueEntityContextRepositoryBase(TEntityContext entityContext, ILogger<TDerivedClass> logger, IMapper mapper, DbSet<TUniqueEntity> uniqueEntityDbSet)
 			:
 			base(entityContext, logger, mapper)
 		{
@@ -143,8 +153,9 @@ namespace JDevl32.Web.Repository.Generic
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
+		/// Add the type of the unique entity item.
 		/// </remarks>
-		public IEnumerable<UniqueEntityBase<TUniqueValue>> Get()
+		public IEnumerable<TUniqueEntity> Get()
 			=>
 			Do(this.GetInfo(nameof(Get), "from", "entity context"), "retrieving");
 
@@ -161,16 +172,18 @@ namespace JDevl32.Web.Repository.Generic
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
+		/// Add the type of the unique entity item.
 		/// </remarks>
-		public void Remove(UniqueEntityBase<TUniqueValue> uniqueEntity)
+		public void Remove(TUniqueEntity uniqueEntity)
 			=>
 			Do(this.GetInfo(nameof(Remove), "from", "entity context", uniqueEntity), "removing", UniqueEntityDbSet.Remove, uniqueEntity);
 
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
+		/// Add the type of the unique entity item.
 		/// </remarks>
-		public void Update(UniqueEntityBase<TUniqueValue> uniqueEntity)
+		public void Update(TUniqueEntity uniqueEntity)
 		{
 			// todo|jdevl32: constant(s)...
 			var getInfo =
@@ -201,8 +214,9 @@ namespace JDevl32.Web.Repository.Generic
 		/// <remarks>
 		/// This method re-throws any (and all) exception(s) caught during the try of the method to invoke.
 		/// Last modification:
+		/// Add the type of the unique entity item.
 		/// </remarks>
-		protected virtual IEnumerable<UniqueEntityBase<TUniqueValue>> Do(string info, string action)
+		protected virtual IEnumerable<TUniqueEntity> Do(string info, string action)
 			=>
 			Do(info, action, UniqueEntityDbSet.ToList);
 
@@ -221,8 +235,9 @@ namespace JDevl32.Web.Repository.Generic
 		/// <remarks>
 		/// This method re-throws any (and all) exception(s) caught during the try of the (action) method to invoke.
 		/// Last modification:
+		/// Add the type of the unique entity item.
 		/// </remarks>
-		protected virtual void Do(string info, string action, Action<IEnumerable<UniqueEntityBase<TUniqueValue>>> method)
+		protected virtual void Do(string info, string action, Action<IEnumerable<TUniqueEntity>> method)
 			=>
 			Do(info, action, method, UniqueEntityDbSet.ToList);
 
@@ -244,8 +259,9 @@ namespace JDevl32.Web.Repository.Generic
 		/// <remarks>
 		/// This method re-throws any (and all) exception(s) caught during the try of the (action) method to invoke.
 		/// Last modification:
+		/// Add the type of the unique entity item.
 		/// </remarks>
-		protected virtual void Do(string info, string action, Action<IEnumerable<UniqueEntityBase<TUniqueValue>>> method, Func<IEnumerable<UniqueEntityBase<TUniqueValue>>> uniqueEntityMethod)
+		protected virtual void Do(string info, string action, Action<IEnumerable<TUniqueEntity>> method, Func<IEnumerable<TUniqueEntity>> uniqueEntityMethod)
 		{
 			try
 			{
@@ -276,8 +292,9 @@ namespace JDevl32.Web.Repository.Generic
 		/// <remarks>
 		/// This method re-throws any (and all) exception(s) caught during the try of the method to invoke.
 		/// Last modification:
+		/// Add the type of the unique entity item.
 		/// </remarks>
-		protected virtual IEnumerable<UniqueEntityBase<TUniqueValue>> Do(string info, string action, Func<IEnumerable<UniqueEntityBase<TUniqueValue>>> method)
+		protected virtual IEnumerable<TUniqueEntity> Do(string info, string action, Func<IEnumerable<TUniqueEntity>> method)
 		{
 			try
 			{
@@ -311,8 +328,9 @@ namespace JDevl32.Web.Repository.Generic
 		/// <remarks>
 		/// This method re-throws any (and all) exception(s) caught during the try of the method to invoke.
 		/// Last modification:
+		/// Add the type of the unique entity item.
 		/// </remarks>
-		protected virtual EntityEntry<UniqueEntityBase<TUniqueValue>> Do(string info, string action, Func<UniqueEntityBase<TUniqueValue>, EntityEntry<UniqueEntityBase<TUniqueValue>>> method, UniqueEntityBase<TUniqueValue> uniqueEntity)
+		protected virtual EntityEntry<TUniqueEntity> Do(string info, string action, Func<TUniqueEntity, EntityEntry<TUniqueEntity>> method, TUniqueEntity uniqueEntity)
 		{
 			try
 			{

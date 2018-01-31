@@ -24,13 +24,17 @@ namespace JDevl32.Web.Controller.Generic
 	/// <typeparam name="TRepository">
 	/// This should be the type of the derived class of the repository (for the logger).
 	/// </typeparam>
+	/// <typeparam name="TUniqueEntity">
+	/// The type of the unique entity item.
+	/// </typeparam>
 	/// <typeparam name="TUniqueValue">
 	/// The (value) type of the unique entity item.
 	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
+	/// Add the type of the unique entity item.
 	/// </remarks>
-	public abstract class InformableUniqueEntityControllerBase<TDerivedClass, TRepository, TUniqueValue>
+	public abstract class InformableUniqueEntityControllerBase<TDerivedClass, TRepository, TUniqueEntity, TUniqueValue>
 		:
 		ControllerBase<TDerivedClass>
 		,
@@ -45,6 +49,10 @@ namespace JDevl32.Web.Controller.Generic
 			TRepository
 			:
 			class
+		where
+			TUniqueEntity
+			:
+			UniqueEntityBase<TUniqueValue>
 		where
 			TUniqueValue
 			:
@@ -80,8 +88,9 @@ namespace JDevl32.Web.Controller.Generic
 		/// </summary>
 		/// <remarks>
 		/// Last modification:
+		/// Add the type of the unique entity item.
 		/// </remarks>
-		public virtual IInformableUniqueEntityContextRepository<TRepository, TUniqueValue> InformableUniqueEntityContextRepository { get; }
+		public virtual IInformableUniqueEntityContextRepository<TRepository, TUniqueEntity, TUniqueValue> InformableUniqueEntityContextRepository { get; }
 
 #endregion
 
@@ -90,8 +99,9 @@ namespace JDevl32.Web.Controller.Generic
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
+		/// Add the type of the unique entity item.
 		/// </remarks>
-		protected InformableUniqueEntityControllerBase(IHostingEnvironment hostingEnvironment, ILogger<TDerivedClass> logger, IMapper mapper, IInformableUniqueEntityContextRepository<TRepository, TUniqueValue> informableUniqueEntityContextRepository, string displayName)
+		protected InformableUniqueEntityControllerBase(IHostingEnvironment hostingEnvironment, ILogger<TDerivedClass> logger, IMapper mapper, IInformableUniqueEntityContextRepository<TRepository, TUniqueEntity, TUniqueValue> informableUniqueEntityContextRepository, string displayName)
 			:
 			base(hostingEnvironment, logger, mapper)
 		{
@@ -103,7 +113,7 @@ namespace JDevl32.Web.Controller.Generic
 
 #endregion
 
-#region Implementation of IUniqueController<TUnique>
+#region Implementation of IUniqueEntityController<TUniqueValue>
 
 		/// <inheritdoc />
 		/// <remarks>
@@ -143,6 +153,7 @@ namespace JDevl32.Web.Controller.Generic
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
+		/// Add the type of the unique entity item.
 		/// </remarks>
 		[HttpDelete]
 		public virtual async Task<IActionResult> Delete([FromBody] UniqueEntityViewModelBase<TUniqueValue> uniqueEntityViewModel)
@@ -157,7 +168,7 @@ namespace JDevl32.Web.Controller.Generic
 						{
 							// todo|jdevl32: ???
 							//uniqueEntityViewModel.UserName = User.Identity.Name;
-							var uniqueEntity = Mapper.Map<UniqueEntityBase<TUniqueValue>>(uniqueEntityViewModel);
+							var uniqueEntity = Mapper.Map<TUniqueEntity>(uniqueEntityViewModel);
 
 							InformableUniqueEntityContextRepository.Remove(uniqueEntity);
 
@@ -204,6 +215,7 @@ namespace JDevl32.Web.Controller.Generic
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
+		/// Add the type of the unique entity item.
 		/// </remarks>
 		[HttpPost]
 		public virtual async Task<IActionResult> Post([FromBody] UniqueEntityViewModelBase<TUniqueValue> uniqueEntityViewModel)
@@ -218,7 +230,7 @@ namespace JDevl32.Web.Controller.Generic
 						{
 							// todo|jdevl32: ???
 							//uniqueEntityViewModel.UserName = User.Identity.Name;
-							var uniqueEntity = Mapper.Map<UniqueEntityBase<TUniqueValue>>(uniqueEntityViewModel);
+							var uniqueEntity = Mapper.Map<TUniqueEntity>(uniqueEntityViewModel);
 
 							InformableUniqueEntityContextRepository.Update(uniqueEntity);
 

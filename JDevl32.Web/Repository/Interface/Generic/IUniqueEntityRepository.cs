@@ -8,15 +8,23 @@ namespace JDevl32.Web.Repository.Interface.Generic
 	/// <summary>
 	/// A (generic) unique entity item repository.
 	/// </summary>
-	/// <typeparam name="T">
+	/// <typeparam name="TUniqueEntity">
+	/// The type of the unique entity item.
+	/// </typeparam>
+	/// <typeparam name="TUniqueValue">
 	/// The (value) type of the unique entity item.
 	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
+	/// Add the type of the unique entity item.
 	/// </remarks>
-	public interface IUniqueEntityRepository<T>
+	public interface IUniqueEntityRepository<TUniqueEntity, TUniqueValue>
 		where
-			T
+			TUniqueEntity
+			:
+			UniqueEntityBase<TUniqueValue>
+		where
+			TUniqueValue
 			:
 			struct
 	{
@@ -28,8 +36,9 @@ namespace JDevl32.Web.Repository.Interface.Generic
 		/// </summary>
 		/// <remarks>
 		/// Last modification:
+		/// Add the type of the unique entity item.
 		/// </remarks>
-		DbSet<UniqueEntityBase<T>> UniqueEntityDbSet { get; }
+		DbSet<TUniqueEntity> UniqueEntityDbSet { get; }
 
 #endregion
 
@@ -41,8 +50,9 @@ namespace JDevl32.Web.Repository.Interface.Generic
 		/// </returns>
 		/// <remarks>
 		/// Last modification:
+		/// Add the type of the unique entity item.
 		/// </remarks>
-		IEnumerable<UniqueEntityBase<T>> Get();
+		IEnumerable<TUniqueEntity> Get();
 
 		/// <summary>
 		/// Remove (all) the unique entity item(s).
@@ -57,8 +67,9 @@ namespace JDevl32.Web.Repository.Interface.Generic
 		/// </summary>
 		/// <remarks>
 		/// Last modification:
+		/// Add the type of the unique entity item.
 		/// </remarks>
-		void Remove(UniqueEntityBase<T> uniqueEntity);
+		void Remove(TUniqueEntity uniqueEntity);
 
 		/// <summary>
 		/// Update the unique entity item.
@@ -66,9 +77,9 @@ namespace JDevl32.Web.Repository.Interface.Generic
 		/// <remarks>
 		/// Update is either add or modify (depending on existence).
 		/// Last modification:
-		/// Add unique entity item type.
+		/// Add the type of the unique entity item.
 		/// </remarks>
-		void Update(UniqueEntityBase<T> uniqueEntity);
+		void Update(TUniqueEntity uniqueEntity);
 
 	}
 

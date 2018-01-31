@@ -9,10 +9,10 @@
     <PackageProjectUrl></PackageProjectUrl>
     <RepositoryUrl>https://github.com/jdevl32/JDevl32/JDevl32.Web</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Refactor unique entity item(s) on (value) type of (global) unique identifier.</PackageReleaseNotes>
-    <Version>1.1.0.1</Version>
-    <FileVersion>1.1.0.1</FileVersion>
-    <AssemblyVersion>1.1.0.1</AssemblyVersion>
+    <PackageReleaseNotes>Add the type of the unique entity item.</PackageReleaseNotes>
+    <Version>1.1.1.1</Version>
+    <FileVersion>1.1.1.1</FileVersion>
+    <AssemblyVersion>1.1.1.1</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

@@ -9,11 +9,9 @@ namespace JDevl32.Entity.Test.Unit.Common
 	/// <remarks>
 	/// This class should be used to test string representation extension(s).
 	/// Last modification:
-	/// (Re-)implement due to:
-	/// Refactor unique entity item(s) on (value) type of (global) unique identifier.
 	/// </remarks>
 	[TestClass]
-	public class ToString
+	public class ToPropertyString
 	{
 
 		/// <summary>
@@ -22,7 +20,6 @@ namespace JDevl32.Entity.Test.Unit.Common
 		/// <remarks>
 		/// This method should be used to test string representation extension(s) for a(n implementation) object.
 		/// Last modification:
-		/// Enhance string representation (include type name).
 		/// </remarks>
 		[TestMethod]
 		public void Test1()
@@ -30,9 +27,9 @@ namespace JDevl32.Entity.Test.Unit.Common
 			var test1 = new Implementation.Test1();
 			const string propertySeparator = Entity.Common.DefaultPropertySeparator;
 			const string valueSeparator = Entity.Common.DefaultValueSeparator;
-			const string enclosure = Entity.Common.DefaultEnclosure;
-			var expected = Entity.Common.ToEnclosedString($"{test1.GetType()}:{Entity.Common.ToPropertyString(test1, propertySeparator, valueSeparator)}", enclosure);
-			var actual = Entity.Common.ToString(test1, propertySeparator, valueSeparator, enclosure);
+			const string test1PublicStringProperty001Name = nameof(test1.PublicStringProperty001);
+			var expected = $"{nameof(test1.PublicIntProperty001)}{valueSeparator}{test1.PublicIntProperty001}{propertySeparator}{test1PublicStringProperty001Name}{valueSeparator}{test1PublicStringProperty001Name}";
+			var actual = Entity.Common.ToPropertyString(test1, propertySeparator, valueSeparator);
 
 			Assert.AreEqual(expected, actual);
 		}

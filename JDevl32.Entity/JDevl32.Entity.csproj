@@ -8,11 +8,10 @@
     <Copyright>Copyright © 2017 Jeremy Paiz</Copyright>
     <RepositoryUrl>https://github.com/jdevl32/JDevl32/JDevl32.Entity</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Refactor unique entity item(s) on (value) type of (global) unique identifier.
-Enhance string representation extension(s).</PackageReleaseNotes>
-    <Version>1.2.0.1</Version>
-    <AssemblyVersion>1.2.0.1</AssemblyVersion>
-    <FileVersion>1.2.0.1</FileVersion>
+    <PackageReleaseNotes>Enhance string representation (include type name).</PackageReleaseNotes>
+    <Version>1.2.1.1</Version>
+    <AssemblyVersion>1.2.1.1</AssemblyVersion>
+    <FileVersion>1.2.1.1</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using JDevl32.Logging.Interface;
 using JDevl32.Logging.Interface.Generic;
 using JDevl32.Mapper.Interface;
 using JDevl32.Web.Controller.Interface;

@@ -80,6 +80,88 @@ namespace JDevl32.Entity
 			2 == enclosure.Length ? $"{enclosure[0]}{value}{enclosure[1]}" : $"{enclosure}{value}{enclosure}";
 
 		/// <summary>
+		/// Get a string representation of (the propert(y/ies) of) an object.
+		/// </summary>
+		/// <typeparam name="T">
+		/// The type of the object.
+		/// </typeparam>
+		/// <param name="obj">
+		/// An object.
+		/// </param>
+		/// <returns>
+		/// A string representation of (the propert(y/ies) of) an object.
+		/// </returns>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		public static string ToPropertyString<T>(T obj)
+			=>
+			ToPropertyString(obj, DefaultPropertySeparator);
+
+		/// <summary>
+		/// Get a string representation of (the propert(y/ies) of) an object.
+		/// </summary>
+		/// <typeparam name="T">
+		/// The type of the object.
+		/// </typeparam>
+		/// <param name="obj">
+		/// An object.
+		/// </param>
+		/// <param name="propertySeparator">
+		/// A(n object) property separator.
+		/// </param>
+		/// <returns>
+		/// A string representation of (the propert(y/ies) of) an object.
+		/// </returns>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		public static string ToPropertyString<T>(T obj, string propertySeparator)
+			=>
+			ToPropertyString(obj, propertySeparator, DefaultValueSeparator);
+
+		/// <summary>
+		/// Get a string representation of (the propert(y/ies) of) an object.
+		/// </summary>
+		/// <typeparam name="T">
+		/// The type of the object.
+		/// </typeparam>
+		/// <param name="obj">
+		/// An object.
+		/// </param>
+		/// <param name="propertySeparator">
+		/// A(n object) property separator.
+		/// </param>
+		/// <param name="valueSeparator">
+		/// A (property) value separator.
+		/// </param>
+		/// <returns>
+		/// A string representation of (the propert(y/ies) of) an object.
+		/// </returns>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		public static string ToPropertyString<T>(T obj, string propertySeparator, string valueSeparator)
+		{
+			return
+				string.Join
+					(
+						propertySeparator
+						,
+						typeof(T)
+							.GetProperties()
+							.Select
+								(
+									propertyInfo
+									=>
+									ToString(obj, propertyInfo, valueSeparator)
+								)
+							.ToArray()
+					)
+			;
+		}
+
+		/// <summary>
 		/// Get a string representation of an object.
 		/// </summary>
 		/// <typeparam name="T">
@@ -168,25 +250,13 @@ namespace JDevl32.Entity
 		/// </returns>
 		/// <remarks>
 		/// Last modification:
+		/// Enhance string representation (include type name).
 		/// </remarks>
 		public static string ToString<T>(T obj, string propertySeparator, string valueSeparator, string enclosure)
 			=>
 			ToEnclosedString
 				(
-					string.Join
-						(
-							propertySeparator
-							,
-							typeof(T)
-								.GetProperties()
-								.Select
-									(
-										propertyInfo
-										=>
-										ToString(obj, propertyInfo, valueSeparator)
-									)
-								.ToArray()
-						)
+					$"{typeof(T)}:{ToPropertyString(obj, propertySeparator, valueSeparator)}"
 					,
 					enclosure
 				)

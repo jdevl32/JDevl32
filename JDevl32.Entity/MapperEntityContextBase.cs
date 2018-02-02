@@ -6,41 +6,45 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 
-namespace JDevl32.Entity.Generic
+namespace JDevl32.Entity
 {
 
 	/// <summary>
-	/// A (generic) entity context (base class) with (an auto-mapper) mapper.
+	/// An entity context (base class) with (an auto-mapper) mapper.
 	/// </summary>
 	/// <remarks>
 	/// Last modification:
-	/// (Re-)implement as generic.
 	/// </remarks>
-	public abstract class MapperEntityContextBase<TDerivedClass>
+	public abstract class MapperEntityContextBase
 		:
-		EntityContextBase<TDerivedClass>
+		EntityContextBase
 		,
 		IInstanceMapper
-		where
-			TDerivedClass
-			:
-			class
 	{
 
 #region Property
 
-#region IInstanceMapper
+#region Implementation of EntityContextBase
 
+		// todo|jdevl32: ???
+		/**
 		/// <summary>
-		/// The logger.
+		/// A logger.
 		/// </summary>
 		/// <remarks>
 		/// Last modification:
-		/// Make virtual.
 		/// </remarks>
-		public new virtual ILogger<TDerivedClass> Logger { get; protected set; }
+		public new virtual ILogger Logger { get; protected set; }
+		/**/
+
+#endregion
+
+#region Implementation of IInstanceMapper
 
 		/// <inheritdoc />
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
 		public IMapper Mapper { get; protected set; }
 
 #endregion
@@ -50,29 +54,39 @@ namespace JDevl32.Entity.Generic
 #region Instance Initialization
 
 		/// <inheritdoc />
-		protected MapperEntityContextBase(DbContextOptions dbContextOptions, IConfigurationRoot configurationRoot, IHostingEnvironment hostingEnvironment, ILogger<TDerivedClass> logger, IMapper mapper)
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		protected MapperEntityContextBase(DbContextOptions dbContextOptions, IConfigurationRoot configurationRoot, IHostingEnvironment hostingEnvironment, ILoggerFactory loggerFactory, IMapper mapper)
 			:
-			base(dbContextOptions, configurationRoot, hostingEnvironment, logger)
+			base(dbContextOptions, configurationRoot, hostingEnvironment, loggerFactory)
 			=>
-			Set(logger, mapper);
+			//Set(logger, mapper);
+			SetMapper(mapper);
 
 		/// <inheritdoc />
-		protected MapperEntityContextBase(DbContextOptions dbContextOptions, IConfigurationRoot configurationRoot, IHostingEnvironment hostingEnvironment, ILogger<TDerivedClass> logger, IMapper mapper, string connectionStringKey)
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		protected MapperEntityContextBase(DbContextOptions dbContextOptions, IConfigurationRoot configurationRoot, IHostingEnvironment hostingEnvironment, ILoggerFactory loggerFactory, IMapper mapper, string connectionStringKey)
 			:
-			base(dbContextOptions, configurationRoot, hostingEnvironment, logger, connectionStringKey)
+			base(dbContextOptions, configurationRoot, hostingEnvironment, loggerFactory, connectionStringKey)
 			=>
-			Set(logger, mapper);
+			//Set(logger, mapper);
+			SetMapper(mapper);
 
 #endregion
 
+		// todo|jdevl32: ???
+		/**
 		/// <summary>
 		/// Set the logger and mapper.
 		/// </summary>
 		/// <param name="logger">
-		/// The logger.
+		/// A logger.
 		/// </param>
 		/// <param name="mapper">
-		/// The mapper.
+		/// A mapper.
 		/// </param>
 		/// <remarks>
 		/// Last modification:
@@ -87,7 +101,7 @@ namespace JDevl32.Entity.Generic
 		/// Set the logger.
 		/// </summary>
 		/// <param name="logger">
-		/// The logger.
+		/// A logger.
 		/// </param>
 		/// <remarks>
 		/// Last modification:
@@ -96,12 +110,14 @@ namespace JDevl32.Entity.Generic
 		{
 			Logger = logger ?? throw new ArgumentNullException(nameof(logger));
 		}
+		/**/
 
+		// todo|jdevl32: is this really needed ???
 		/// <summary>
 		/// Set the mapper.
 		/// </summary>
 		/// <param name="mapper">
-		/// The mapper.
+		/// A mapper.
 		/// </param>
 		/// <remarks>
 		/// Last modification:

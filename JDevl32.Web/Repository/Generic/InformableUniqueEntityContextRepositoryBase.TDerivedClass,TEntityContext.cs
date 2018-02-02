@@ -1,6 +1,8 @@
-﻿using JDevl32.Entity.Generic;
-using JDevl32.Entity.Interface;
+﻿using AutoMapper;
+using JDevl32.Entity;
+using JDevl32.Entity.Generic;
 using JDevl32.Logging.Extension;
+using JDevl32.Logging.Interface;
 using JDevl32.Web.Repository.Interface.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -15,6 +17,12 @@ namespace JDevl32.Web.Repository.Generic
 	/// <summary>
 	/// A (generic) unique entity item context repository (base class).
 	/// </summary>
+	/// <typeparam name="TDerivedClass">
+	/// This should be the type of the derived class from this base class (for the logger).
+	/// </typeparam>
+	/// <typeparam name="TEntityContext">
+	/// The type of the entity context.
+	/// </typeparam>
 	/// <typeparam name="TUniqueEntity">
 	/// The type of the unique entity item.
 	/// </typeparam>
@@ -23,13 +31,21 @@ namespace JDevl32.Web.Repository.Generic
 	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
-	/// Refactor loggable logger category name.
+	/// Add the type of the unique entity item.
 	/// </remarks>
-	public abstract class InformableUniqueEntityContextRepositoryBase<TUniqueEntity, TUniqueValue>
+	public abstract class InformableUniqueEntityContextRepositoryBase<TDerivedClass, TEntityContext, TUniqueEntity, TUniqueValue>
 		:
-		EntityContextRepositoryBase
+		EntityContextRepositoryBase<TDerivedClass, TEntityContext>
 		,
-		IInformableUniqueEntityContextRepository<TUniqueEntity, TUniqueValue>
+		IInformableUniqueEntityContextRepository<TEntityContext, TUniqueEntity, TUniqueValue>
+		where
+			TDerivedClass
+			:
+			class
+		where
+			TEntityContext
+			:
+			EntityContextBase
 		where
 			TUniqueEntity
 			:
@@ -66,13 +82,24 @@ namespace JDevl32.Web.Repository.Generic
 #endregion
 		/**/
 
-#region Implementation of IInformable
+#region Implementation of IInformableUniqueEntityContextRepository<out TDerivedClass>
 
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
 		public string DisplayName{ get; set; }
+
+#endregion
+
+#region Implementation of ILoggable
+
+		// todo|jdevl32: ???
+		/// <inheritdoc />
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		ILogger ILoggable.Logger => Logger;
 
 #endregion
 
@@ -106,19 +133,22 @@ namespace JDevl32.Web.Repository.Generic
 		/// <param name="entityContext">
 		/// An entity context.
 		/// </param>
-		/// <param name="loggerFactory">
-		/// A logger factory.
+		/// <param name="logger">
+		/// A logger.
+		/// </param>
+		/// <param name="mapper">
+		/// A mapper.
 		/// </param>
 		/// <param name="uniqueEntityDbSet">
 		/// A db-set of (all) the unique entity item(s).
 		/// </param>
 		/// <remarks>
 		/// Last modification:
-		/// Refactor loggable logger category name.
+		/// Add the type of the unique entity item.
 		/// </remarks>
-		protected InformableUniqueEntityContextRepositoryBase(IEntityContext entityContext, ILoggerFactory loggerFactory, DbSet<TUniqueEntity> uniqueEntityDbSet)
+		protected InformableUniqueEntityContextRepositoryBase(TEntityContext entityContext, ILogger<TDerivedClass> logger, IMapper mapper, DbSet<TUniqueEntity> uniqueEntityDbSet)
 			:
-			base(entityContext, loggerFactory)
+			base(entityContext, logger, mapper)
 		{
 			// todo|jdevl32: ???
 			//GetUniqueItemMethod = getUniqueItemMethod;
@@ -127,7 +157,7 @@ namespace JDevl32.Web.Repository.Generic
 
 #endregion
 
-#region Implementation of IUniqueEntityRepository<TUniqueEntity, TUniqueValue>
+#region Implementation of IInformableUniqueEntityContextRepository<TDerivedClass>
 
 		// todo|jdevl32: constant(s)...
 		/// <inheritdoc />

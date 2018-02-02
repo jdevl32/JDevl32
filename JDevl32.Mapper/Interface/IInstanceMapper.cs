@@ -4,15 +4,18 @@ namespace JDevl32.Mapper.Interface
 {
 
 	/// <summary>
-	/// An instance-base auto-mapper.
+	/// An instance-based auto-mapper.
 	/// </summary>
+	/// <remarks>
+	/// Last modification:
+	/// </remarks>
 	public interface IInstanceMapper
 	{
 
 #region Property
 
 		/// <summary>
-		/// The auto-mapper instance.
+		/// An auto-mapper instance.
 		/// </summary>
 		/// <remarks>
 		/// Last modification:

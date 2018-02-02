@@ -9,7 +9,7 @@ namespace JDevl32.Web.Controller.Generic
 {
 
 	/// <summary>
-	/// A generic (web) controller (base class).
+	/// A (generic, web) controller (base class).
 	/// </summary>
 	/// <typeparam name="TDerivedClass">
 	/// This should be the type of the derived class from this base class (for the logger).
@@ -35,7 +35,7 @@ namespace JDevl32.Web.Controller.Generic
 
 #region Property
 
-#region IController
+#region Implementation of IController
 
 		/// <inheritdoc />
 		/// <remarks>
@@ -45,7 +45,7 @@ namespace JDevl32.Web.Controller.Generic
 
 #endregion
 
-#region ILoggable<TDerivedClass>
+#region Implementation of ILoggable<TDerivedClass>
 
 		/// <inheritdoc />
 		/// <remarks>
@@ -56,7 +56,7 @@ namespace JDevl32.Web.Controller.Generic
 
 #endregion
 
-#region IInstanceMapper
+#region Implementation of IInstanceMapper
 
 		/// <inheritdoc />
 		/// <remarks>
@@ -105,7 +105,6 @@ namespace JDevl32.Web.Controller.Generic
 			// todo|jdevl32: (see above) ???
 			//:
 			//this(logger) => HostingEnvironment = hostingEnvironment;
-
 		{
 			HostingEnvironment = hostingEnvironment;
 			Logger = logger;

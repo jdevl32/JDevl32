@@ -1,19 +1,30 @@
-﻿using JDevl32.Logging.Interface.Generic;
+﻿using Microsoft.Extensions.Logging;
 
 namespace JDevl32.Logging.Interface
 {
 
-	/// <inheritdoc />
 	/// <summary>
 	/// A loggable object.
 	/// </summary>
 	/// <remarks>
 	/// Last modification:
+	/// (Re-)implement (no interface extension).
 	/// </remarks>
 	public interface ILoggable
-		:
-		ILoggable<ILoggable>
 	{
+
+#region Property
+
+		/// <summary>
+		/// The logger.
+		/// </summary>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		ILogger Logger { get; }
+
+#endregion
+
 	}
 
 }

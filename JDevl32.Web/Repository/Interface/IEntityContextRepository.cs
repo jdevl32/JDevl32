@@ -15,8 +15,9 @@ namespace JDevl32.Web.Repository.Interface
 
 #region Property
 
+		// todo|jdevl32: ??? should this be entity-context-base (abstract base class instead of interface) ???
 		/// <summary>
-		/// The entity context.
+		/// An entity context.
 		/// </summary>
 		/// <remarks>
 		/// Last modification:
@@ -26,10 +27,10 @@ namespace JDevl32.Web.Repository.Interface
 #endregion
 
 		/// <summary>
-		/// 
+		/// Save changes to the database (via the entity context repository) asynchronously.
 		/// </summary>
 		/// <returns>
-		/// 
+		/// A task (of (a) boolean).
 		/// </returns>
 		/// <remarks>
 		/// Last modification:

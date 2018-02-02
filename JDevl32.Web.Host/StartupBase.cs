@@ -404,7 +404,7 @@ namespace JDevl32.Web.Host
 		/// 
 		/// </summary>
 		/// <typeparam name="TEntityContext">
-		/// The entity context type.
+		/// The type of the entity context.
 		/// </typeparam>
 		/// <param name="serviceCollection">
 		/// The service collection.
@@ -427,7 +427,7 @@ namespace JDevl32.Web.Host
 		/// 
 		/// </summary>
 		/// <typeparam name="TEntityContext">
-		/// The entity context type.
+		/// The type of the entity context.
 		/// </typeparam>
 		/// <typeparam name="TDerivedClass">
 		/// The (loggable) derived class type.

@@ -3,13 +3,16 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.1.1.1</Version>
+    <Version>1.2.0.1</Version>
     <Authors>Jeremy Paiz</Authors>
     <Company />
-    <PackageReleaseNotes>Refactor display-name (re-implement setter in base (informable) interface).</PackageReleaseNotes>
+    <PackageReleaseNotes>Refactor loggable logger category name.
+Implement (non-generic) get (logging) information.</PackageReleaseNotes>
     <RepositoryUrl>https://github.com/jdevl32/JDevl32/JDevl32.Logging</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
     <Copyright>Copyright © 2017 Jeremy Paiz</Copyright>
+    <AssemblyVersion>1.2.0.1</AssemblyVersion>
+    <FileVersion>1.2.0.1</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

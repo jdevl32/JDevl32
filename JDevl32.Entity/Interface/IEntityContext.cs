@@ -7,7 +7,7 @@ namespace JDevl32.Entity.Interface
 {
 
 	/// <summary>
-	/// The entity context.
+	/// An entity context.
 	/// </summary>
 	/// <remarks>
 	/// Last modification:
@@ -19,7 +19,7 @@ namespace JDevl32.Entity.Interface
 #region Property
 
 		/// <summary>
-		/// The configuration root of the application.
+		/// The configuration root (of the application).
 		/// </summary>
 		/// <remarks>
 		/// Last modification:
@@ -27,7 +27,7 @@ namespace JDevl32.Entity.Interface
 		IConfigurationRoot ConfigurationRoot { get; }
 
 		/// <summary>
-		/// The database connection string key.
+		/// A database connection string key.
 		/// </summary>
 		/// <remarks>
 		/// Last modification:
@@ -43,7 +43,7 @@ namespace JDevl32.Entity.Interface
 		DbContextOptions DbContextOptions { get; }
 
 		/// <summary>
-		/// The hosting environment of the application.
+		/// The hosting environment (of the application).
 		/// </summary>
 		/// <remarks>
 		/// Last modification:
@@ -53,10 +53,10 @@ namespace JDevl32.Entity.Interface
 #endregion
 
 		/// <summary>
-		/// 
+		/// Save changes to the database (via the entity context) asynchronously.
 		/// </summary>
 		/// <returns>
-		/// 
+		/// A task (of (an) integer).
 		/// </returns>
 		/// <remarks>
 		/// Last modification:

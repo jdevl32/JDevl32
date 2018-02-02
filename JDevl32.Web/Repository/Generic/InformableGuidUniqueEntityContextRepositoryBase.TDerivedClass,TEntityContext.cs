@@ -1,21 +1,22 @@
 ﻿using AutoMapper;
+using JDevl32.Entity;
 using JDevl32.Entity.Generic;
-using JDevl32.Entity.Interface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System;
 
 namespace JDevl32.Web.Repository.Generic
 {
 
 	/// <inheritdoc />
 	/// <summary>
-	/// A (generic) unique identifier entity item context repository (base class).
+	/// A (generic) global unique identifier entity item context repository (base class).
 	/// </summary>
 	/// <typeparam name="TDerivedClass">
 	/// This should be the type of the derived class from this base class (for the logger).
 	/// </typeparam>
 	/// <typeparam name="TEntityContext">
-	/// The entity context type.
+	/// The type of the entity context.
 	/// </typeparam>
 	/// <typeparam name="TUniqueEntity">
 	/// The type of the unique entity item.
@@ -24,9 +25,9 @@ namespace JDevl32.Web.Repository.Generic
 	/// Last modification:
 	/// Add the type of the unique entity item.
 	/// </remarks>
-	public abstract class InformableIntUniqueEntityContextRepositoryBase<TDerivedClass, TEntityContext, TUniqueEntity>
+	public abstract class InformableGuidUniqueEntityContextRepositoryBase<TDerivedClass, TEntityContext, TUniqueEntity>
 		:
-		InformableUniqueEntityContextRepositoryBase<TDerivedClass, TEntityContext, TUniqueEntity, int>
+		InformableUniqueEntityContextRepositoryBase<TDerivedClass, TEntityContext, TUniqueEntity, Guid>
 		where
 			TDerivedClass
 			:
@@ -34,13 +35,11 @@ namespace JDevl32.Web.Repository.Generic
 		where
 			TEntityContext
 			:
-			DbContext
-			,
-			IEntityContext
+			EntityContextBase
 		where
 			TUniqueEntity
 			:
-			UniqueEntityBase<int>
+			UniqueEntityBase<Guid>
 	{
 
 #region Instance Initialization
@@ -56,13 +55,13 @@ namespace JDevl32.Web.Repository.Generic
 		/// A mapper.
 		/// </param>
 		/// <param name="uniqueEntityDbSet">
-		/// A db-set of (all) the unique identifier entity item(s).
+		/// A db-set of (all) the global unique identifier entity item(s).
 		/// </param>
 		/// <remarks>
 		/// Last modification:
-		/// Add the type of the unique entity item.
+	/// Add the type of the unique entity item.
 		/// </remarks>
-		protected InformableIntUniqueEntityContextRepositoryBase(TEntityContext entityContext, ILogger<TDerivedClass> logger, IMapper mapper, DbSet<TUniqueEntity> uniqueEntityDbSet)
+		protected InformableGuidUniqueEntityContextRepositoryBase(TEntityContext entityContext, ILogger<TDerivedClass> logger, IMapper mapper, DbSet<TUniqueEntity> uniqueEntityDbSet)
 			:
 			base(entityContext, logger, mapper, uniqueEntityDbSet)
 		{

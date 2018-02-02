@@ -1,16 +1,28 @@
-﻿using JDevl32.Logging.Interface.Generic;
-
-namespace JDevl32.Logging.Interface
+﻿namespace JDevl32.Logging.Interface
 {
 
 	/// <inheritdoc />
 	/// <remarks>
 	/// Last modification:
+	/// (Re-)implement (as (non-generic) loggable interface).
 	/// </remarks>>
 	public interface IInformable
 		:
-		IInformable<IInformable>
+		ILoggable
 	{
+
+#region Property
+
+		/// <summary>
+		/// The display name.
+		/// </summary>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		string DisplayName { get; set; }
+
+#endregion
+
 	}
 
 }

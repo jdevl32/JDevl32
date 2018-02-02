@@ -1,16 +1,22 @@
 ﻿using System.Threading.Tasks;
 
-namespace JDevl32.Entity.Interface
+namespace JDevl32.Entity.Interface.Generic
 {
 
 	/// <summary>
-	/// A sower (seeder) for the entity context.
+	/// A sower (seeder) for an entity context.
 	/// </summary>
+	/// <typeparam name="TEntityContext">
+	/// The type of the entity context.
+	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
-	/// (Re-)implement logger downstream (due to loggable interface).
 	/// </remarks>
-	public interface IEntityContextSower
+	public interface IEntityContextSower<out TEntityContext>
+		where
+			TEntityContext
+			:
+			EntityContextBase
 	{
 
 #region Property
@@ -20,9 +26,8 @@ namespace JDevl32.Entity.Interface
 		/// </summary>
 		/// <remarks>
 		/// Last modification:
-		/// Remove generic entity context interface -- obsolete due to (new) loggable interface.
 		/// </remarks>
-		IEntityContext EntityContext { get; }
+		TEntityContext EntityContext { get; }
 
 #endregion
 

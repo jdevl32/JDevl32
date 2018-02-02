@@ -1,23 +1,31 @@
-﻿using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using JDevl32.Entity.Interface;
 using JDevl32.Logging.Interface.Generic;
 using JDevl32.Mapper.Interface;
+using JDevl32.Web.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
-namespace JDevl32.Entity.Generic
+namespace JDevl32.Web.Repository.Generic
 {
 
 	/// <summary>
-	/// A (generic) entity context sower (base class).
+	/// A(n) (generic) entity context repository (base class).
 	/// </summary>
+	/// <typeparam name="TDerivedClass">
+	/// 
+	/// </typeparam>
+	/// <typeparam name="TEntityContext">
+	/// The type of the entity context.
+	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
+	/// Restrict entity context type parameter to db-context type.
 	/// </remarks>
-	public abstract class EntityContextSowerBase<TDerivedClass, TEntityContext>
+	public abstract class EntityContextRepositoryBase<TDerivedClass, TEntityContext>
 		:
-		IEntityContextSower
+		IEntityContextRepository
 		,
 		ILoggable<TDerivedClass>
 		,
@@ -36,21 +44,19 @@ namespace JDevl32.Entity.Generic
 
 #region Property
 
-#region IEntityContextSower
+#region Implementation of IEntityContextRepository
 
+		// todo|jdevl32: ??? is the setter needed ???
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
+		/// (Re-)implement explicitly.
 		/// </remarks>
-		IEntityContext IEntityContextSower.EntityContext
-		{
-			get => Mapper.Map<IEntityContext>(EntityContext);
-			// todo|jdevl32: is the setter needed ???
-		}
+		IEntityContext IEntityContextRepository.EntityContext => Mapper.Map<IEntityContext>(EntityContext);
 
 #endregion
 
-#region ILoggable<TDerivedClass>
+#region Implementation of ILoggable<TDerivedClass>
 
 		/// <inheritdoc />
 		/// <remarks>
@@ -60,7 +66,7 @@ namespace JDevl32.Entity.Generic
 
 #endregion
 
-#region IInstanceMapper
+#region Implementation of IInstanceMapper
 
 		/// <inheritdoc />
 		/// <remarks>
@@ -86,18 +92,18 @@ namespace JDevl32.Entity.Generic
 		/// Create an entity context repository.
 		/// </summary>
 		/// <param name="entityContext">
-		/// The entity context.
+		/// An entity context.
 		/// </param>
 		/// <param name="logger">
-		/// The logger.
+		/// A logger.
 		/// </param>
 		/// <param name="mapper">
-		/// The mapper.
+		/// A mapper.
 		/// </param>
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
-		protected EntityContextSowerBase(TEntityContext entityContext, ILogger<TDerivedClass> logger, IMapper mapper)
+		protected EntityContextRepositoryBase(TEntityContext entityContext, ILogger<TDerivedClass> logger, IMapper mapper)
 		{
 			EntityContext = entityContext;
 			Logger = logger;
@@ -106,13 +112,13 @@ namespace JDevl32.Entity.Generic
 
 #endregion
 
-#region IEntityContextSower
+#region Implementation of IEntityContextRepository
 
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
-		public abstract Task Seed();
+		public virtual async Task<bool> SaveChangesAsync() => await EntityContext.SaveChangesAsync() > 0;
 
 #endregion
 

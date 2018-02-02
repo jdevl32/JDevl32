@@ -1,5 +1,5 @@
-﻿using JDevl32.Entity.Generic;
-using JDevl32.Entity.Interface;
+﻿using JDevl32.Entity;
+using JDevl32.Entity.Generic;
 using JDevl32.Logging.Extension;
 using JDevl32.Web.Repository.Interface.Generic;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +15,9 @@ namespace JDevl32.Web.Repository.Generic
 	/// <summary>
 	/// A (generic) unique entity item context repository (base class).
 	/// </summary>
+	/// <typeparam name="TEntityContext">
+	/// The type of the entity context.
+	/// </typeparam>
 	/// <typeparam name="TUniqueEntity">
 	/// The type of the unique entity item.
 	/// </typeparam>
@@ -23,13 +26,16 @@ namespace JDevl32.Web.Repository.Generic
 	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
-	/// Refactor loggable logger category name.
 	/// </remarks>
-	public abstract class InformableUniqueEntityContextRepositoryBase<TUniqueEntity, TUniqueValue>
+	public abstract class InformableUniqueEntityContextRepositoryBase<TEntityContext, TUniqueEntity, TUniqueValue>
 		:
-		EntityContextRepositoryBase
+		EntityContextRepositoryBase<TEntityContext>
 		,
-		IInformableUniqueEntityContextRepository<TUniqueEntity, TUniqueValue>
+		IInformableUniqueEntityContextRepository<TEntityContext, TUniqueEntity, TUniqueValue>
+		where
+			TEntityContext
+			:
+			EntityContextBase
 		where
 			TUniqueEntity
 			:
@@ -42,7 +48,7 @@ namespace JDevl32.Web.Repository.Generic
 
 #region Property
 
-#region Implementation of IEntityContextRepository
+#region Implementation of IEntityContextRepository<TEntityContext>
 
 		//// todo|jdevl32: ??? is the setter needed ???
 		///// <inheritdoc />
@@ -81,7 +87,6 @@ namespace JDevl32.Web.Repository.Generic
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Add the type of the unique entity item.
 		/// </remarks>
 		public DbSet<TUniqueEntity> UniqueEntityDbSet { get; }
 
@@ -114,9 +119,8 @@ namespace JDevl32.Web.Repository.Generic
 		/// </param>
 		/// <remarks>
 		/// Last modification:
-		/// Refactor loggable logger category name.
 		/// </remarks>
-		protected InformableUniqueEntityContextRepositoryBase(IEntityContext entityContext, ILoggerFactory loggerFactory, DbSet<TUniqueEntity> uniqueEntityDbSet)
+		protected InformableUniqueEntityContextRepositoryBase(TEntityContext entityContext, ILoggerFactory loggerFactory, DbSet<TUniqueEntity> uniqueEntityDbSet)
 			:
 			base(entityContext, loggerFactory)
 		{
@@ -133,7 +137,6 @@ namespace JDevl32.Web.Repository.Generic
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Add the type of the unique entity item.
 		/// </remarks>
 		public IEnumerable<TUniqueEntity> Get()
 			=>
@@ -152,7 +155,6 @@ namespace JDevl32.Web.Repository.Generic
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Add the type of the unique entity item.
 		/// </remarks>
 		public void Remove(TUniqueEntity uniqueEntity)
 			=>
@@ -161,7 +163,6 @@ namespace JDevl32.Web.Repository.Generic
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Add the type of the unique entity item.
 		/// </remarks>
 		public void Update(TUniqueEntity uniqueEntity)
 		{

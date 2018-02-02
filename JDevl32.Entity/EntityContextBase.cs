@@ -1,37 +1,32 @@
 ﻿using JDevl32.Entity.Interface;
-using JDevl32.Logging.Interface.Generic;
+using JDevl32.Logging.Interface;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
-namespace JDevl32.Entity.Generic
+namespace JDevl32.Entity
 {
 
 	/// <summary>
-	/// A (generic) entity context (base class).
+	/// A entity context (base class).
 	/// </summary>
 	/// <remarks>
 	/// Last modification:
-	/// Add save changes async.
 	/// </remarks>
-	public abstract class EntityContextBase<TDerivedClass>
+	public abstract class EntityContextBase
 		:
 		DbContext
 		,
 		IEntityContext
 		,
-		ILoggable<TDerivedClass>
-		where
-			TDerivedClass
-			:
-			class
+		ILoggable
 	{
 
 #region Property
 
-#region IEntityContext
+#region Implementation of IEntityContext
 
 		/// <inheritdoc />
 		/// <remarks>
@@ -57,12 +52,15 @@ namespace JDevl32.Entity.Generic
 		/// </remarks>
 		public IHostingEnvironment HostingEnvironment { get; }
 
+#endregion
+
+#region Implementation of ILoggable
+
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Make virtual (due to re-implementation).
 		/// </remarks>
-		public virtual ILogger<TDerivedClass> Logger { get; }
+		public virtual ILogger Logger { get; }
 
 #endregion
 
@@ -83,20 +81,20 @@ namespace JDevl32.Entity.Generic
 		/// <param name="hostingEnvironment">
 		/// The hosting envrionment (of the application).
 		/// </param>
-		/// <param name="logger">
-		/// A logger.
+		/// <param name="loggerFactory">
+		/// A logger factory.
 		/// </param>
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
-		protected EntityContextBase(DbContextOptions dbContextOptions, IConfigurationRoot configurationRoot, IHostingEnvironment hostingEnvironment, ILogger<TDerivedClass> logger)
+		protected EntityContextBase(DbContextOptions dbContextOptions, IConfigurationRoot configurationRoot, IHostingEnvironment hostingEnvironment, ILoggerFactory loggerFactory)
 			:
 			base(dbContextOptions)
 		{
 			ConfigurationRoot = configurationRoot;
 			DbContextOptions = dbContextOptions;
 			HostingEnvironment = hostingEnvironment;
-			Logger = logger;
+			Logger = loggerFactory.CreateLogger(GetType());
 		}
 
 		/// <inheritdoc />
@@ -112,8 +110,8 @@ namespace JDevl32.Entity.Generic
 		/// <param name="hostingEnvironment">
 		/// The hosting envrionment (of the application).
 		/// </param>
-		/// <param name="logger">
-		/// A logger.
+		/// <param name="loggerFactory">
+		/// A logger factory.
 		/// </param>
 		/// <param name="connectionStringKey">
 		/// A database connection string key.
@@ -121,13 +119,15 @@ namespace JDevl32.Entity.Generic
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
-		protected EntityContextBase(DbContextOptions dbContextOptions, IConfigurationRoot configurationRoot, IHostingEnvironment hostingEnvironment, ILogger<TDerivedClass> logger, string connectionStringKey)
+		protected EntityContextBase(DbContextOptions dbContextOptions, IConfigurationRoot configurationRoot, IHostingEnvironment hostingEnvironment, ILoggerFactory loggerFactory, string connectionStringKey)
 			:
-			this(dbContextOptions, configurationRoot, hostingEnvironment, logger) => ConnectionStringKey = connectionStringKey;
+			this(dbContextOptions, configurationRoot, hostingEnvironment, loggerFactory)
+			=>
+			ConnectionStringKey = connectionStringKey;
 
 #endregion
 
-#region DbContext
+#region Implementation of DbContext
 
 		/// <inheritdoc />
 		/// <remarks>
@@ -150,7 +150,7 @@ namespace JDevl32.Entity.Generic
 
 #endregion
 
-#region IEntityContext
+#region Implementation of IEntityContext
 
 		/// <inheritdoc />
 		/// <remarks>

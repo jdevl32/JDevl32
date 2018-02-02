@@ -1,27 +1,23 @@
-﻿using System.Threading.Tasks;
-using JDevl32.Entity;
-using JDevl32.Entity.Generic;
+﻿using JDevl32.Entity;
+using System.Threading.Tasks;
 
 namespace JDevl32.Web.Repository.Interface.Generic
 {
 
 	/// <summary>
-	/// A (generic) entity context repository.
+	/// A(n) (generic) entity context repository.
 	/// </summary>
-	/// <typeparam name="TDerivedClass">
-	/// This should be the type of the derived class from this base class (for the logger).
+	/// <typeparam name="TEntityContext">
+	/// The type of the entity context.
 	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
-	/// Rename.
-	/// Re-implement as generic.
-	/// Add entity context.
 	/// </remarks>
-	public interface IEntityContextRepository<TDerivedClass>
+	public interface IEntityContextRepository<out TEntityContext>
 		where
-			TDerivedClass
+			TEntityContext
 			:
-			class
+			EntityContextBase
 	{
 
 #region Property
@@ -32,7 +28,7 @@ namespace JDevl32.Web.Repository.Interface.Generic
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
-		EntityContextBase<TDerivedClass> EntityContext { get; }
+		TEntityContext EntityContext { get; }
 
 #endregion
 

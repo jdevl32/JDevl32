@@ -1,43 +1,42 @@
-﻿using AutoMapper;
+﻿using JDevl32.Entity.Interface.Generic;
 using JDevl32.Logging.Interface;
-using JDevl32.Mapper.Interface;
-using JDevl32.Web.Controller.Interface;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
-namespace JDevl32.Web.Controller
+namespace JDevl32.Entity.Generic
 {
 
 	/// <summary>
-	/// A (web) controller (base class).
+	/// A(n) (generic) entity context sower (base class).
 	/// </summary>
 	/// <remarks>
 	/// Last modification:
-	/// Refactor loggable logger category name.
 	/// </remarks>
-	public abstract class ControllerBase
+	public abstract class EntityContextSowerBase<TEntityContext>
 		:
-		Microsoft.AspNetCore.Mvc.Controller
+		IEntityContextSower<TEntityContext>
 		,
 		ILoggable
-		,
-		IController
 		// todo|jdevl32: ???
-		/**/
+		/**
 		,
 		IInstanceMapper
 		/**/
+		where
+			TEntityContext
+			:
+			EntityContextBase
 	{
 
 #region Property
 
-#region Implementation of IController
+#region Implementation of IEntityContextSower<TEntityContext>
 
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
-		public IHostingEnvironment HostingEnvironment { get; }
+		public virtual TEntityContext EntityContext { get; }
 
 #endregion
 
@@ -46,14 +45,13 @@ namespace JDevl32.Web.Controller
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Make public (for loggable interface implementation) and virtual.
 		/// </remarks>
 		public virtual ILogger Logger { get; }
 
 #endregion
 
 		// todo|jdevl32: ???
-		/**/
+		/**
 #region Implementation of IInstanceMapper
 
 		/// <inheritdoc />
@@ -69,30 +67,35 @@ namespace JDevl32.Web.Controller
 
 #region Instance Initialization
 
-		/// <inheritdoc />
 		/// <summary>
-		/// Create a controller base.
+		/// Create an entity context repository.
 		/// </summary>
-		/// <param name="hostingEnvironment">
-		/// The (injected) hosting environment.
+		/// <param name="entityContext">
+		/// An entity context.
 		/// </param>
 		/// <param name="loggerFactory">
 		/// A logger factory.
 		/// </param>
-		/// <param name="mapper">
-		/// A(n auto-)mapper.
-		/// </param>
 		/// <remarks>
 		/// Last modification:
-		/// Refactor loggable logger category name.
 		/// </remarks>
-		protected ControllerBase(IHostingEnvironment hostingEnvironment, ILoggerFactory loggerFactory, IMapper mapper)
+		protected EntityContextSowerBase(TEntityContext entityContext, ILoggerFactory loggerFactory)
 		{
-			HostingEnvironment = hostingEnvironment;
+			EntityContext = entityContext;
 			Logger = loggerFactory.CreateLogger(GetType());
 			// todo|jdevl32: ???
-			Mapper = mapper;
+			//Mapper = mapper;
 		}
+
+#endregion
+
+#region IEntityContextSower<TEntityContext>
+
+		/// <inheritdoc />
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		public abstract Task Seed();
 
 #endregion
 

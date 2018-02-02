@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using JDevl32.Entity;
 using JDevl32.Entity.Generic;
 using JDevl32.Logging.Extension;
 using JDevl32.Web.Controller.Interface.Generic;
@@ -14,10 +15,12 @@ using IInformable = JDevl32.Logging.Interface.IInformable;
 
 namespace JDevl32.Web.Controller.Generic
 {
-
 	/// <summary>
 	/// A(n) (generic) informable unique entity item controller (base class).
 	/// </summary>
+	/// <typeparam name="TEntityContext">
+	/// The type of the entity context.
+	/// </typeparam>
 	/// <typeparam name="TUniqueEntity">
 	/// The type of the unique entity item.
 	/// </typeparam>
@@ -26,15 +29,18 @@ namespace JDevl32.Web.Controller.Generic
 	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
-	/// Refactor loggable logger category name.
 	/// </remarks>
-	public abstract class InformableUniqueEntityControllerBase<TUniqueEntity, TUniqueValue>
+	public abstract class InformableUniqueEntityControllerBase<TEntityContext, TUniqueEntity, TUniqueValue>
 		:
 		ControllerBase
 		,
 		IInformable
 		,
 		IUniqueEntityController<TUniqueValue>
+		where
+			TEntityContext
+			:
+			EntityContextBase
 		where
 			TUniqueEntity
 			:
@@ -52,7 +58,6 @@ namespace JDevl32.Web.Controller.Generic
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Refactor loggable logger category name.
 		/// </remarks>
 		string IInformable.DisplayName
 		{
@@ -75,9 +80,8 @@ namespace JDevl32.Web.Controller.Generic
 		/// </summary>
 		/// <remarks>
 		/// Last modification:
-		/// Refactor loggable logger category name.
 		/// </remarks>
-		public virtual IInformableUniqueEntityContextRepository<TUniqueEntity, TUniqueValue> InformableUniqueEntityContextRepository { get; }
+		public virtual IInformableUniqueEntityContextRepository<TEntityContext, TUniqueEntity, TUniqueValue> InformableUniqueEntityContextRepository { get; }
 
 #endregion
 
@@ -86,9 +90,8 @@ namespace JDevl32.Web.Controller.Generic
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Refactor loggable logger category name.
 		/// </remarks>
-		protected InformableUniqueEntityControllerBase(IHostingEnvironment hostingEnvironment, ILoggerFactory loggerFactory, IMapper mapper, IInformableUniqueEntityContextRepository<TUniqueEntity, TUniqueValue> informableUniqueEntityContextRepository, string displayName)
+		protected InformableUniqueEntityControllerBase(IHostingEnvironment hostingEnvironment, ILoggerFactory loggerFactory, IMapper mapper, IInformableUniqueEntityContextRepository<TEntityContext, TUniqueEntity, TUniqueValue> informableUniqueEntityContextRepository, string displayName)
 			:
 			base(hostingEnvironment, loggerFactory, mapper)
 		{

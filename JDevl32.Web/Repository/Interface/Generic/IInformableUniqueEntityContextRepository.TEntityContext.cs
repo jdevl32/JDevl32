@@ -1,4 +1,5 @@
-﻿using JDevl32.Entity.Generic;
+﻿using JDevl32.Entity;
+using JDevl32.Entity.Generic;
 using JDevl32.Logging.Interface;
 
 namespace JDevl32.Web.Repository.Interface.Generic
@@ -7,6 +8,9 @@ namespace JDevl32.Web.Repository.Interface.Generic
 	/// <summary>
 	/// A(n) (generic) informable unique entity item context repository.
 	/// </summary>
+	/// <typeparam name="TEntityContext">
+	/// The type of the entity context.
+	/// </typeparam>
 	/// <typeparam name="TUniqueEntity">
 	/// The type of the unique entity item.
 	/// </typeparam>
@@ -15,15 +19,18 @@ namespace JDevl32.Web.Repository.Interface.Generic
 	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
-	/// Refactor loggable logger category name.
 	/// </remarks>
-	public interface IInformableUniqueEntityContextRepository<TUniqueEntity, TUniqueValue>
+	public interface IInformableUniqueEntityContextRepository<out TEntityContext, TUniqueEntity, TUniqueValue>
 		:
-		IEntityContextRepository
+		IEntityContextRepository<TEntityContext>
 		,
 		IInformable
 		,
 		IUniqueEntityRepository<TUniqueEntity, TUniqueValue>
+		where
+			TEntityContext
+			:
+			EntityContextBase
 		where
 			TUniqueEntity
 			:

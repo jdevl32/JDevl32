@@ -1,45 +1,36 @@
-﻿using AutoMapper;
-using JDevl32.Entity.Interface;
-using JDevl32.Logging.Interface.Generic;
-using JDevl32.Mapper.Interface;
+﻿using JDevl32.Entity.Interface;
+using JDevl32.Logging.Interface;
 using JDevl32.Web.Repository.Interface;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
-namespace JDevl32.Web.Repository.Generic
+namespace JDevl32.Web.Repository
 {
 
 	/// <summary>
-	/// A (generic) entity context repository (base class).
+	/// An entity context repository (base class).
 	/// </summary>
 	/// <remarks>
 	/// Last modification:
-	/// Restrict entity context type parameter to db-context type.
 	/// </remarks>
-	public abstract class EntityContextRepositoryBase<TDerivedClass, TEntityContext>
+	public abstract class EntityContextRepositoryBase
 		:
 		IEntityContextRepository
 		,
-		ILoggable<TDerivedClass>
+		ILoggable
+		// todo|jdevl32: ???
+		/**
 		,
 		IInstanceMapper
-		where
-			TDerivedClass
-			:
-			class
-		where
-			TEntityContext
-			:
-			DbContext
-			,
-			IEntityContext
+		/**/
 	{
 
 #region Property
 
 #region Implementation of IEntityContextRepository
 
+		// todo|jdevl32: ???
+		/**
 		// todo|jdevl32: ??? is the setter needed ???
 		/// <inheritdoc />
 		/// <remarks>
@@ -47,19 +38,29 @@ namespace JDevl32.Web.Repository.Generic
 		/// (Re-)implement explicitly.
 		/// </remarks>
 		IEntityContext IEntityContextRepository.EntityContext => Mapper.Map<IEntityContext>(EntityContext);
+		/**/
+
+		// todo:jdevl32: ??? should this be entity-context-base (abstract base class instead of interface) ???
+		/// <inheritdoc />
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		public virtual IEntityContext EntityContext { get; }
 
 #endregion
 
-#region Implementation of ILoggable<TDerivedClass>
+#region Implementation of ILoggable
 
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
-		public virtual ILogger<TDerivedClass> Logger { get; }
+		public virtual ILogger Logger { get; }
 
 #endregion
 
+		// todo|jdevl32: ???
+		/**
 #region Implementation of IInstanceMapper
 
 		/// <inheritdoc />
@@ -69,14 +70,7 @@ namespace JDevl32.Web.Repository.Generic
 		public IMapper Mapper { get; }
 
 #endregion
-
-		/// <summary>
-		/// The entity context.
-		/// </summary>
-		/// <remarks>
-		/// Last modification:
-		/// </remarks>
-		public virtual TEntityContext EntityContext { get; }
+		/**/
 
 #endregion
 
@@ -88,20 +82,18 @@ namespace JDevl32.Web.Repository.Generic
 		/// <param name="entityContext">
 		/// An entity context.
 		/// </param>
-		/// <param name="logger">
-		/// A logger.
-		/// </param>
-		/// <param name="mapper">
-		/// A mapper.
+		/// <param name="loggerFactory">
+		/// A logger factory.
 		/// </param>
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
-		protected EntityContextRepositoryBase(TEntityContext entityContext, ILogger<TDerivedClass> logger, IMapper mapper)
+		protected EntityContextRepositoryBase(IEntityContext entityContext, ILoggerFactory loggerFactory)
 		{
 			EntityContext = entityContext;
-			Logger = logger;
-			Mapper = mapper;
+			Logger = loggerFactory.CreateLogger(GetType());
+			// todo|jdevl32: ???
+			//Mapper = mapper;
 		}
 
 #endregion

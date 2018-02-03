@@ -21,24 +21,31 @@ namespace JDevl32.Web.Controller.Generic
 	/// <typeparam name="TUniqueEntity">
 	/// The type of the unique entity item.
 	/// </typeparam>
+	/// <typeparam name="TUniqueEntityViewModel">
+	/// The type of the unique entity item view model.
+	/// </typeparam>
 	/// <typeparam name="TUniqueValue">
 	/// The (value) type of the unique entity item.
 	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
-	/// Refactor loggable logger category name.
+	/// Add the type of the unique entity item view model.
 	/// </remarks>
-	public abstract class InformableUniqueEntityControllerBase<TUniqueEntity, TUniqueValue>
+	public abstract class InformableUniqueEntityControllerBase<TUniqueEntity, TUniqueEntityViewModel, TUniqueValue>
 		:
 		ControllerBase
 		,
 		IInformable
 		,
-		IUniqueEntityController<TUniqueValue>
+		IUniqueEntityController<TUniqueEntityViewModel, TUniqueValue>
 		where
 			TUniqueEntity
 			:
 			UniqueEntityBase<TUniqueValue>
+		where
+			TUniqueEntityViewModel
+			:
+			UniqueEntityViewModelBase<TUniqueValue>
 		where
 			TUniqueValue
 			:
@@ -100,7 +107,7 @@ namespace JDevl32.Web.Controller.Generic
 
 #endregion
 
-#region Implementation of IUniqueEntityController<TUniqueValue>
+#region Implementation of IUniqueEntityController<TUniqueEntityViewModel, TUniqueValue>
 
 		/// <inheritdoc />
 		/// <remarks>
@@ -140,10 +147,10 @@ namespace JDevl32.Web.Controller.Generic
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Add the type of the unique entity item.
+		/// Add the type of the unique entity item view model.
 		/// </remarks>
 		[HttpDelete]
-		public virtual async Task<IActionResult> Delete([FromBody] UniqueEntityViewModelBase<TUniqueValue> uniqueEntityViewModel)
+		public virtual async Task<IActionResult> Delete([FromBody] TUniqueEntityViewModel uniqueEntityViewModel)
 		{
 			// todo|jdevl32: constant(s)...
 			var task =
@@ -180,6 +187,7 @@ namespace JDevl32.Web.Controller.Generic
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
+		/// Add the type of the unique entity item view model.
 		/// </remarks>
 		[HttpGet]
 		public virtual IActionResult Get()
@@ -191,7 +199,10 @@ namespace JDevl32.Web.Controller.Generic
 						() =>
 						Ok
 							(
-								Mapper.Map<IEnumerable<UniqueEntityViewModelBase<TUniqueValue>>>(InformableUniqueEntityContextRepository.Get())
+								Mapper.Map<IEnumerable<TUniqueEntityViewModel>>
+									(
+										InformableUniqueEntityContextRepository.Get()
+									)
 							)
 					)
 			;
@@ -202,10 +213,10 @@ namespace JDevl32.Web.Controller.Generic
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// Add the type of the unique entity item.
+		/// Add the type of the unique entity item view model.
 		/// </remarks>
 		[HttpPost]
-		public virtual async Task<IActionResult> Post([FromBody] UniqueEntityViewModelBase<TUniqueValue> uniqueEntityViewModel)
+		public virtual async Task<IActionResult> Post([FromBody] TUniqueEntityViewModel uniqueEntityViewModel)
 		{
 			// todo|jdevl32: constant(s)...
 			var task =
@@ -224,7 +235,7 @@ namespace JDevl32.Web.Controller.Generic
 							if (await InformableUniqueEntityContextRepository.SaveChangesAsync())
 							{
 								// Use map in case database modified the unique entity item in any way.
-								var value = Mapper.Map<UniqueEntityViewModelBase<TUniqueValue>>(uniqueEntity);
+								var value = Mapper.Map<TUniqueEntityViewModel>(uniqueEntity);
 								// todo|jdevl32: ??? does this work for add/new ???
 								return Accepted($"{Request.Path.Value}/{value.Id}", value);
 							} // if

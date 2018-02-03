@@ -4,22 +4,29 @@ using System.Threading.Tasks;
 
 namespace JDevl32.Web.Controller.Interface.Generic
 {
-
 	/// <inheritdoc />
 	/// <summary>
 	/// A (generic) unique entity item controller.
 	/// </summary>
-	/// <typeparam name="T">
+	/// <typeparam name="TUniqueEntityViewModel">
+	/// The type of the unique entity item view model.
+	/// </typeparam>
+	/// <typeparam name="TUniqueValue">
 	/// The (value) type of the unique entity item view model.
 	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
+	/// Add the (contravariant) type of the unique entity item view model.
 	/// </remarks>
-	public interface IUniqueEntityController<T>
+	public interface IUniqueEntityController<in TUniqueEntityViewModel, TUniqueValue>
 		:
 		IController
 		where
-			T
+			TUniqueEntityViewModel
+			:
+			UniqueEntityViewModelBase<TUniqueValue>
+		where
+			TUniqueValue
 			:
 			struct
 	{
@@ -62,9 +69,10 @@ namespace JDevl32.Web.Controller.Interface.Generic
 		/// </returns>
 		/// <remarks>
 		/// Last modification:
+		/// Add the type of the unique entity item view model.
 		/// </remarks>
 		[HttpDelete]
-		Task<IActionResult> Delete([FromBody] UniqueEntityViewModelBase<T> uniqueEntityViewModel);
+		Task<IActionResult> Delete([FromBody] TUniqueEntityViewModel uniqueEntityViewModel);
 
 		/// <summary>
 		/// Get (all) the unique entity item(s).
@@ -89,9 +97,10 @@ namespace JDevl32.Web.Controller.Interface.Generic
 		/// </returns>
 		/// <remarks>
 		/// Last modification:
+		/// Add the type of the unique entity item view model.
 		/// </remarks>
 		[HttpPost]
-		Task<IActionResult> Post([FromBody] UniqueEntityViewModelBase<T> uniqueEntityViewModel);
+		Task<IActionResult> Post([FromBody] TUniqueEntityViewModel uniqueEntityViewModel);
 
 	}
 

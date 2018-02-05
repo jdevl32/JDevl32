@@ -54,6 +54,18 @@ namespace JDevl32.Entity.Generic
 
 #endregion
 
+#region Overrides of Object
+
+		// todo|jdevl32: ???
+		//return base.ToString();
+		/// <inheritdoc />
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		public override string ToString() => Extension.UniqueEntity.ToString(this);
+
+#endregion
+
 	}
 
 }

@@ -1,5 +1,4 @@
-﻿using JDevl32.Entity.Interface;
-using JDevl32.Entity.Interface.Generic;
+﻿using JDevl32.Entity.Interface.Generic;
 
 namespace JDevl32.Entity.Extension
 {
@@ -34,7 +33,9 @@ namespace JDevl32.Entity.Extension
 				:
 				struct
 			=>
-			Common.ToString(uniqueEntity as IUnique<T>, uniqueEntity as IEntity);
+			// todo|jdevl32: !!! this needs to be revisited !!!
+			//Common.ToString(uniqueEntity as IUnique<T>, uniqueEntity as IEntity);
+			Common.ToString(uniqueEntity);
 
 	}
 

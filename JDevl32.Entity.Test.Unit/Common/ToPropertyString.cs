@@ -20,6 +20,7 @@ namespace JDevl32.Entity.Test.Unit.Common
 		/// <remarks>
 		/// This method should be used to test string representation extension(s) for a(n implementation) object.
 		/// Last modification:
+		/// Refactor ...
 		/// </remarks>
 		[TestMethod]
 		public void Test1()

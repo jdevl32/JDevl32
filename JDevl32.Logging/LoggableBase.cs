@@ -7,7 +7,7 @@ namespace JDevl32.Logging
 	/// <inheritdoc />
 	/// <remarks>
 	/// Last modification:
-	/// (Re-)implement (as non-generic loggable interface).
+	/// Implement constructor (with injected logger).
 	/// </remarks>
 	public abstract class LoggableBase
 		:
@@ -30,19 +30,11 @@ namespace JDevl32.Logging
 
 #region Instance Initialization
 
-		// todo|jdevl32: is this needed anywhere ???
-		/**
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// (Correctly) make abstract/protected.
 		/// </remarks>
-		protected LoggableBase(ILogger<LoggableBase> logger)
-			:
-			base(logger)
-		{
-		}
-		/**/
+		protected LoggableBase(ILogger logger) => Logger = logger;
 
 #endregion
 

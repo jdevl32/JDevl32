@@ -29,8 +29,13 @@ namespace JDevl32.Web.ViewModel.Generic
 		/// </summary>
 		/// <remarks>
 		/// Last modification:
+		/// Enhance id (from base class).
 		/// </remarks>
-		protected new T Id { get; set; }
+		protected new T Id
+		{
+			get => base.Id;
+			set => base.Id = value;
+		}
 
 #endregion
 

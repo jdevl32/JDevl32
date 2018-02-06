@@ -12,6 +12,7 @@ namespace JDevl32.Web.ViewModel.Generic
 	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
+	/// Remove (protected) restriction on view model id.
 	/// </remarks>
 	public abstract class UniqueEntityViewModelBase<T>
 		:
@@ -21,24 +22,6 @@ namespace JDevl32.Web.ViewModel.Generic
 			:
 			struct
 	{
-
-#region Property
-
-		/// <summary>
-		/// The unique identifier for the unique entity item.
-		/// </summary>
-		/// <remarks>
-		/// Last modification:
-		/// Enhance id (from base class).
-		/// </remarks>
-		protected new T Id
-		{
-			get => base.Id;
-			set => base.Id = value;
-		}
-
-#endregion
-
 	}
 
 }

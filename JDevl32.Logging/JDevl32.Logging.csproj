@@ -3,15 +3,15 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.3.0.1</Version>
+    <Version>1.4.0.1</Version>
     <Authors>Jeremy Paiz</Authors>
     <Company />
-    <PackageReleaseNotes>Implement (loggable) constructor (with injected logger).</PackageReleaseNotes>
+    <PackageReleaseNotes>Enhance (loggable) logger creation (from logger factory).</PackageReleaseNotes>
     <RepositoryUrl>https://github.com/jdevl32/JDevl32/JDevl32.Logging</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
     <Copyright>Copyright © 2017 Jeremy Paiz</Copyright>
-    <AssemblyVersion>1.3.0.1</AssemblyVersion>
-    <FileVersion>1.3.0.1</FileVersion>
+    <AssemblyVersion>1.4.0.1</AssemblyVersion>
+    <FileVersion>1.4.0.1</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

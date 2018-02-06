@@ -33,8 +33,11 @@ namespace JDevl32.Logging
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
+		/// Enhance logger creation (from logger factory).
 		/// </remarks>
-		protected LoggableBase(ILogger logger) => Logger = logger;
+		protected LoggableBase(ILoggerFactory loggerFactory)
+			=>
+			Logger = loggerFactory.CreateLogger(GetType());
 
 #endregion
 

@@ -8,11 +8,10 @@
     <Copyright>Copyright © 2017 Jeremy Paiz</Copyright>
     <RepositoryUrl>https://github.com/jdevl32/JDevl32/JDevl32.Entity</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Refactor the (redundant) object type.
-Refactor the property info array (of the object(s)).</PackageReleaseNotes>
-    <Version>1.3.1.1</Version>
-    <AssemblyVersion>1.3.1.1</AssemblyVersion>
-    <FileVersion>1.3.1.1</FileVersion>
+    <PackageReleaseNotes>Implement (generic) informable entity context sower (base class).</PackageReleaseNotes>
+    <Version>1.3.1.4</Version>
+    <AssemblyVersion>1.3.1.4</AssemblyVersion>
+    <FileVersion>1.3.1.4</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

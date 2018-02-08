@@ -8,10 +8,10 @@
     <Copyright>Copyright © 2017 Jeremy Paiz</Copyright>
     <RepositoryUrl>https://github.com/jdevl32/JDevl32/JDevl32.Entity</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>(Re-)Implement (generic) informable entity context sower (base class)</PackageReleaseNotes>
-    <Version>1.3.1.5</Version>
-    <AssemblyVersion>1.3.1.5</AssemblyVersion>
-    <FileVersion>1.3.1.5</FileVersion>
+    <PackageReleaseNotes>Implement (missing) constructor.</PackageReleaseNotes>
+    <Version>1.3.2.1</Version>
+    <AssemblyVersion>1.3.2.1</AssemblyVersion>
+    <FileVersion>1.3.2.1</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

@@ -22,6 +22,7 @@ namespace JDevl32.Entity.Generic
 	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
+	/// Implement (missing) constructor.
 	/// </remarks>
 	public abstract class InformableEntityContextSowerBase<TEntityContext, TUniqueEntity, TUniqueValue>
 		:
@@ -70,6 +71,16 @@ namespace JDevl32.Entity.Generic
 		protected InformableEntityContextSowerBase(TEntityContext entityContext, ILoggerFactory loggerFactory)
 			:
 			base(entityContext, loggerFactory)
+		{
+		}
+
+		/// <inheritdoc />
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		protected InformableEntityContextSowerBase(TEntityContext entityContext, ILoggerFactory loggerFactory, string displayName)
+			:
+			base(entityContext, loggerFactory, displayName)
 		{
 		}
 

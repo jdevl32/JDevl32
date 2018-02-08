@@ -15,6 +15,7 @@ using IInformable = JDevl32.Logging.Interface.IInformable;
 
 namespace JDevl32.Web.Controller.Generic
 {
+
 	/// <summary>
 	/// A(n) (generic) informable unique entity item controller (base class).
 	/// </summary>

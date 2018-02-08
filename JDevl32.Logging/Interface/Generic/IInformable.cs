@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 namespace JDevl32.Logging.Interface.Generic
 {
 
-	/// <inheritdoc />
 	/// <summary>
 	/// A(n) (generic) informable object.
 	/// </summary>

@@ -12,6 +12,12 @@ namespace JDevl32.Entity.Generic
 	/// <summary>
 	/// A(n) (generic) entity context sower (base class).
 	/// </summary>
+	/// <typeparam name="TDerivedClass">
+	/// This should be the type of the derived class from this base class (for the logger).
+	/// </typeparam>
+	/// <typeparam name="TEntityContext">
+	/// The type of the entity context.
+	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
 	/// </remarks>

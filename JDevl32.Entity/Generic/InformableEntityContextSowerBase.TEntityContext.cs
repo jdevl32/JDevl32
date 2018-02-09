@@ -1,6 +1,8 @@
-﻿using JDevl32.Logging.Interface;
+﻿using JDevl32.Entity.Interface;
+using JDevl32.Logging.Interface;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Threading.Tasks;
 
 namespace JDevl32.Entity.Generic
 {
@@ -10,12 +12,13 @@ namespace JDevl32.Entity.Generic
 	/// </summary>
 	/// <remarks>
 	/// Last modification:
+	/// (Re-)implement (as interface).
 	/// </remarks>
 	public abstract class InformableEntityContextSowerBase<TEntityContext>
 		:
 		EntityContextSowerBase<TEntityContext>
 		,
-		IInformable
+		IInformableEntityContextSower
 		where
 			TEntityContext
 			:
@@ -81,6 +84,29 @@ namespace JDevl32.Entity.Generic
 			this(entityContext, loggerFactory)
 			=>
 			DisplayName = displayName;
+
+#endregion
+
+#region Implementation of IInformableEntityContextSower
+
+		/// <inheritdoc />
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		public virtual async Task<bool> TrySeed()
+		{
+			try
+			{
+				await Seed();
+				return true;
+			} // try
+			catch (Exception exception)
+			{
+				Logger.LogError(exception, $"Error on seed {DisplayName}:  {exception}");
+			} // catch
+
+			return false;
+		}
 
 #endregion
 

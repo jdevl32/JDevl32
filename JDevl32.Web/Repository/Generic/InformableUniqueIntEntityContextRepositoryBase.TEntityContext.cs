@@ -1,12 +1,12 @@
 ﻿using JDevl32.Entity;
 using JDevl32.Entity.Generic;
+using JDevl32.Web.Repository.Interface.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace JDevl32.Web.Repository.Generic
 {
 
-	/// <inheritdoc />
 	/// <summary>
 	/// A (generic) unique (integer) identifier entity item context repository (base class).
 	/// </summary>
@@ -22,6 +22,8 @@ namespace JDevl32.Web.Repository.Generic
 	public abstract class InformableUniqueIntEntityContextRepositoryBase<TEntityContext, TUniqueEntity>
 		:
 		InformableUniqueEntityContextRepositoryBase<TEntityContext, TUniqueEntity, int>
+		,
+		IInformableUniqueIntEntityContextRepository<TEntityContext, TUniqueEntity>
 		where
 			TEntityContext
 			:
@@ -29,6 +31,7 @@ namespace JDevl32.Web.Repository.Generic
 		where
 			TUniqueEntity
 			:
+			// todo|jdevl32: replace with (int) type-specific ???
 			UniqueEntityBase<int>
 	{
 

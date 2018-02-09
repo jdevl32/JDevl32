@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 using JDevl32.Entity;
 using JDevl32.Entity.Generic;
+using JDevl32.Web.Repository.Interface.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace JDevl32.Web.Repository.Generic
 {
 
-	/// <inheritdoc />
 	/// <summary>
 	/// A (generic) unique (integer) identifier entity item context repository (base class).
 	/// </summary>
@@ -22,11 +22,13 @@ namespace JDevl32.Web.Repository.Generic
 	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
-	/// Add the type of the unique entity item.
+	/// Enhance type-specific interface(s) (and implementation(s)).
 	/// </remarks>
 	public abstract class InformableUniqueIntEntityContextRepositoryBase<TDerivedClass, TEntityContext, TUniqueEntity>
 		:
 		InformableUniqueEntityContextRepositoryBase<TDerivedClass, TEntityContext, TUniqueEntity, int>
+		,
+		IInformableUniqueIntEntityContextRepository<TEntityContext, TUniqueEntity>
 		where
 			TDerivedClass
 			:
@@ -38,6 +40,7 @@ namespace JDevl32.Web.Repository.Generic
 		where
 			TUniqueEntity
 			:
+			// todo|jdevl32: replace with (int) type-specific ???
 			UniqueEntityBase<int>
 	{
 

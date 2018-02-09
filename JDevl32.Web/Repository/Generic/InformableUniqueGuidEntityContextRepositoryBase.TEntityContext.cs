@@ -1,5 +1,6 @@
 ﻿using JDevl32.Entity;
 using JDevl32.Entity.Generic;
+using JDevl32.Web.Repository.Interface.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -7,7 +8,6 @@ using System;
 namespace JDevl32.Web.Repository.Generic
 {
 
-	/// <inheritdoc />
 	/// <summary>
 	/// A (generic) global unique (GUID) identifier entity item context repository (base class).
 	/// </summary>
@@ -23,6 +23,8 @@ namespace JDevl32.Web.Repository.Generic
 	public abstract class InformableUniqueGuidEntityContextRepositoryBase<TEntityContext, TUniqueEntity>
 		:
 		InformableUniqueEntityContextRepositoryBase<TEntityContext, TUniqueEntity, Guid>
+		,
+		IInformableUniqueGuidEntityContextRepository<TEntityContext, TUniqueEntity>
 		where
 			TEntityContext
 			:
@@ -30,6 +32,7 @@ namespace JDevl32.Web.Repository.Generic
 		where
 			TUniqueEntity
 			:
+			// todo|jdevl32: replace with (guid) type-specific ???
 			UniqueEntityBase<Guid>
 	{
 

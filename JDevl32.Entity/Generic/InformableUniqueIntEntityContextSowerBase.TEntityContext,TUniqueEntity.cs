@@ -1,10 +1,10 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using JDevl32.Entity.Interface.Generic;
+using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 
 namespace JDevl32.Entity.Generic
 {
 
-	/// <inheritdoc />
 	/// <summary>
 	/// A(n) (generic) informable unique (integer) identifier entity context sower (base class).
 	/// </summary>
@@ -16,10 +16,14 @@ namespace JDevl32.Entity.Generic
 	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
+	/// Enhance type-specific interface(s) (and implementation(s)).
 	/// </remarks>
 	public abstract class InformableUniqueIntEntityContextSowerBase<TEntityContext, TUniqueEntity>
 		:
 		InformableEntityContextSowerBase<TEntityContext, TUniqueEntity, int>
+		,
+		//IInformableIntEntityContextSower<TEntityContext, TUniqueEntity>
+		IIntEntityContextSower<TEntityContext, TUniqueEntity>
 		where
 			TEntityContext
 			:
@@ -27,12 +31,9 @@ namespace JDevl32.Entity.Generic
 		where
 			TUniqueEntity
 			:
+			// todo|jdevl32: replace with (int) type-specific ???
 			UniqueEntityBase<int>
 	{
-
-#region Property
-
-#endregion
 
 #region Instance Initialization
 

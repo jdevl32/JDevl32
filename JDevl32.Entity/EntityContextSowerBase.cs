@@ -1,7 +1,7 @@
-﻿using System.Threading.Tasks;
-using JDevl32.Entity.Interface;
+﻿using JDevl32.Entity.Interface;
 using JDevl32.Logging.Interface;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace JDevl32.Entity
 {
@@ -103,7 +103,7 @@ namespace JDevl32.Entity
 
 #endregion
 
-#region IImplementation of EntityContextSower
+#region Implementation of IEntityContextSower
 
 		/// <inheritdoc />
 		/// <remarks>

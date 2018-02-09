@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using JDevl32.Entity;
 using JDevl32.Entity.Generic;
+using JDevl32.Web.Controller.Interface.Generic;
 using JDevl32.Web.Repository.Interface.Generic;
 using JDevl32.Web.ViewModel.Generic;
 using Microsoft.AspNetCore.Hosting;
@@ -8,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace JDevl32.Web.Controller.Generic
 {
-	/// <inheritdoc />
+
 	/// <summary>
 	/// A (generic) unique (integer) identifier entity item controller (base class).
 	/// </summary>
@@ -28,7 +29,8 @@ namespace JDevl32.Web.Controller.Generic
 	public abstract class InformableUniqueIntEntityControllerBase<TEntityContext, TUniqueEntity, TUniqueEntityViewModel>
 		:
 		InformableUniqueEntityControllerBase<TEntityContext, TUniqueEntity, TUniqueEntityViewModel, int>
-		// todo|jdevl32: implement (new int) type-specific interface ???
+		,
+		IInformableUniqueIntEntityController<TUniqueEntityViewModel>
 		where
 			TEntityContext
 			:

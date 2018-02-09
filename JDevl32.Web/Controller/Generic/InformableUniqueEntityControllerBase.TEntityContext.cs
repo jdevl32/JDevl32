@@ -33,15 +33,13 @@ namespace JDevl32.Web.Controller.Generic
 	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
-	/// Add the type of the unique entity item view model.
+	/// Enhance type-specific interface(s) (and implementation(s)).
 	/// </remarks>
 	public abstract class InformableUniqueEntityControllerBase<TEntityContext, TUniqueEntity, TUniqueEntityViewModel, TUniqueValue>
 		:
 		ControllerBase
 		,
-		IInformable
-		,
-		IUniqueEntityController<TUniqueEntityViewModel, TUniqueValue>
+		IInformableUniqueEntityController<TUniqueEntityViewModel, TUniqueValue>
 		where
 			TEntityContext
 			:

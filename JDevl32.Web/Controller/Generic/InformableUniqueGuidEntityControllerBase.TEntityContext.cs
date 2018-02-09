@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using JDevl32.Entity;
 using JDevl32.Entity.Generic;
+using JDevl32.Web.Controller.Interface.Generic;
 using JDevl32.Web.Repository.Interface.Generic;
 using JDevl32.Web.ViewModel.Generic;
 using Microsoft.AspNetCore.Hosting;
@@ -10,7 +11,6 @@ using System;
 namespace JDevl32.Web.Controller.Generic
 {
 
-	/// <inheritdoc />
 	/// <summary>
 	/// A (generic) global unique (GUID) identifier entity item controller (base class).
 	/// </summary>
@@ -25,12 +25,13 @@ namespace JDevl32.Web.Controller.Generic
 	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
-	/// Add the type of the unique entity item view model.
+	/// Enhance type-specific interface(s) (and implementation(s)).
 	/// </remarks>
 	public abstract class InformableUniqueGuidEntityControllerBase<TEntityContext, TUniqueEntity, TUniqueEntityViewModel>
 		:
 		InformableUniqueEntityControllerBase<TEntityContext, TUniqueEntity, TUniqueEntityViewModel, Guid>
-		// todo|jdevl32: implement (new guid) type-specific interface ???
+		,
+		IInformableUniqueGuidEntityController<TUniqueEntityViewModel>
 		where
 			TEntityContext
 			:

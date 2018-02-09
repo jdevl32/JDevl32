@@ -21,12 +21,12 @@
     <Folder Include="Interface\IEntityContext\" />
     <Folder Include="Interface\IEntity\" />
     <Folder Include="Interface\Generic\" />
-    <Folder Include="Model\GuidUniqueEntity\" />
+    <Folder Include="Model\UniqueGuidEntity\" />
     <Folder Include="Generic\EntityContextSowerBase\" />
     <Folder Include="Generic\MapperEntityContextBase\" />
     <Folder Include="Interface\IEntityContextSower\" />
     <Folder Include="Interface\Generic\IUniqueEntity\" />
-    <Folder Include="Model\IntUniqueEntity\" />
+    <Folder Include="Model\UniqueIntEntity\" />
   </ItemGroup>
 
   <ItemGroup>

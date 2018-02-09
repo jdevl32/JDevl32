@@ -25,7 +25,7 @@ namespace JDevl32.Entity.Interface.Generic
 #region EF - Primary Key
 
 		/// <summary>
-		/// A unique identifier for the unique item.
+		/// A unique (generic) identifier for the unique item.
 		/// </summary>
 		/// <remarks>
 		/// Last modification:

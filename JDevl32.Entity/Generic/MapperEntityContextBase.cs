@@ -10,7 +10,7 @@ namespace JDevl32.Entity.Generic
 {
 
 	/// <summary>
-	/// A (generic) entity context (base class) with (an auto-mapper) mapper.
+	/// A (generic) entity context (base class) with a(n) (auto-mapper) mapper.
 	/// </summary>
 	/// <remarks>
 	/// Last modification:

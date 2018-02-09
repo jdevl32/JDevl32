@@ -9,7 +9,7 @@ namespace JDevl32.Entity.Generic
 {
 
 	/// <summary>
-	/// A(n) (generic) entity context sower (base class).
+	/// A(n) (generic) informable entity context sower (base class).
 	/// </summary>
 	/// <typeparam name="TEntityContext">
 	/// The type of the entity context.
@@ -22,7 +22,7 @@ namespace JDevl32.Entity.Generic
 	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
-	/// Implement (missing) constructor.
+	/// Implement additional constructor(s) (to set the unique entity item(s) to sow (seed)).
 	/// </remarks>
 	public abstract class InformableEntityContextSowerBase<TEntityContext, TUniqueEntity, TUniqueValue>
 		:
@@ -57,8 +57,9 @@ namespace JDevl32.Entity.Generic
 
 		/// <remarks>
 		/// Last modification:
+		/// Add setter.
 		/// </remarks>
-		protected abstract IEnumerable<TUniqueEntity> Entity { get; }
+		protected abstract IEnumerable<TUniqueEntity> Entity { get; set; }
 
 #endregion
 
@@ -83,6 +84,53 @@ namespace JDevl32.Entity.Generic
 			base(entityContext, loggerFactory, displayName)
 		{
 		}
+
+		/// <inheritdoc />
+		/// <summary>
+		/// Create an informable entity context sower.
+		/// </summary>
+		/// <param name="entityContext">
+		/// A(n) unique entity item context.
+		/// </param>
+		/// <param name="loggerFactory">
+		/// A logger factory.
+		/// </param>
+		/// <param name="entity">
+		/// The unique entity item(s) to sow (seed).
+		/// </param>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		protected InformableEntityContextSowerBase(TEntityContext entityContext, ILoggerFactory loggerFactory, IEnumerable<TUniqueEntity> entity)
+			:
+			this(entityContext, loggerFactory)
+			=>
+			Entity = entity;
+
+		/// <inheritdoc />
+		/// <summary>
+		/// Create an informable entity context sower.
+		/// </summary>
+		/// <param name="entityContext">
+		/// A(n) unique entity item context.
+		/// </param>
+		/// <param name="loggerFactory">
+		/// A logger factory.
+		/// </param>
+		/// <param name="displayName">
+		/// A display name.
+		/// </param>
+		/// <param name="entity">
+		/// The unique entity item(s) to sow (seed).
+		/// </param>
+		/// <remarks>
+		/// Last modification:
+		/// </remarks>
+		protected InformableEntityContextSowerBase(TEntityContext entityContext, ILoggerFactory loggerFactory, string displayName, IEnumerable<TUniqueEntity> entity)
+			:
+			this(entityContext, loggerFactory, displayName)
+			=>
+			Entity = entity;
 
 #endregion
 

@@ -9,7 +9,7 @@ namespace JDevl32.Web.Repository.Generic
 
 	/// <inheritdoc />
 	/// <summary>
-	/// A (generic) unique identifier entity item context repository (base class).
+	/// A (generic) unique (integer) identifier entity item context repository (base class).
 	/// </summary>
 	/// <typeparam name="TDerivedClass">
 	/// This should be the type of the derived class from this base class (for the logger).
@@ -24,7 +24,7 @@ namespace JDevl32.Web.Repository.Generic
 	/// Last modification:
 	/// Add the type of the unique entity item.
 	/// </remarks>
-	public abstract class InformableIntUniqueEntityContextRepositoryBase<TDerivedClass, TEntityContext, TUniqueEntity>
+	public abstract class InformableUniqueIntEntityContextRepositoryBase<TDerivedClass, TEntityContext, TUniqueEntity>
 		:
 		InformableUniqueEntityContextRepositoryBase<TDerivedClass, TEntityContext, TUniqueEntity, int>
 		where
@@ -54,13 +54,13 @@ namespace JDevl32.Web.Repository.Generic
 		/// A mapper.
 		/// </param>
 		/// <param name="uniqueEntityDbSet">
-		/// A db-set of (all) the unique identifier entity item(s).
+		/// A db-set of (all) the unique (integer) identifier entity item(s).
 		/// </param>
 		/// <remarks>
 		/// Last modification:
 		/// Add the type of the unique entity item.
 		/// </remarks>
-		protected InformableIntUniqueEntityContextRepositoryBase(TEntityContext entityContext, ILogger<TDerivedClass> logger, IMapper mapper, DbSet<TUniqueEntity> uniqueEntityDbSet)
+		protected InformableUniqueIntEntityContextRepositoryBase(TEntityContext entityContext, ILogger<TDerivedClass> logger, IMapper mapper, DbSet<TUniqueEntity> uniqueEntityDbSet)
 			:
 			base(entityContext, logger, mapper, uniqueEntityDbSet)
 		{

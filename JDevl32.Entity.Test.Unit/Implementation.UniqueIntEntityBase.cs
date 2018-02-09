@@ -19,7 +19,7 @@ namespace JDevl32.Entity.Test.Unit
 		/// This class should be used to test string representation extension(s) of integer unique entity item(s).
 		/// Last modification:
 		/// </remarks>
-		public class IntUniqueEntityBase
+		public class UniqueIntEntityBase
 			:
 			UniqueEntityBase<int>
 		{

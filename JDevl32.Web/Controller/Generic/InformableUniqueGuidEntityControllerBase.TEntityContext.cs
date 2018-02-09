@@ -5,12 +5,14 @@ using JDevl32.Web.Repository.Interface.Generic;
 using JDevl32.Web.ViewModel.Generic;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
+using System;
 
 namespace JDevl32.Web.Controller.Generic
 {
+
 	/// <inheritdoc />
 	/// <summary>
-	/// A (generic) unique identifier entity item controller (base class).
+	/// A (generic) global unique (GUID) identifier entity item controller (base class).
 	/// </summary>
 	/// <typeparam name="TEntityContext">
 	/// The type of the entity context.
@@ -25,9 +27,10 @@ namespace JDevl32.Web.Controller.Generic
 	/// Last modification:
 	/// Add the type of the unique entity item view model.
 	/// </remarks>
-	public abstract class InformableIntUniqueEntityControllerBase<TEntityContext, TUniqueEntity, TUniqueEntityViewModel>
+	public abstract class InformableUniqueGuidEntityControllerBase<TEntityContext, TUniqueEntity, TUniqueEntityViewModel>
 		:
-		InformableUniqueEntityControllerBase<TEntityContext, TUniqueEntity, TUniqueEntityViewModel, int>
+		InformableUniqueEntityControllerBase<TEntityContext, TUniqueEntity, TUniqueEntityViewModel, Guid>
+		// todo|jdevl32: implement (new guid) type-specific interface ???
 		where
 			TEntityContext
 			:
@@ -35,11 +38,13 @@ namespace JDevl32.Web.Controller.Generic
 		where
 			TUniqueEntity
 			:
-			UniqueEntityBase<int>
+			// todo|jdevl32: replace with (guid) type-specific ???
+			UniqueEntityBase<Guid>
 		where
 			TUniqueEntityViewModel
 			:
-			UniqueEntityViewModelBase<int>
+			// todo|jdevl32: replace with (guid) type-specific ???
+			UniqueEntityViewModelBase<Guid>
 	{
 
 #region Instance Initialization
@@ -47,8 +52,9 @@ namespace JDevl32.Web.Controller.Generic
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
+		/// 
 		/// </remarks>
-		protected InformableIntUniqueEntityControllerBase(IHostingEnvironment hostingEnvironment, ILoggerFactory loggerFactory, IMapper mapper, IInformableUniqueEntityContextRepository<TEntityContext, TUniqueEntity, int> informableUniqueEntityContextRepository, string displayName)
+		protected InformableUniqueGuidEntityControllerBase(IHostingEnvironment hostingEnvironment, ILoggerFactory loggerFactory, IMapper mapper, IInformableUniqueGuidEntityContextRepository<TEntityContext, TUniqueEntity> informableUniqueEntityContextRepository, string displayName)
 			:
 			base(hostingEnvironment, loggerFactory, mapper, informableUniqueEntityContextRepository, displayName)
 		{

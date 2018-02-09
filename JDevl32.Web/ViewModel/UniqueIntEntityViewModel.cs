@@ -1,19 +1,18 @@
 ﻿using JDevl32.Web.ViewModel.Generic;
-using System;
 
 namespace JDevl32.Web.ViewModel
 {
 
 	/// <inheritdoc />
 	/// <summary>
-	/// A global unique identifier entity item view model.
+	/// A unique (integer) identifier entity item view model.
 	/// </summary>
 	/// <remarks>
 	/// Last modification:
 	/// </remarks>
-	public class GuidUniqueEntityViewModel
+	public class UniqueIntEntityViewModel
 		:
-		UniqueEntityViewModelBase<Guid>
+		UniqueEntityViewModelBase<int>
 	{
 	}
 

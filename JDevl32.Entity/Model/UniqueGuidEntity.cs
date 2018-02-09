@@ -1,17 +1,17 @@
-﻿using System;
-using JDevl32.Entity.Generic;
+﻿using JDevl32.Entity.Generic;
+using System;
 
 namespace JDevl32.Entity.Model
 {
 
 	/// <inheritdoc />
 	/// <summary>
-	/// A global unique identifier entity item.
+	/// A global unique (GUID) identifier entity item.
 	/// </summary>
 	/// <remarks>
 	/// Last modification:
 	/// </remarks>
-	public class GuidUniqueEntity
+	public class UniqueGuidEntity
 		:
 		UniqueEntityBase<Guid>
 	{

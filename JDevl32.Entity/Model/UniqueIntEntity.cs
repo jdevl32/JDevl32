@@ -5,12 +5,12 @@ namespace JDevl32.Entity.Model
 
 	/// <inheritdoc />
 	/// <summary>
-	/// A unique identifier entity item.
+	/// A unique (integer) identifier entity item.
 	/// </summary>
 	/// <remarks>
 	/// Last modification:
 	/// </remarks>
-	public class IntUniqueEntity
+	public class UniqueIntEntity
 		:
 		UniqueEntityBase<int>
 	{

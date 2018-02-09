@@ -2,13 +2,14 @@
 using JDevl32.Entity.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System;
 
 namespace JDevl32.Web.Repository.Generic
 {
 
 	/// <inheritdoc />
 	/// <summary>
-	/// A (generic) unique identifier entity item context repository (base class).
+	/// A (generic) global unique (GUID) identifier entity item context repository (base class).
 	/// </summary>
 	/// <typeparam name="TEntityContext">
 	/// The type of the entity context.
@@ -19,9 +20,9 @@ namespace JDevl32.Web.Repository.Generic
 	/// <remarks>
 	/// Last modification:
 	/// </remarks>
-	public abstract class InformableIntUniqueEntityContextRepositoryBase<TEntityContext, TUniqueEntity>
+	public abstract class InformableUniqueGuidEntityContextRepositoryBase<TEntityContext, TUniqueEntity>
 		:
-		InformableUniqueEntityContextRepositoryBase<TEntityContext, TUniqueEntity, int>
+		InformableUniqueEntityContextRepositoryBase<TEntityContext, TUniqueEntity, Guid>
 		where
 			TEntityContext
 			:
@@ -29,7 +30,7 @@ namespace JDevl32.Web.Repository.Generic
 		where
 			TUniqueEntity
 			:
-			UniqueEntityBase<int>
+			UniqueEntityBase<Guid>
 	{
 
 #region Instance Initialization
@@ -42,12 +43,12 @@ namespace JDevl32.Web.Repository.Generic
 		/// A logger factory.
 		/// </param>
 		/// <param name="uniqueEntityDbSet">
-		/// A db-set of (all) the unique identifier entity item(s).
+		/// A db-set of (all) the global unique (GUID) identifier entity item(s).
 		/// </param>
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
-		protected InformableIntUniqueEntityContextRepositoryBase(TEntityContext entityContext, ILoggerFactory loggerFactory, DbSet<TUniqueEntity> uniqueEntityDbSet)
+		protected InformableUniqueGuidEntityContextRepositoryBase(TEntityContext entityContext, ILoggerFactory loggerFactory, DbSet<TUniqueEntity> uniqueEntityDbSet)
 			:
 			base(entityContext, loggerFactory, uniqueEntityDbSet)
 		{

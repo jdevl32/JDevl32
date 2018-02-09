@@ -21,7 +21,7 @@ namespace JDevl32.Entity.Test.Unit.Generic.UniqueEntityBase
 		/// <remarks>
 		/// Last modification:
 		/// </remarks>
-		public static Implementation.IntUniqueEntityBase IntUniqueEntityBase { get; private set; }
+		public static Implementation.UniqueIntEntityBase UniqueIntEntityBase { get; private set; }
 
 #endregion
 
@@ -34,7 +34,7 @@ namespace JDevl32.Entity.Test.Unit.Generic.UniqueEntityBase
 		[TestInitialize]
 		public void Initialize()
 		{
-			IntUniqueEntityBase = new Implementation.IntUniqueEntityBase
+			UniqueIntEntityBase = new Implementation.UniqueIntEntityBase
 			{
 				Id = 11
 				,
@@ -56,7 +56,7 @@ namespace JDevl32.Entity.Test.Unit.Generic.UniqueEntityBase
 		[TestMethod]
 		public void IsExtension()
 		{
-			var test = IntUniqueEntityBase;
+			var test = UniqueIntEntityBase;
 			// todo|jdevl32: ???
 			var expect = $"[{test.GetType()}:{Entity.Common.ToPropertyString(test)}]";
 			var actual = test.ToString();
@@ -73,7 +73,7 @@ namespace JDevl32.Entity.Test.Unit.Generic.UniqueEntityBase
 		[TestMethod]
 		public void IsNotBase()
 		{
-			var test = IntUniqueEntityBase;
+			var test = UniqueIntEntityBase;
 			var notExpect = test.GetType().ToString();
 			var actual = test.ToString();
 

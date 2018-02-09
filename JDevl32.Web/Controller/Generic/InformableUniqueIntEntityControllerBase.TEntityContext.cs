@@ -24,7 +24,6 @@ namespace JDevl32.Web.Controller.Generic
 	/// <remarks>
 	/// Last modification:
 	/// Add the type of the unique entity item view model.
-	/// 
 	/// </remarks>
 	public abstract class InformableUniqueIntEntityControllerBase<TEntityContext, TUniqueEntity, TUniqueEntityViewModel>
 		:
@@ -51,11 +50,11 @@ namespace JDevl32.Web.Controller.Generic
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// 
+		/// Refactor (rename) (repository) parameter per type.
 		/// </remarks>
-		protected InformableUniqueIntEntityControllerBase(IHostingEnvironment hostingEnvironment, ILoggerFactory loggerFactory, IMapper mapper, IInformableUniqueIntEntityContextRepository<TEntityContext, TUniqueEntity> informableUniqueEntityContextRepository, string displayName)
+		protected InformableUniqueIntEntityControllerBase(IHostingEnvironment hostingEnvironment, ILoggerFactory loggerFactory, IMapper mapper, IInformableUniqueIntEntityContextRepository<TEntityContext, TUniqueEntity> informableUniqueIntEntityContextRepository, string displayName)
 			:
-			base(hostingEnvironment, loggerFactory, mapper, informableUniqueEntityContextRepository, displayName)
+			base(hostingEnvironment, loggerFactory, mapper, informableUniqueIntEntityContextRepository, displayName)
 		{
 		}
 

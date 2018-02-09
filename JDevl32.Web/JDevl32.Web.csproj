@@ -9,14 +9,10 @@
     <PackageProjectUrl></PackageProjectUrl>
     <RepositoryUrl>https://github.com/jdevl32/JDevl32/JDevl32.Web</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Implement additional constructor(s) (to set the unique entity item(s) to sow (seed)).
-Add setter.
-Implement a(n) (generic) informable unique (GUID and integer) identifier entity context sower (base class).
-Mass refactor (rename) (class(es) and file(s)).
-Implement a(n) (generic) informable unique (GUID and integer) identifier entity item context repository (interface).</PackageReleaseNotes>
-    <Version>1.3.0.2</Version>
-    <FileVersion>1.3.0.2</FileVersion>
-    <AssemblyVersion>1.3.0.2</AssemblyVersion>
+    <PackageReleaseNotes>Refactor (rename) (repository) parameter per type.</PackageReleaseNotes>
+    <Version>1.3.0.3</Version>
+    <FileVersion>1.3.0.3</FileVersion>
+    <AssemblyVersion>1.3.0.3</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

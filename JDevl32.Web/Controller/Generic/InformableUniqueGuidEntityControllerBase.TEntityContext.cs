@@ -52,11 +52,11 @@ namespace JDevl32.Web.Controller.Generic
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
-		/// 
+		/// Refactor (rename) (repository) parameter per type.
 		/// </remarks>
-		protected InformableUniqueGuidEntityControllerBase(IHostingEnvironment hostingEnvironment, ILoggerFactory loggerFactory, IMapper mapper, IInformableUniqueGuidEntityContextRepository<TEntityContext, TUniqueEntity> informableUniqueEntityContextRepository, string displayName)
+		protected InformableUniqueGuidEntityControllerBase(IHostingEnvironment hostingEnvironment, ILoggerFactory loggerFactory, IMapper mapper, IInformableUniqueGuidEntityContextRepository<TEntityContext, TUniqueEntity> informableUniqueGuidEntityContextRepository, string displayName)
 			:
-			base(hostingEnvironment, loggerFactory, mapper, informableUniqueEntityContextRepository, displayName)
+			base(hostingEnvironment, loggerFactory, mapper, informableUniqueGuidEntityContextRepository, displayName)
 		{
 		}
 

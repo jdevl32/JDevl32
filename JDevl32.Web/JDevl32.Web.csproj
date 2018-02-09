@@ -9,10 +9,10 @@
     <PackageProjectUrl></PackageProjectUrl>
     <RepositoryUrl>https://github.com/jdevl32/JDevl32/JDevl32.Web</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageReleaseNotes>Refactor (rename) (repository) parameter per type.</PackageReleaseNotes>
-    <Version>1.3.0.3</Version>
-    <FileVersion>1.3.0.3</FileVersion>
-    <AssemblyVersion>1.3.0.3</AssemblyVersion>
+    <PackageReleaseNotes>Remove name specification from http-delete attribute.</PackageReleaseNotes>
+    <Version>1.3.0.4</Version>
+    <FileVersion>1.3.0.4</FileVersion>
+    <AssemblyVersion>1.3.0.4</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

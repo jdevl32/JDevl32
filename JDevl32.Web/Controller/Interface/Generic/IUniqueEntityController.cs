@@ -54,8 +54,9 @@ namespace JDevl32.Web.Controller.Interface.Generic
 		/// </returns>
 		/// <remarks>
 		/// Last modification:
+		/// Remove name specification from http-delete attribute.
 		/// </remarks>
-		[HttpDelete("*", Name = "RemoveAll")]
+		[HttpDelete("*")]
 		Task<IActionResult> Delete();
 
 		/// <summary>

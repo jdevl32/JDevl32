@@ -117,8 +117,9 @@ namespace JDevl32.Web.Controller.Generic
 		/// <inheritdoc />
 		/// <remarks>
 		/// Last modification:
+		/// Remove name specification from http-delete attribute.
 		/// </remarks>
-		[HttpDelete("*", Name = "RemoveAll")]
+		[HttpDelete("*")]
 		public virtual async Task<IActionResult> Delete()
 		{
 			// todo|jdevl32: constant(s)...

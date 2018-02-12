@@ -45,6 +45,8 @@ namespace JDevl32.Entity.Generic
 
 #region Property
 
+		// todo|jdevl32: cleanup...
+		/**
 #region Implementation of IEntityContextSower<out TEntityContext, TUniqueEntity, TUniqueValue>
 
 		/// <inheritdoc />
@@ -60,6 +62,18 @@ namespace JDevl32.Entity.Generic
 		/// Add setter.
 		/// </remarks>
 		protected abstract IEnumerable<TUniqueEntity> Entity { get; set; }
+		/**/
+
+#region Implementation of IEntityContextSower<out TEntityContext, TUniqueEntity, TUniqueValue>
+
+		/// <inheritdoc />
+		/// <remarks>
+		/// Last modification:
+		/// Refactor (set of) unique entity item(s) to seed.
+		/// </remarks>
+		public IEnumerable<TUniqueEntity> Entity { get; }
+
+#endregion
 
 #endregion
 

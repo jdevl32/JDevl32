@@ -22,7 +22,7 @@ namespace JDevl32.Entity.Generic
 	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
-	/// Implement additional constructor(s) (to set the unique entity item(s) to sow (seed)).
+	/// Remove unnecessary constructor.
 	/// </remarks>
 	public abstract class InformableEntityContextSowerBase<TEntityContext, TUniqueEntity, TUniqueValue>
 		:
@@ -44,25 +44,6 @@ namespace JDevl32.Entity.Generic
 	{
 
 #region Property
-
-		// todo|jdevl32: cleanup...
-		/**
-#region Implementation of IEntityContextSower<out TEntityContext, TUniqueEntity, TUniqueValue>
-
-		/// <inheritdoc />
-		/// <remarks>
-		/// Last modification:
-		/// </remarks>
-		IEnumerable<TUniqueEntity> IEntityContextSower<TEntityContext, TUniqueEntity, TUniqueValue>.Entity => Entity;
-
-#endregion
-
-		/// <remarks>
-		/// Last modification:
-		/// Add setter.
-		/// </remarks>
-		protected abstract IEnumerable<TUniqueEntity> Entity { get; set; }
-		/**/
 
 #region Implementation of IEntityContextSower<out TEntityContext, TUniqueEntity, TUniqueValue>
 
@@ -98,28 +79,6 @@ namespace JDevl32.Entity.Generic
 			base(entityContext, loggerFactory, displayName)
 		{
 		}
-
-		/// <inheritdoc />
-		/// <summary>
-		/// Create an informable entity context sower.
-		/// </summary>
-		/// <param name="entityContext">
-		/// A(n) unique entity item context.
-		/// </param>
-		/// <param name="loggerFactory">
-		/// A logger factory.
-		/// </param>
-		/// <param name="entity">
-		/// The unique entity item(s) to sow (seed).
-		/// </param>
-		/// <remarks>
-		/// Last modification:
-		/// </remarks>
-		protected InformableEntityContextSowerBase(TEntityContext entityContext, ILoggerFactory loggerFactory, IEnumerable<TUniqueEntity> entity)
-			:
-			this(entityContext, loggerFactory)
-			=>
-			Entity = entity;
 
 		/// <inheritdoc />
 		/// <summary>

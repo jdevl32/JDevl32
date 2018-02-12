@@ -17,7 +17,7 @@ namespace JDevl32.Entity.Generic
 	/// </typeparam>
 	/// <remarks>
 	/// Last modification:
-	/// Enhance type-specific interface(s) (and implementation(s)).
+	/// Remove unnecessary constructor.
 	/// </remarks>
 	public abstract class InformableUniqueGuidEntityContextSowerBase<TEntityContext, TUniqueEntity>
 		:
@@ -55,16 +55,6 @@ namespace JDevl32.Entity.Generic
 		protected InformableUniqueGuidEntityContextSowerBase(TEntityContext entityContext, ILoggerFactory loggerFactory, string displayName)
 			:
 			base(entityContext, loggerFactory, displayName)
-		{
-		}
-
-		/// <inheritdoc />
-		/// <remarks>
-		/// Last modification:
-		/// </remarks>
-		protected InformableUniqueGuidEntityContextSowerBase(TEntityContext entityContext, ILoggerFactory loggerFactory, IEnumerable<TUniqueEntity> entity)
-			:
-			base(entityContext, loggerFactory, entity)
 		{
 		}
 
